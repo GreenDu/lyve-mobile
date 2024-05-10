@@ -1,0 +1,23 @@
+{
+    "extends": "./tsconfig.json",
+    "compilerOptions": {
+      "types": ["node"],
+    },
+    "exclude": [
+      "jest.config.ts",
+      "**/*.spec.ts",
+      "**/*.spec.tsx",
+      "test-setup.ts"
+    ],
+    "include": [
+      "**/*.ts", 
+      "**/*.tsx", 
+      ".expo/types/**/*.ts", 
+      "expo-env.d.ts",
+  
+      "jest.config.ts",
+      "metro.config.js",
+      "tamagui.config.ts",
+    ]
+  }
+  

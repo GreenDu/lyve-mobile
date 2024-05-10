@@ -2,8 +2,8 @@ import { createAnimations } from '@tamagui/animations-react-native';
 import { createInterFont } from '@tamagui/font-inter';
 import { createMedia } from '@tamagui/react-native-media-driver';
 import { shorthands } from '@tamagui/shorthands';
-import { themes, tokens } from '@tamagui/themes';
-import { createTamagui, styled, SizableText, H1, YStack } from 'tamagui';
+import { radius, size, space, themes, zIndex } from '@tamagui/themes';
+import { createTamagui, createTokens } from 'tamagui';
 
 const animations = createAnimations({
   bouncy: {
@@ -25,30 +25,34 @@ const animations = createAnimations({
   },
 });
 
+const tokens = createTokens({
+  color: {
+    primaryDark: '#151718',
+    primaryLight: '#242526',
+    secondary: '#FFFFFF',
+    accentMain: '#8A4BF9',
+    accentDark: '#6D30DC',
+    accentDarker: '#4B0EB7',
+    accentWashedOut: '#9F6EF4',
+    textMain: '#FFFFFF',
+    textWashedOut: '#5E5E60',
+    buttonTextActive: '#0C0C0C',
+    buttonTextDisabled: '#929597',
+    buttonActive: '#F8FBFC',
+    buttonInactive: '#1D1F20',
+    buttonBorder: '#212627',
+    background: '#151718',
+    orange: '#F36E1D',
+  },
+  space,
+  size,
+  radius,
+  zIndex,
+});
+
 const headingFont = createInterFont();
 
 const bodyFont = createInterFont();
-
-export const Container = styled(YStack, {
-  flex: 1,
-  padding: 24,
-});
-
-export const Main = styled(YStack, {
-  flex: 1,
-  justifyContent: 'space-between',
-  maxWidth: 960,
-});
-
-export const Title = styled(H1, {
-  color: '#000',
-  size: '$12',
-});
-
-export const Subtitle = styled(SizableText, {
-  color: '#38434D',
-  size: '$9',
-});
 
 const config = createTamagui({
   light: {
@@ -63,8 +67,8 @@ const config = createTamagui({
   themeClassNameOnRoot: true,
   shorthands,
   fonts: {
-    body: bodyFont,
-    heading: headingFont,
+    body: bodyFont as any,
+    heading: headingFont as any,
   },
   themes,
   tokens,
