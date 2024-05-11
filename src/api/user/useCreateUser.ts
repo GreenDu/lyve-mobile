@@ -15,11 +15,8 @@ export const useCreateUser = createMutation<
     user: {
       id: string;
       username: string;
-      bio: string;
-      avatar_url: string | null;
-      followingCount: number;
-      followerCount: number;
-      level: number;
+      email: string;
+      created_at: string;
     };
   }>,
   Variables,

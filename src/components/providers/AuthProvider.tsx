@@ -14,11 +14,8 @@ import { router } from 'expo-router';
 import { jwtDecode } from 'jwt-decode';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 
-import { axiosClient } from '../../api/axiosClient';
-import { useCreateUser } from '../../api/user/useCreateUser';
 import { AuthContext } from '../../context/AuthContext';
 import { AuthContextData, KeycloakConfiguration } from '../../types/auth';
-import { TypedResponse } from '../../types/response';
 
 // This is needed for ios
 global.atob = decode;
@@ -30,8 +27,6 @@ interface AuthProviderProps {
 const AuthProvider: React.FC<AuthProviderProps> = ({ children, config }) => {
   const [user, setUser] = useState<AuthContextData['user']>({} as AuthContextData['user']);
   const [session, setSession] = useState<boolean>(false);
-
-  const { data: createUserData, mutate: createUser } = useCreateUser();
 
   const discovery = useAutoDiscovery(config.realmUrl);
 
@@ -115,55 +110,57 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children, config }) => {
   const updateState = async (x: { tokens: TokenResponse } | null) => {
     const tokens = x?.tokens ?? null;
 
-    if (tokens) {
-      await AsyncStorage.multiSet([
-        ['tokenConfig', JSON.stringify(tokens)],
-        ['accessToken', tokens.accessToken],
-      ]);
+    if (!tokens) return;
 
-      if (tokens.idToken) {
-        // set user data
-        const userData: any = jwtDecode(tokens.idToken); // not beautiful but it works
+    const { accessToken, idToken } = tokens;
 
-        // make axios call to /api/user/:id
-        const checkUser = await axiosClient
-          .get<
-            TypedResponse<{
-              user: {
-                id: string;
-                username: string;
+    await AsyncStorage.multiSet([
+      ['tokenConfig', JSON.stringify(idToken)],
+      ['accessToken', accessToken],
+    ]);
 
-                bio: string;
-                avatar_url: string;
-                followingCount: number;
-                followerCount: number;
-                level: number;
-              };
-            }>
-          >(`/api/user/${userData.sub}`)
-          .then((res) => res.data);
+    if (!idToken) return;
 
-        // user found ??
-        if (checkUser.error[0]?.code === 404) {
-          createUser({
-            id: userData.sub,
-            username: userData.username,
-            email: userData.email,
-          });
-        }
+    // set user data
+    const userData: any = jwtDecode(idToken); // not beautiful but it works
 
-        setUser({
-          id: createUserData?.data.user.id ?? checkUser.data.user.id,
-          username: createUserData?.data.user.username ?? checkUser.data.user.username,
-          avatar_url: createUserData?.data.user.avatar_url ?? checkUser.data.user.avatar_url,
-          level: createUserData?.data.user.level ?? checkUser.data.user.level,
+    // make axios call to /api/user/:id
+
+    const checkUser = await fetch(
+      `${process.env.EXPO_PUBLIC_API_URL}/api/user/${userData.sub}`
+    ).then((res) => res.json());
+
+    let createdUser: any = null;
+
+    const isUserNotFound = checkUser.error.length > 0 && checkUser.error[0]?.code === 404;
+    if (isUserNotFound) {
+      createdUser = await fetch(`${process.env.EXPO_PUBLIC_API_URL}/api/user/create`, {
+        method: 'POST',
+        body: JSON.stringify({
+          id: userData.sub,
+          username: userData.preferred_username,
           email: userData.email,
-        });
-
-        setSession(true);
-        router.replace('/');
-      }
+        }),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }).then((res) => res.json());
     }
+
+    const user = createdUser || checkUser.data.user;
+
+    const { id, username, avatar_url, level } = user;
+
+    setUser({
+      id,
+      username,
+      avatar_url,
+      level,
+      email: userData.email,
+    });
+
+    setSession(true);
+    router.replace('/');
   };
 
   const handleRefresh = useCallback(async () => {
