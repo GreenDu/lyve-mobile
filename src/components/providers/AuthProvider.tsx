@@ -110,30 +110,57 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children, config }) => {
   const updateState = async (x: { tokens: TokenResponse } | null) => {
     const tokens = x?.tokens ?? null;
 
-    if (tokens) {
-      await AsyncStorage.multiSet([
-        ['tokenConfig', JSON.stringify(tokens)],
-        ['accessToken', tokens.accessToken],
-      ]);
+    if (!tokens) return;
 
-      if (tokens.idToken) {
-        // set user data
-        const userData: any = jwtDecode(tokens.idToken); // not beautiful but it works
+    const { accessToken, idToken } = tokens;
 
-        setUser({
+    await AsyncStorage.multiSet([
+      ['tokenConfig', JSON.stringify(idToken)],
+      ['accessToken', accessToken],
+    ]);
+
+    if (!idToken) return;
+
+    // set user data
+    const userData: any = jwtDecode(idToken); // not beautiful but it works
+
+    // make axios call to /api/user/:id
+
+    const checkUser = await fetch(
+      `${process.env.EXPO_PUBLIC_API_URL}/api/user/${userData.sub}`
+    ).then((res) => res.json());
+
+    let createdUser: any = null;
+
+    const isUserNotFound = checkUser.error.length > 0 && checkUser.error[0]?.code === 404;
+    if (isUserNotFound) {
+      createdUser = await fetch(`${process.env.EXPO_PUBLIC_API_URL}/api/user/create`, {
+        method: 'POST',
+        body: JSON.stringify({
           id: userData.sub,
-          emailVerified: userData.email_verified,
-          fullName: userData.name,
-          username: userData.preferred_name,
-          first_name: userData.given_name,
-          last_name: userData.family_name,
+          username: userData.preferred_username,
           email: userData.email,
-        });
-
-        setSession(true);
-        router.replace('/');
-      }
+        }),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }).then((res) => res.json());
     }
+
+    const user = createdUser || checkUser.data.user;
+
+    const { id, username, avatar_url, level } = user;
+
+    setUser({
+      id,
+      username,
+      avatar_url,
+      level,
+      email: userData.email,
+    });
+
+    setSession(true);
+    router.replace('/');
   };
 
   const handleRefresh = useCallback(async () => {

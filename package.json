@@ -23,6 +23,8 @@
     "@tamagui/react-native-media-driver": "1.74.8",
     "@tamagui/shorthands": "1.74.8",
     "@tamagui/themes": "1.74.8",
+    "@tanstack/react-query": "^5.35.5",
+    "axios": "^1.6.8",
     "base-64": "^1.0.0",
     "expo": "~50.0.7",
     "expo-auth-session": "~5.4.0",
@@ -46,7 +48,9 @@
     "react-native-screens": "~3.29.0",
     "react-native-svg": "14.1.0",
     "react-native-web": "~0.19.10",
-    "tamagui": "1.74.8"
+    "react-query-kit": "^3.3.0",
+    "tamagui": "1.74.8",
+    "zustand": "^4.5.2"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
