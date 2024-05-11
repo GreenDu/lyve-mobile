@@ -7,11 +7,9 @@ export type AuthContextData = {
   signOut(): void;
   user: {
     id: string;
-    emailVerified: boolean;
-    fullName: string;
     username: string;
-    first_name: string;
-    last_name: string;
+    avatar_url: string;
+    level: number;
     email: string;
   };
 };

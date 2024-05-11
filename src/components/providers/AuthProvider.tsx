@@ -14,8 +14,11 @@ import { router } from 'expo-router';
 import { jwtDecode } from 'jwt-decode';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 
+import { axiosClient } from '../../api/axiosClient';
+import { useCreateUser } from '../../api/user/useCreateUser';
 import { AuthContext } from '../../context/AuthContext';
 import { AuthContextData, KeycloakConfiguration } from '../../types/auth';
+import { TypedResponse } from '../../types/response';
 
 // This is needed for ios
 global.atob = decode;
@@ -27,6 +30,8 @@ interface AuthProviderProps {
 const AuthProvider: React.FC<AuthProviderProps> = ({ children, config }) => {
   const [user, setUser] = useState<AuthContextData['user']>({} as AuthContextData['user']);
   const [session, setSession] = useState<boolean>(false);
+
+  const { data: createUserData, mutate: createUser } = useCreateUser();
 
   const discovery = useAutoDiscovery(config.realmUrl);
 
@@ -120,13 +125,38 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children, config }) => {
         // set user data
         const userData: any = jwtDecode(tokens.idToken); // not beautiful but it works
 
+        // make axios call to /api/user/:id
+        const checkUser = await axiosClient
+          .get<
+            TypedResponse<{
+              user: {
+                id: string;
+                username: string;
+
+                bio: string;
+                avatar_url: string;
+                followingCount: number;
+                followerCount: number;
+                level: number;
+              };
+            }>
+          >(`/api/user/${userData.sub}`)
+          .then((res) => res.data);
+
+        // user found ??
+        if (checkUser.error[0]?.code === 404) {
+          createUser({
+            id: userData.sub,
+            username: userData.username,
+            email: userData.email,
+          });
+        }
+
         setUser({
-          id: userData.sub,
-          emailVerified: userData.email_verified,
-          fullName: userData.name,
-          username: userData.preferred_name,
-          first_name: userData.given_name,
-          last_name: userData.family_name,
+          id: createUserData?.data.user.id ?? checkUser.data.user.id,
+          username: createUserData?.data.user.username ?? checkUser.data.user.username,
+          avatar_url: createUserData?.data.user.avatar_url ?? checkUser.data.user.avatar_url,
+          level: createUserData?.data.user.level ?? checkUser.data.user.level,
           email: userData.email,
         });
 

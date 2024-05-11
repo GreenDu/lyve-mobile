@@ -9,6 +9,7 @@ import { TamaguiProvider } from 'tamagui';
 
 import config from '../../tamagui.config';
 import AuthProvider from '../components/providers/AuthProvider';
+import { APIProvider } from '../api/APIProvider';
 
 export const unstable_settings = {
   // Ensure that reloading on `/modal` keeps a back button present.
@@ -39,16 +40,18 @@ export default function RootLayout() {
   return (
     <TamaguiProvider config={config} defaultTheme="dark">
       <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-        <AuthProvider
-          config={{
-            clientId: process.env.EXPO_PUBLIC_KEYCLOAK_CLIENT_ID as string,
-            realmUrl: process.env.EXPO_PUBLIC_KEYCLOAK_REALM_URL as string,
-            scheme: 'lyve-mobile',
-          }}>
-          <SafeAreaProvider onLayout={onLayoutRootView}>
-            <Slot />
-          </SafeAreaProvider>
-        </AuthProvider>
+        <APIProvider>
+          <AuthProvider
+            config={{
+              clientId: process.env.EXPO_PUBLIC_KEYCLOAK_CLIENT_ID as string,
+              realmUrl: process.env.EXPO_PUBLIC_KEYCLOAK_REALM_URL as string,
+              scheme: 'lyve-mobile',
+            }}>
+            <SafeAreaProvider onLayout={onLayoutRootView}>
+              <Slot />
+            </SafeAreaProvider>
+          </AuthProvider>
+        </APIProvider>
       </ThemeProvider>
     </TamaguiProvider>
   );
