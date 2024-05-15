@@ -59,7 +59,7 @@ const HomePage = () => {
               <StreamPreviewCardPlaceholder />
             ) : (
               fakeFollowingStreamData.map((d, idx) => {
-                return <StreamPreviewCard key={idx} {...d} />;
+                return <StreamPreviewCard key={idx} {...d} streamId={idx.toString()} />;
               })
             )}
           </XStack>
@@ -72,27 +72,32 @@ const HomePage = () => {
         <ScrollView>
           <YStack gap="$2.5">
             <StreamCard
+              streamId="1"
               name="Anna"
               viewerCount={1200000}
               avatar_url="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTSOLGUixXG8-JSCNGgzrdg0tIqAFL9VfHbJBYylyOtU28twsRS"
             />
 
             <StreamCard
+              streamId="1"
               name="Anna"
               viewerCount={1200000}
               avatar_url="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTSOLGUixXG8-JSCNGgzrdg0tIqAFL9VfHbJBYylyOtU28twsRS"
             />
             <StreamCard
+              streamId="1"
               name="Anna"
               viewerCount={1200000}
               avatar_url="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTSOLGUixXG8-JSCNGgzrdg0tIqAFL9VfHbJBYylyOtU28twsRS"
             />
             <StreamCard
+              streamId="1"
               name="Anna"
               viewerCount={1200000}
               avatar_url="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTSOLGUixXG8-JSCNGgzrdg0tIqAFL9VfHbJBYylyOtU28twsRS"
             />
             <StreamCard
+              streamId="1"
               name="Anna"
               viewerCount={1200000}
               avatar_url="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTSOLGUixXG8-JSCNGgzrdg0tIqAFL9VfHbJBYylyOtU28twsRS"
