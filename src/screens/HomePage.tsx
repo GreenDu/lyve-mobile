@@ -1,36 +1,42 @@
-import React from "react";
-import { YStack, XStack, Avatar, H1 } from "tamagui";
-import StreamPreviewCard from "../components/StreamPreviewCard";
-import { ScrollView } from "react-native";
-import StreamCard from "../components/StreamCard";
+import React from 'react';
+import { ScrollView } from 'react-native';
+import { YStack, XStack, Avatar, H1 } from 'tamagui';
+
+import StreamCard from '../components/StreamCard';
+import StreamPreviewCard from '../components/StreamPreviewCard';
+import StreamPreviewCardPlaceholder from '../components/StreamPreviewCardPlaceholder';
 
 const HomePage = () => {
-  const fakeFollowingStreamData = [
+  const fakeFollowingStreamData: {
+    viewerCount: number;
+    streamerName: string;
+    previewImg: string;
+  }[] = [
     {
       viewerCount: 1200000,
-      streamerName: "Nic",
-      previewImg: "https://random.imagecdn.app/181/310"
+      streamerName: 'Nic',
+      previewImg: 'https://random.imagecdn.app/181/310',
     },
     {
       viewerCount: 10000,
-      streamerName: "Tom",
-      previewImg: "https://random.imagecdn.app/181/310"
+      streamerName: 'Tom',
+      previewImg: 'https://random.imagecdn.app/181/310',
     },
     {
       viewerCount: 100000,
-      streamerName: "Tom",
-      previewImg: "https://random.imagecdn.app/181/310"
+      streamerName: 'Tom',
+      previewImg: 'https://random.imagecdn.app/181/310',
     },
     {
       viewerCount: 1200,
-      streamerName: "Julia",
-      previewImg: "https://random.imagecdn.app/181/310"
+      streamerName: 'Julia',
+      previewImg: 'https://random.imagecdn.app/181/310',
     },
     {
       viewerCount: 80,
-      streamerName: "Kevin",
-      previewImg: "https://random.imagecdn.app/181/310"
-    }
+      streamerName: 'Kevin',
+      previewImg: 'https://random.imagecdn.app/181/310',
+    },
   ];
   return (
     <YStack height="100%" backgroundColor="$color.background" padding="$4">
@@ -47,11 +53,15 @@ const HomePage = () => {
         <H1 fontSize={24} fontWeight="800">
           Followings
         </H1>
-        <ScrollView horizontal={true}>
+        <ScrollView horizontal>
           <XStack gap="$2.5">
-            {fakeFollowingStreamData.map((d, idx) => {
-              return <StreamPreviewCard key={idx} {...d} />;
-            })}
+            {fakeFollowingStreamData.length === 0 ? (
+              <StreamPreviewCardPlaceholder />
+            ) : (
+              fakeFollowingStreamData.map((d, idx) => {
+                return <StreamPreviewCard key={idx} {...d} streamId={idx.toString()} />;
+              })
+            )}
           </XStack>
         </ScrollView>
       </YStack>
@@ -62,27 +72,32 @@ const HomePage = () => {
         <ScrollView>
           <YStack gap="$2.5">
             <StreamCard
+              streamId="1"
               name="Anna"
               viewerCount={1200000}
               avatar_url="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTSOLGUixXG8-JSCNGgzrdg0tIqAFL9VfHbJBYylyOtU28twsRS"
             />
 
             <StreamCard
+              streamId="1"
               name="Anna"
               viewerCount={1200000}
               avatar_url="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTSOLGUixXG8-JSCNGgzrdg0tIqAFL9VfHbJBYylyOtU28twsRS"
             />
             <StreamCard
+              streamId="1"
               name="Anna"
               viewerCount={1200000}
               avatar_url="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTSOLGUixXG8-JSCNGgzrdg0tIqAFL9VfHbJBYylyOtU28twsRS"
             />
             <StreamCard
+              streamId="1"
               name="Anna"
               viewerCount={1200000}
               avatar_url="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTSOLGUixXG8-JSCNGgzrdg0tIqAFL9VfHbJBYylyOtU28twsRS"
             />
             <StreamCard
+              streamId="1"
               name="Anna"
               viewerCount={1200000}
               avatar_url="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTSOLGUixXG8-JSCNGgzrdg0tIqAFL9VfHbJBYylyOtU28twsRS"

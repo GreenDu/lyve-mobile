@@ -26,7 +26,9 @@ interface AuthProviderProps {
 
 const AuthProvider: React.FC<AuthProviderProps> = ({ children, config }) => {
   const [user, setUser] = useState<AuthContextData['user']>({} as AuthContextData['user']);
-  const [session, setSession] = useState<boolean>(true);
+  const [session, setSession] = useState<boolean>(
+    AsyncStorage.getItem('accessToken') != null && AsyncStorage.getItem('configToken') != null
+  );
 
   const discovery = useAutoDiscovery(config.realmUrl);
 
