@@ -18,7 +18,22 @@
           "root": "./src/app"
         }
       ],
-      "expo-font"
+      "expo-font",
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "Allow Lyve to access your photos."
+        }
+      ],
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "Allow Lyve to access your camera.",
+          "microphonePermission": "Allow Lyve to access your microphone",
+          "recordAudioAndroid": true
+        }
+      ],
+      "@config-plugins/react-native-webrtc"
     ],
     "experiments": {
       "typedRoutes": true,
