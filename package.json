@@ -9,8 +9,8 @@
     "ios": "expo run:ios",
     "start": "expo start",
     "web": "expo start --web",
-    "android:native": "expo run:android",
-    "ios:native": "expo run:ios",
+    "android:native": "expo run:android -d --no-build-cache",
+    "ios:native": "expo run:ios -d --no-build-cache",
     "test": "jest --watch --coverage=false --changedSince=origin/main",
     "testDebug": "jest -o --watch --coverage=false",
     "testFinal": "jest"

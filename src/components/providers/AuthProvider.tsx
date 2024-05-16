@@ -27,7 +27,7 @@ interface AuthProviderProps {
 const AuthProvider: React.FC<AuthProviderProps> = ({ children, config }) => {
   const [user, setUser] = useState<AuthContextData['user']>({} as AuthContextData['user']);
   const [session, setSession] = useState<boolean>(
-    AsyncStorage.getItem('accessToken') != null && AsyncStorage.getItem('configToken') != null
+    AsyncStorage.getItem('accessToken') != null && AsyncStorage.getItem('tokenConfig') != null
   );
 
   const discovery = useAutoDiscovery(config.realmUrl);
@@ -103,8 +103,7 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children, config }) => {
       }
 
       return null;
-    } catch (error) {
-      console.error(error);
+    } catch (_error) {
       return null;
     }
   }, [discovery, redirectUri, request, result]);
@@ -149,7 +148,7 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children, config }) => {
       }).then((res) => res.json());
     }
 
-    const user = createdUser || checkUser.data.user;
+    const user = createdUser.data.data || checkUser.data.user;
 
     const { id, username, avatar_url, level } = user;
 
@@ -190,6 +189,30 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children, config }) => {
     }
   }, [config.clientId, discovery, session]);
 
+  const fetchAndSetUser = async () => {
+    const configToken = await AsyncStorage.getItem('tokenConfig');
+
+    if (!configToken) {
+      return;
+    }
+
+    const userData: any = jwtDecode(configToken);
+
+    const fetchedUser = await fetch(
+      `${process.env.EXPO_PUBLIC_API_URL}/api/user/${userData.sub}`
+    ).then((res) => res.json());
+
+    const { id, username, avatar_url, level } = fetchedUser.data.user;
+
+    setUser({
+      id,
+      username,
+      avatar_url,
+      level,
+      email: userData.email,
+    });
+  };
+
   useEffect(() => {
     handleTokenExchange().then(updateState);
   }, [handleTokenExchange, result]);
@@ -206,6 +229,10 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children, config }) => {
       return () => clearInterval(refreshInterval);
     }
   }, [handleRefresh, session]);
+
+  useEffect(() => {
+    fetchAndSetUser();
+  }, []);
 
   const authContextValue = useMemo(
     () => ({

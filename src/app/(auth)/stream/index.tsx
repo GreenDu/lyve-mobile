@@ -105,10 +105,21 @@ const StreamPage = () => {
   };
 
   const createStream = async () => {
+    console.log(user);
+    console.log(
+      JSON.stringify({
+        streamerId: user.id,
+        previewImgUrl: 'dummy',
+        genre: selectedGenre
+          .filter((g) => g.selected === true)
+          .map((m) => m.text)
+          .join(','),
+      })
+    );
     const createdStream: any = await fetch(`${process.env.EXPO_PUBLIC_API_URL}/api/stream/create`, {
       method: 'POST',
       body: JSON.stringify({
-        streamerId: user.id ?? 'id',
+        streamerId: user.id,
         previewImgUrl: 'dummy',
         genre: selectedGenre
           .filter((g) => g.selected === true)
