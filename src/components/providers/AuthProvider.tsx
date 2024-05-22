@@ -26,9 +26,8 @@ interface AuthProviderProps {
 
 const AuthProvider: React.FC<AuthProviderProps> = ({ children, config }) => {
   const [user, setUser] = useState<AuthContextData['user']>({} as AuthContextData['user']);
-  const [session, setSession] = useState<boolean>(
-    AsyncStorage.getItem('accessToken') != null && AsyncStorage.getItem('tokenConfig') != null
-  );
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   const discovery = useAutoDiscovery(config.realmUrl);
 
@@ -49,93 +48,53 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children, config }) => {
   // Create and load an auth request
   const [request, result, promptAsync] = useAuthRequest({ ...authRequestConfig }, discovery);
 
-  const signIn = useCallback(async () => {
-    await promptAsync();
-  }, [promptAsync]);
-
-  const signOut = useCallback(async (): Promise<void> => {
-    if (discovery?.revocationEndpoint) {
-      const accessToken = await AsyncStorage.getItem('accessToken');
-
-      if (accessToken) {
-        setUser({} as AuthContextData['user']); // remove userData
-        const revokeResponse = await revokeAsync(
-          {
-            token: accessToken,
-            clientId: config.clientId,
-          },
-          discovery
-        );
-
-        if (revokeResponse) {
-          setUser({} as AuthContextData['user']); // remove userData
-          await AsyncStorage.multiRemove(['accessToken', 'tokenConfig']);
-          setSession(false);
-        }
-      }
-    }
-  }, [config.clientId, discovery]);
-
-  const handleTokenExchange = useCallback(async (): Promise<{
-    tokens: TokenResponse;
-  } | null> => {
-    try {
-      if (result?.type === 'success' && !!discovery?.tokenEndpoint) {
-        const { code } = result.params;
-
-        if (!code) {
-          return null;
-        }
-
-        const tokens: TokenResponse = await AuthSession.exchangeCodeAsync(
-          {
-            code,
-            redirectUri,
-            clientId: process.env.EXPO_PUBLIC_KEYCLOAK_CLIENT_ID as string,
-            extraParams: {
-              code_verifier: request?.codeVerifier as string,
-            },
-          },
-          discovery
-        );
-
-        return { tokens };
-      }
-
-      return null;
-    } catch (_error) {
-      return null;
-    }
-  }, [discovery, redirectUri, request, result]);
-
-  const updateState = async (x: { tokens: TokenResponse } | null) => {
-    const tokens = x?.tokens ?? null;
-
-    if (!tokens) return;
-
+  const storeTokensAndSetUser = async (tokens: TokenResponse) => {
     const { accessToken, idToken } = tokens;
-
     await AsyncStorage.multiSet([
-      ['tokenConfig', JSON.stringify(idToken)],
+      ['tokenConfig', JSON.stringify(tokens)],
       ['accessToken', accessToken],
     ]);
 
-    if (!idToken) return;
+    if (idToken) {
+      const userData: any = jwtDecode(idToken);
+      const userResponse = await fetchUserData(userData);
 
-    // set user data
-    const userData: any = jwtDecode(idToken); // not beautiful but it works
+      if (userResponse !== null) {
+        setUser({
+          id: userResponse.id,
+          username: userResponse.username,
+          avatar_url: userResponse.avatar_url,
+          level: userResponse.level,
+          email: userData.email,
+        });
+        setIsAuthenticated(true);
+        router.replace('/');
+      }
+    }
+  };
 
-    // make axios call to /api/user/:id
+  const fetchUserData = async (userData: any) => {
+    try {
+      const userResponse = await fetch(
+        `${process.env.EXPO_PUBLIC_API_URL}/api/user/${userData.sub}`
+      );
+      const userJson = await userResponse.json();
 
-    const checkUser = await fetch(
-      `${process.env.EXPO_PUBLIC_API_URL}/api/user/${userData.sub}`
-    ).then((res) => res.json());
+      if (userJson.success && userJson.data.user !== null) {
+        return userJson.data.user;
+      } else {
+        const createUserResponse = await createUser(userData);
+        return createUserResponse?.data.user;
+      }
+    } catch (error) {
+      console.error('Error fetching user data', error);
+      return null;
+    }
+  };
 
-    let createdUser: any = null;
-
-    const isUserNotFound = checkUser.error.length > 0 && checkUser.error[0]?.code === 404;
-    if (isUserNotFound) {
-      createdUser = await fetch(`${process.env.EXPO_PUBLIC_API_URL}/api/user/create`, {
+  const createUser = async (userData: any) => {
+    try {
+      const createUserResponse = await fetch(`${process.env.EXPO_PUBLIC_API_URL}/api/user/create`, {
         method: 'POST',
         body: JSON.stringify({
           id: userData.sub,
@@ -145,104 +104,147 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children, config }) => {
         headers: {
           'Content-Type': 'application/json',
         },
-      }).then((res) => res.json());
+      });
+      return createUserResponse.json();
+    } catch (error) {
+      console.error('Error creating user', error);
+      return null;
     }
-
-    const user = createdUser.data.data || checkUser.data.user;
-
-    const { id, username, avatar_url, level } = user;
-
-    setUser({
-      id,
-      username,
-      avatar_url,
-      level,
-      email: userData.email,
-    });
-
-    setSession(true);
-    router.replace('/');
   };
 
-  const handleRefresh = useCallback(async () => {
-    const tokenConfigString = await AsyncStorage.getItem('tokenConfig');
+  const signIn = useCallback(async () => {
+    await promptAsync();
+  }, [promptAsync]);
 
-    if (tokenConfigString && session) {
-      const tokenConfig: TokenResponseConfig = JSON.parse(tokenConfigString);
-      if (tokenConfig?.refreshToken && discovery?.tokenEndpoint) {
-        // instantiate a new token response object which will allow us to refresh
-        let tokenResponse = new TokenResponse(tokenConfig);
-        // shouldRefresh checks the expiration and makes sure there is a refresh token
-        if (tokenResponse.shouldRefresh()) {
-          tokenResponse = await refreshAsync(
+  const signOut = useCallback(async (): Promise<void> => {
+    if (discovery?.revocationEndpoint) {
+      try {
+        const accessToken = await AsyncStorage.getItem('accessToken');
+        if (accessToken) {
+          await revokeAsync({ token: accessToken, clientId: config.clientId }, discovery);
+          await clearUserData();
+        }
+      } catch (error) {
+        console.error('Error during sign out', error);
+      }
+    }
+  }, [config.clientId, discovery]);
+
+  const clearUserData = async () => {
+    setUser({} as AuthContextData['user']);
+    await AsyncStorage.multiRemove(['accessToken', 'tokenConfig']);
+    setIsAuthenticated(false);
+    setIsLoading(false);
+  };
+
+  const handleTokenExchange = useCallback(async (): Promise<TokenResponse | null> => {
+    try {
+      if (result?.type === 'success' && discovery?.tokenEndpoint) {
+        const { code } = result.params;
+        if (code) {
+          const tokens = await AuthSession.exchangeCodeAsync(
             {
+              code,
+              redirectUri,
               clientId: config.clientId,
-              refreshToken: tokenConfig.refreshToken,
+              extraParams: { code_verifier: request?.codeVerifier as string },
             },
             discovery
           );
+          return tokens;
         }
-
-        // update tokenConfig, accesToken and user
-        updateState({ tokens: tokenResponse });
       }
+    } catch (error) {
+      console.error('Error during token exchange ', error);
     }
-  }, [config.clientId, discovery, session]);
+    return null;
+  }, [discovery, redirectUri, request, result, config.clientId]);
 
-  const fetchAndSetUser = async () => {
-    const configToken = await AsyncStorage.getItem('tokenConfig');
+  const handleRefresh = useCallback(async () => {
+    try {
+      const tokenConfigString = await AsyncStorage.getItem('tokenConfig');
+      if (tokenConfigString) {
+        const tokenConfig = JSON.parse(tokenConfigString);
+        if (tokenConfig.refreshToken && discovery?.tokenEndpoint) {
+          let tokenResponse = new TokenResponse(tokenConfig);
+          if (tokenResponse.shouldRefresh()) {
+            tokenResponse = await refreshAsync(
+              { clientId: config.clientId, refreshToken: tokenConfig.refreshToken },
+              discovery
+            );
 
-    if (!configToken) {
-      return;
+            await storeTokensAndSetUser(tokenResponse);
+          }
+        }
+      }
+    } catch (error) {
+      console.error('Error refreshing token', error);
+      await clearUserData();
     }
+  }, [config.clientId, discovery]);
 
-    const userData: any = jwtDecode(configToken);
+  const checkExistingTokens = useCallback(async () => {
+    try {
+      const accessToken = await AsyncStorage.getItem('accessToken');
+      const tokenConfigString = await AsyncStorage.getItem('tokenConfig');
 
-    const fetchedUser = await fetch(
-      `${process.env.EXPO_PUBLIC_API_URL}/api/user/${userData.sub}`
-    ).then((res) => res.json());
+      if (accessToken && tokenConfigString && discovery?.userInfoEndpoint) {
+        const tokenConfig = JSON.parse(tokenConfigString);
 
-    const { id, username, avatar_url, level } = fetchedUser.data.user;
+        await AuthSession.fetchUserInfoAsync(
+          {
+            accessToken,
+          },
+          discovery
+        );
 
-    setUser({
-      id,
-      username,
-      avatar_url,
-      level,
-      email: userData.email,
-    });
-  };
+        if (new TokenResponse(tokenConfig).shouldRefresh()) {
+          await handleRefresh();
+        } else {
+          await storeTokensAndSetUser(new TokenResponse(tokenConfig));
+        }
+      } else {
+        setIsLoading(false);
+      }
+    } catch (error) {
+      console.error('Error checking existing tokens', error);
+      setIsLoading(false);
+    }
+  }, [handleRefresh]);
 
   useEffect(() => {
-    handleTokenExchange().then(updateState);
-  }, [handleTokenExchange, result]);
-
-  useEffect(() => {
-    if (session) {
-      const refreshInterval = setInterval(
-        () => {
-          handleRefresh();
-        },
-        2 * 60 * 1000
-      ); // Refresh every 2 min
-
-      return () => clearInterval(refreshInterval);
+    if (result) {
+      handleTokenExchange().then((res) => {
+        if (res) {
+          storeTokensAndSetUser(res);
+        } else {
+          console.error('handleTokenExchange returned null');
+          setIsAuthenticated(false);
+        }
+      });
     }
-  }, [handleRefresh, session]);
+  }, [result, handleTokenExchange]);
 
   useEffect(() => {
-    fetchAndSetUser();
-  }, []);
+    if (isAuthenticated) {
+      const interval = setInterval(handleRefresh, 2 * 60 * 1000);
+      return () => clearInterval(interval);
+    }
+  }, [isAuthenticated, handleRefresh]);
+
+  useEffect(() => {
+    checkExistingTokens();
+  }, [checkExistingTokens]);
 
   const authContextValue = useMemo(
     () => ({
-      isLoading: discovery !== null && !request,
-      session,
+      isLoading,
+      session: isAuthenticated,
       signIn,
       signOut,
       user,
     }),
-    [discovery, request, session, signIn, signOut, user]
+    [isLoading, isAuthenticated, signIn, signOut, user]
   );
 
   return <AuthContext.Provider value={authContextValue}>{children}</AuthContext.Provider>;
