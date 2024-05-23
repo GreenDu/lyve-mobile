@@ -1,20 +1,19 @@
+import useSocket from '@modules/ws/useSocket';
 import { useLocalSearchParams } from 'expo-router';
 import { Device } from 'mediasoup-client';
+import { RtpCapabilities } from 'mediasoup-client/lib/types';
 import React, { useContext, useEffect, useState } from 'react';
-import { Platform, SafeAreaView, StatusBar, View } from 'react-native';
+import { View } from 'react-native';
 import { mediaDevices, RTCView, MediaStream } from 'react-native-webrtc';
 import { YStack, Button } from 'tamagui';
-
-import { WebSocketContext } from '../../../../context/WebSocketContext';
 
 const Stream = () => {
   const { streamId } = useLocalSearchParams();
 
   const [flag, setFlag] = useState(false);
 
-  const { socket } = useContext(WebSocketContext); // Todo add useSocket hook for this
+  const { socket } = useSocket(); // Todo add useSocket hook for this
 
-  const [device, setDevice] = useState<Device | null>(null);
   const [stream, setStream] = useState<MediaStream | null>(null);
 
   useEffect(() => {
@@ -22,10 +21,10 @@ const Stream = () => {
   }, []);
 
   useEffect(() => {
-    if (socket) {
+    if (socket && !flag) {
       console.log('call create_stream');
 
-      socket.emit('create_stream', { streamId }, (data) => {
+      socket.emit('create_stream', { streamId }, (data: any) => {
         console.log(data);
         socket.emit('connect_as_streamer');
         setFlag(true);
@@ -44,17 +43,22 @@ const Stream = () => {
           recvTransportOptions,
           sendTransportOptions,
         }) => {
+          console.log(
+            streamId,
+            peerId,
+            routerRtpCapabilities,
+            recvTransportOptions,
+            sendTransportOptions
+          );
           // Todo use response
-          await loadDevice(routerRtpCapabilities);
+          // await loadDevice(routerRtpCapabilities);
         }
       );
     }
   }, [socket]);
 
-  const loadDevice = async (routerRtpCapabilities) => {
-    const newDevice = getDevice();
-    await newDevice.load({ routerRtpCapabilities });
-    setDevice(newDevice);
+  const loadDevice = async (device: Device, routerRtpCapabilities: RtpCapabilities) => {
+    await device.load({ routerRtpCapabilities });
   };
 
   const startMedia = async () => {

@@ -1,7 +1,7 @@
 import { Slot } from 'expo-router';
 import React from 'react';
 
-import WebSocketProvider from '../../../../components/providers/WebSocketProvider';
+import WebSocketProvider from '../../../../modules/ws/WebSocketProvider';
 
 const StreamLayout = () => {
   return (

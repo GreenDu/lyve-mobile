@@ -2,8 +2,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, { useEffect, useMemo, useState } from 'react';
 import { Socket, io } from 'socket.io-client';
 
-import { WebSocketContext } from '../../context/WebSocketContext';
-import useAuth from '../../hooks/useAuth';
+import { WebSocketContext } from './WebSocketContext';
+import useAuth from '../auth/useAuth';
 
 const WebSocketProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [socket, setSocket] = useState<Socket>(null as any);

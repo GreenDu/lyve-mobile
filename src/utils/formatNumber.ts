@@ -6,10 +6,10 @@
  * @returns {string} The formatted number as a string.
  */
 export const formatNumber = (number: number): string => {
-  if (isNaN(number) || number === null) return "0";
+  if (isNaN(number) || number === null) return '0';
 
   let absNumber: number = Math.abs(number);
-  const abbrev: string[] = ["", "k", "M", "B", "T"];
+  const abbrev: string[] = ['', 'k', 'M', 'B', 'T'];
   let index = 0;
 
   while (absNumber >= 1000 && index < abbrev.length - 1) {
@@ -17,6 +17,6 @@ export const formatNumber = (number: number): string => {
     index++;
   }
 
-  const formattedNumber: string = absNumber.toFixed(1).replace(/\.0$/, "");
-  return (number < 0 ? "-" : "") + formattedNumber + abbrev[index];
+  const formattedNumber: string = absNumber.toFixed(1).replace(/\.0$/, '');
+  return (number < 0 ? '-' : '') + formattedNumber + abbrev[index];
 };

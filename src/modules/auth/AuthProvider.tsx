@@ -8,13 +8,12 @@ import {
   useAutoDiscovery,
   revokeAsync,
   refreshAsync,
-  TokenResponseConfig,
 } from 'expo-auth-session';
 import { router } from 'expo-router';
 import { jwtDecode } from 'jwt-decode';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 
-import { AuthContext } from '../../context/AuthContext';
+import { AuthContext } from './AuthContext';
 import { AuthContextData, KeycloakConfiguration } from '../../types/auth';
 
 // This is needed for ios

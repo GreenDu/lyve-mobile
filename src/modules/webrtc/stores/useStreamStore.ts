@@ -1,6 +1,6 @@
 import { Device } from 'mediasoup-client';
 import { detectDevice, Transport } from 'mediasoup-client/lib/types';
-import create from 'zustand';
+import { create } from 'zustand';
 import { combine } from 'zustand/middleware';
 
 export const getDevice = async () => {
@@ -16,7 +16,7 @@ export const getDevice = async () => {
   }
 };
 
-export const useVoiceStore = create(
+export const useStreamStore = create(
   combine(
     {
       streamId: '',

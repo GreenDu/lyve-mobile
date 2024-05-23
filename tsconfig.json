@@ -20,9 +20,12 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "~/*": [
-        "./src/*"
-      ]
+      "@api/*": ["./src/api/*"],
+      "@components/*": ["./src/components/*"],
+      "@modules/*": ["./src/modules/*"],
+      "@screens/*": ["./src/screens/*"],
+      "@utils/*": ["./src/utils/*"],
+      "@types/*": ["./src/types/*"],
     },
     "strict": true,
     "strictNullChecks": true,
@@ -43,7 +46,8 @@
   "files": [],
   "include": [
     ".expo/types/**/*.ts",
-    "expo-env.d.ts"
+    "expo-env.d.ts",
+    "./src/**/*"
   ],
   "exclude": [
     "node_modules",

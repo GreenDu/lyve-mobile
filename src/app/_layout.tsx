@@ -12,7 +12,7 @@ import { TamaguiProvider } from 'tamagui';
 
 import config from '../../tamagui.config';
 import { APIProvider } from '../api/APIProvider';
-import AuthProvider from '../components/providers/AuthProvider';
+import AuthProvider from '../modules/auth/AuthProvider';
 
 export const unstable_settings = {
   // Ensure that reloading on `/modal` keeps a back button present.

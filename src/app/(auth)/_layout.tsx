@@ -3,7 +3,7 @@ import React from 'react';
 import { ActivityIndicator } from 'react-native';
 import { YStack } from 'tamagui';
 
-import useAuth from '../../hooks/useAuth';
+import useAuth from '../../modules/auth/useAuth';
 
 export default function AppLayout() {
   const { isLoading, session } = useAuth();

@@ -5,7 +5,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { Button, H3, XStack, YStack } from 'tamagui';
 
 import GenreBadge from '../../../components/GenreBadge';
-import useAuth from '../../../hooks/useAuth';
+import useAuth from '../../../modules/auth/useAuth';
 
 const StreamPage = () => {
   const { user } = useAuth();
@@ -86,21 +86,21 @@ const StreamPage = () => {
   const addSelectedGenre = (idx: number) => {
     if (
       selectedGenre.filter((g) => g.selected === true).length >= 3 ||
-      selectedGenre[idx].selected
+      selectedGenre[idx]?.selected
     ) {
       return;
     }
 
     const updatedGenres = [...selectedGenre];
-    updatedGenres[idx].selected = true;
+    updatedGenres[idx]!.selected = true;
     setSelectedGenre(updatedGenres);
   };
 
   const removeSelectedGenre = (idx: number) => {
-    if (!selectedGenre[idx].selected) return;
+    if (!selectedGenre[idx]?.selected) return;
 
     const updatedGenres = [...selectedGenre];
-    updatedGenres[idx].selected = false;
+    updatedGenres[idx]!.selected = false;
     setSelectedGenre(updatedGenres);
   };
 
@@ -158,7 +158,7 @@ const StreamPage = () => {
                   color={g.color}
                   selected={g.selected}
                   onPress={() => {
-                    if (selectedGenre[idx].selected) {
+                    if (selectedGenre[idx]?.selected) {
                       removeSelectedGenre(idx);
                     } else {
                       addSelectedGenre(idx);
