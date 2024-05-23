@@ -1,10 +1,9 @@
+import StreamCard from '@components/StreamCard';
+import StreamPreviewCard from '@components/StreamPreviewCard';
+import StreamPreviewCardPlaceholder from '@components/StreamPreviewCardPlaceholder';
 import React from 'react';
 import { ScrollView } from 'react-native';
 import { YStack, XStack, Avatar, H1 } from 'tamagui';
-
-import StreamCard from '../components/StreamCard';
-import StreamPreviewCard from '../components/StreamPreviewCard';
-import StreamPreviewCardPlaceholder from '../components/StreamPreviewCardPlaceholder';
 
 const HomePage = () => {
   const fakeFollowingStreamData: {

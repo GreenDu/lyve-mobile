@@ -1,9 +1,8 @@
+import useAuth from '@modules/auth/useAuth';
 import { Redirect, Stack } from 'expo-router';
 import React from 'react';
 import { ActivityIndicator } from 'react-native';
 import { YStack } from 'tamagui';
-
-import useAuth from '../../modules/auth/useAuth';
 
 export default function AppLayout() {
   const { isLoading, session } = useAuth();

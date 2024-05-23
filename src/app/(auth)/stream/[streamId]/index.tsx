@@ -2,7 +2,7 @@ import useSocket from '@modules/ws/useSocket';
 import { useLocalSearchParams } from 'expo-router';
 import { Device } from 'mediasoup-client';
 import { RtpCapabilities } from 'mediasoup-client/lib/types';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View } from 'react-native';
 import { mediaDevices, RTCView, MediaStream } from 'react-native-webrtc';
 import { YStack, Button } from 'tamagui';

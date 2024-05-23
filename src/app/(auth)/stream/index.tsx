@@ -1,11 +1,10 @@
+import GenreBadge from '@components/GenreBadge';
 import { Feather } from '@expo/vector-icons';
+import useAuth from '@modules/auth/useAuth';
 import { Link, router } from 'expo-router';
 import React, { useState } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Button, H3, XStack, YStack } from 'tamagui';
-
-import GenreBadge from '../../../components/GenreBadge';
-import useAuth from '../../../modules/auth/useAuth';
 
 const StreamPage = () => {
   const { user } = useAuth();

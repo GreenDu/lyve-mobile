@@ -1,7 +1,6 @@
+import { formatNumber } from '@utils/formatNumber';
 import React from 'react';
 import { YStack, SizableText } from 'tamagui';
-
-import { formatNumber } from '../utils/formatNumber';
 
 interface ViewCounterBadgeProps {
   count: number;

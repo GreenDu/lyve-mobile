@@ -1,5 +1,7 @@
 import 'expo-dev-client';
 
+import { APIProvider } from '@api/APIProvider';
+import AuthProvider from '@modules/auth/AuthProvider';
 import { ThemeProvider, DarkTheme, DefaultTheme } from '@react-navigation/native';
 import { useFonts } from 'expo-font';
 import { Slot, SplashScreen } from 'expo-router';
@@ -11,8 +13,6 @@ import { registerGlobals } from 'react-native-webrtc';
 import { TamaguiProvider } from 'tamagui';
 
 import config from '../../tamagui.config';
-import { APIProvider } from '../api/APIProvider';
-import AuthProvider from '../modules/auth/AuthProvider';
 
 export const unstable_settings = {
   // Ensure that reloading on `/modal` keeps a back button present.
