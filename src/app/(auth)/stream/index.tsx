@@ -128,7 +128,7 @@ const StreamPage = () => {
   };
 
   return (
-    <SafeAreaView>
+    <SafeAreaView style={{ backgroundColor: '#151718' }}>
       <YStack height="100%" backgroundColor="#151718" padding="$4" justifyContent="space-between">
         <XStack>
           <Link asChild href={{ pathname: '/' }}>

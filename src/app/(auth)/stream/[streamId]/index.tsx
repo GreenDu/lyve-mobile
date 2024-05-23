@@ -1,19 +1,67 @@
-import { Link, useLocalSearchParams } from 'expo-router';
-import React, { useEffect, useState } from 'react';
-import { SafeAreaView, StatusBar, View, Button } from 'react-native';
+import { useLocalSearchParams } from 'expo-router';
+import { Device } from 'mediasoup-client';
+import React, { useContext, useEffect, useState } from 'react';
+import { Platform, SafeAreaView, StatusBar, View } from 'react-native';
 import { mediaDevices, RTCView, MediaStream } from 'react-native-webrtc';
-import { Text, YStack } from 'tamagui';
+import { YStack, Button } from 'tamagui';
+
+import { WebSocketContext } from '../../../../context/WebSocketContext';
 
 const Stream = () => {
   const { streamId } = useLocalSearchParams();
 
+  const [flag, setFlag] = useState(false);
+
+  const { socket } = useContext(WebSocketContext); // Todo add useSocket hook for this
+
+  const [device, setDevice] = useState<Device | null>(null);
   const [stream, setStream] = useState<MediaStream | null>(null);
-  const start = async () => {
-    console.log('start');
+
+  useEffect(() => {
+    startMedia();
+  }, []);
+
+  useEffect(() => {
+    if (socket) {
+      console.log('call create_stream');
+
+      socket.emit('create_stream', { streamId }, (data) => {
+        console.log(data);
+        socket.emit('connect_as_streamer');
+        setFlag(true);
+      });
+    }
+  }, [socket]);
+
+  useEffect(() => {
+    if (socket) {
+      socket.on(
+        'you-connected-as-streamer',
+        async ({
+          streamId,
+          peerId,
+          routerRtpCapabilities,
+          recvTransportOptions,
+          sendTransportOptions,
+        }) => {
+          // Todo use response
+          await loadDevice(routerRtpCapabilities);
+        }
+      );
+    }
+  }, [socket]);
+
+  const loadDevice = async (routerRtpCapabilities) => {
+    const newDevice = getDevice();
+    await newDevice.load({ routerRtpCapabilities });
+    setDevice(newDevice);
+  };
+
+  const startMedia = async () => {
     if (!stream) {
       try {
         const s = await mediaDevices.getUserMedia({ video: true });
-        console.log(s);
+
         setStream(s);
       } catch (e) {
         console.error(e);
@@ -21,7 +69,6 @@ const Stream = () => {
     }
   };
   const stop = () => {
-    console.log('stop');
     if (stream) {
       stream.release();
       setStream(null);
@@ -29,16 +76,30 @@ const Stream = () => {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <StatusBar barStyle="dark-content" />
-      <View style={{ flex: 1 }}>
-        {stream && <RTCView streamURL={stream.toURL()} style={{ flex: 1 }} />}
+    <YStack fullscreen>
+      <View style={{ flex: 1, position: 'relative', top: 0, bottom: 0, left: 0, right: 0 }}>
+        {stream && (
+          <RTCView
+            streamURL={stream.toURL()}
+            zOrder={0}
+            objectFit="cover"
+            mirror
+            style={{ position: 'absolute', top: 0, bottom: 0, left: 0, right: 0 }}
+          />
+        )}
+        <YStack width="100%" bottom="$6" position="absolute" paddingHorizontal="$4">
+          <Button
+            backgroundColor="$accentMain"
+            width="$20"
+            alignSelf="center"
+            onPress={() => {
+              console.log('press');
+            }}>
+            Start Stream
+          </Button>
+        </YStack>
       </View>
-      <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
-        <Button title="Start" onPress={start} />
-        <Button title="Stop" onPress={stop} />
-      </View>
-    </SafeAreaView>
+    </YStack>
   );
 };
 
