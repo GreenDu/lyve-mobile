@@ -9,7 +9,7 @@ import {
   revokeAsync,
   refreshAsync,
 } from 'expo-auth-session';
-import { router } from 'expo-router';
+import { router, usePathname } from 'expo-router';
 import { jwtDecode } from 'jwt-decode';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 
@@ -24,6 +24,7 @@ interface AuthProviderProps {
 }
 
 const AuthProvider: React.FC<AuthProviderProps> = ({ children, config }) => {
+  const pathname = usePathname();
   const [user, setUser] = useState<AuthContextData['user']>({} as AuthContextData['user']);
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState(true);
@@ -67,7 +68,9 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children, config }) => {
           email: userData.email,
         });
         setIsAuthenticated(true);
-        router.replace('/');
+        if (pathname.includes('login')) {
+          router.replace('/');
+        }
       }
     }
   };
@@ -188,7 +191,6 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children, config }) => {
       const tokenConfigString = await AsyncStorage.getItem('tokenConfig');
 
       if (accessToken && tokenConfigString && discovery?.userInfoEndpoint) {
-        console.log(tokenConfigString);
         const tokenConfig = JSON.parse(tokenConfigString);
 
         await AuthSession.fetchUserInfoAsync(
