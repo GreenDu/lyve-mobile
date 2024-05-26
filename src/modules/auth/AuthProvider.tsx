@@ -68,7 +68,9 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children, config }) => {
           email: userData.email,
         });
         setIsAuthenticated(true);
-        if (pathname.includes('login')) {
+
+        if (pathname === '/login') {
+          console.log('routing to home');
           router.replace('/');
         }
       }
@@ -163,6 +165,7 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children, config }) => {
   }, [discovery, redirectUri, request, result, config.clientId]);
 
   const handleRefresh = useCallback(async () => {
+    console.log('run');
     try {
       const tokenConfigString = await AsyncStorage.getItem('tokenConfig');
       if (tokenConfigString) {
