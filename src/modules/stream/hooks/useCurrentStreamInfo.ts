@@ -16,7 +16,7 @@ const useCurrentStreamInfo = (streamId: string) => {
     };
   }
 
-  const { id, streamer } = data.data as any;
+  const { id, streamer } = data.data;
   return {
     id,
     streamerId: streamer.id,
