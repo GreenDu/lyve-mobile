@@ -6,16 +6,17 @@ import { axiosClient } from '../axiosClient';
 
 type Variables = { id: string };
 
-export const usePost = createQuery<
+export const useGetUser = createQuery<
   TypedResponse<{
     user: {
       id: string;
       username: string;
-      bio: string;
       avatar_url: string | null;
-      followingCount: number;
+      bio: string;
       followerCount: number;
+      followingCount: number;
       level: number;
+      promotionPoints: number;
     };
   }>,
   Variables,

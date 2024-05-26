@@ -3,6 +3,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { Socket, io } from 'socket.io-client';
 
 import { WebSocketContext } from './WebSocketContext';
+import { MySocket } from './types';
 import useAuth from '../auth/useAuth';
 
 const WebSocketProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
@@ -14,7 +15,7 @@ const WebSocketProvider: React.FC<{ children: React.ReactNode }> = ({ children }
       // eslint-disable-next-line no-unused-expressions
       const connect = async () => {
         const token = await AsyncStorage.getItem('accessToken');
-        const s = io(process.env.EXPO_PUBLIC_API_URL as string, {
+        const s: MySocket = io(process.env.EXPO_PUBLIC_API_URL as string, {
           path: '/socket/',
           transports: ['websocket'],
           auth: {

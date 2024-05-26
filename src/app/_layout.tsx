@@ -13,6 +13,7 @@ import { registerGlobals } from 'react-native-webrtc';
 import { TamaguiProvider } from 'tamagui';
 
 import config from '../../tamagui.config';
+import { useStreamStore } from '@modules/webrtc/stores/useStreamStore';
 
 export const unstable_settings = {
   // Ensure that reloading on `/modal` keeps a back button present.
@@ -23,9 +24,10 @@ WebBrowser.maybeCompleteAuthSession();
 
 SplashScreen.preventAutoHideAsync();
 
-registerGlobals();
-
 export default function RootLayout() {
+  registerGlobals();
+
+  useStreamStore.getState().prepare();
   const colorScheme = useColorScheme();
   const [fontsLoaded, fontError] = useFonts({
     Inter: require('@tamagui/font-inter/otf/Inter-Medium.otf'),

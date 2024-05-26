@@ -188,6 +188,7 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children, config }) => {
       const tokenConfigString = await AsyncStorage.getItem('tokenConfig');
 
       if (accessToken && tokenConfigString && discovery?.userInfoEndpoint) {
+        console.log(tokenConfigString);
         const tokenConfig = JSON.parse(tokenConfigString);
 
         await AuthSession.fetchUserInfoAsync(
@@ -205,9 +206,9 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children, config }) => {
       } else {
         setIsLoading(false);
       }
-    } catch (error) {
-      console.error('Error checking existing tokens', error);
+    } catch {
       setIsLoading(false);
+      clearUserData();
     }
   }, [handleRefresh]);
 

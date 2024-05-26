@@ -1,6 +1,9 @@
 import { createContext } from 'react';
-import { Socket } from 'socket.io-client';
 
-export const WebSocketContext = createContext<{ socket: Socket }>({
+import { MySocket } from './types';
+
+export const WebSocketContext = createContext<{
+  socket: MySocket;
+}>({
   socket: null as any,
 });
