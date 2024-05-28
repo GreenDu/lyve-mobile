@@ -1,5 +1,4 @@
 import { AppData, Producer } from 'mediasoup-client/lib/types';
-import { MediaStream, mediaDevices } from 'react-native-webrtc';
 
 import { useProducerStore } from '../stores/useProducerStore';
 import { useStreamStore } from '../stores/useStreamStore';
@@ -18,12 +17,9 @@ const sendMedia = async () => {
   let stream: MediaStream | null = null;
 
   try {
-    stream = await mediaDevices.getUserMedia({
+    stream = await navigator.mediaDevices.getUserMedia({
       audio: true,
-      video: {
-        facingMode: 'user',
-        // minFrameRate: 30
-      },
+      video: true,
     });
 
     console.log('Successfully got user media');
@@ -33,7 +29,7 @@ const sendMedia = async () => {
     return;
   }
 
-  const videoTracks = stream.getAudioTracks();
+  const videoTracks = stream.getVideoTracks();
   const audioTracks = stream.getAudioTracks();
 
   if (videoTracks.length && audioTracks.length) {
@@ -41,12 +37,12 @@ const sendMedia = async () => {
     const videoTrack = videoTracks[0]!;
 
     const audioPoducer: Producer<AppData> = await sendTransport.produce({
-      track: audioTrack as unknown as MediaStreamTrack,
+      track: audioTrack,
       appData: { mediaTag: 'cam-audio' },
     });
 
     const videoPoducer: Producer<AppData> = await sendTransport.produce({
-      track: videoTrack as unknown as MediaStreamTrack,
+      track: videoTrack,
       appData: { mediaTag: 'cam-audio' },
     });
 
@@ -55,8 +51,8 @@ const sendMedia = async () => {
     useProducerStore.getState().addVideo(videoPoducer);
 
     set({
-      streamAudioTracks: audioTrack as unknown as MediaStreamTrack,
-      streamVideoTracks: videoTrack as unknown as MediaStreamTrack,
+      streamAudioTracks: audioTrack,
+      streamVideoTracks: videoTrack,
       stream,
     });
     return;
