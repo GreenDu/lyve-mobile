@@ -1,22 +1,36 @@
 import { formatNumber } from '@utils/formatNumber';
 import React from 'react';
-import { YStack, SizableText } from 'tamagui';
+import { XStack, SizableText } from 'tamagui';
+import { Feather } from '@expo/vector-icons';
 
 interface ViewCounterBadgeProps {
   count: number;
+  size?: 'small' | 'normal';
 }
 
-const ViewCounterBadge: React.FC<ViewCounterBadgeProps> = ({ count }) => {
+const ViewCounterBadge: React.FC<ViewCounterBadgeProps> = ({ count, size = 'small' }) => {
+  const badgeStyle = {
+    small: {
+      w: 41,
+      h: 26,
+    },
+    normal: {
+      w: 84,
+      h: 34,
+    },
+  };
   return (
-    <YStack
-      width={41}
-      height={26}
+    <XStack
+      width={badgeStyle[size]!.w}
+      height={badgeStyle[size]!.h}
       backgroundColor="#15171899"
       alignItems="center"
       justifyContent="center"
-      borderRadius={25}>
+      borderRadius={25}
+      gap="$3">
+      {size === 'normal' && <Feather name="eye" size={20} color="white" />}
       <SizableText>{formatNumber(count) ?? 0}</SizableText>
-    </YStack>
+    </XStack>
   );
 };
 
