@@ -70,8 +70,7 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children, config }) => {
         setIsAuthenticated(true);
 
         if (pathname === '/login') {
-          console.log('routing to home');
-          router.replace('/');
+          router.navigate('/');
         }
       }
     }
@@ -84,7 +83,7 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children, config }) => {
       );
       const userJson = await userResponse.json();
 
-      if (userJson.success && userJson.data.user !== null) {
+      if (userJson.success && userJson.data.user) {
         return userJson.data.user;
       } else {
         const createUserResponse = await createUser(userData);
@@ -155,6 +154,7 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children, config }) => {
             },
             discovery
           );
+
           return tokens;
         }
       }
@@ -165,7 +165,6 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children, config }) => {
   }, [discovery, redirectUri, request, result, config.clientId]);
 
   const handleRefresh = useCallback(async () => {
-    console.log('run');
     try {
       const tokenConfigString = await AsyncStorage.getItem('tokenConfig');
       if (tokenConfigString) {
@@ -230,12 +229,12 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children, config }) => {
     }
   }, [result, handleTokenExchange]);
 
-  useEffect(() => {
-    if (isAuthenticated) {
-      const interval = setInterval(handleRefresh, 2 * 60 * 1000);
-      return () => clearInterval(interval);
-    }
-  }, [isAuthenticated, handleRefresh]);
+  // useEffect(() => {
+  //   if (isAuthenticated) {
+  //     const interval = setInterval(handleRefresh, 2 * 60 * 1000);
+  //     return () => clearInterval(interval);
+  //   }
+  // }, [isAuthenticated, handleRefresh]);
 
   useEffect(() => {
     checkExistingTokens();
