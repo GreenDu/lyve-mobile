@@ -1,6 +1,5 @@
 import { Device } from 'mediasoup-client';
 import { detectDevice, Transport } from 'mediasoup-client/lib/types';
-import { MediaStream } from 'react-native-webrtc';
 import { create } from 'zustand';
 import { combine } from 'zustand/middleware';
 

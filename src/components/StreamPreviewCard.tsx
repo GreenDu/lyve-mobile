@@ -1,10 +1,10 @@
+import { router } from 'expo-router';
 import React from 'react';
 import { Pressable } from 'react-native';
 import { Card, CardProps, Image, XStack, H4 } from 'tamagui';
 
 import LiveBadge from './LiveBadge';
 import ViewCounterBadge from './ViewCounterBadge';
-import { router } from 'expo-router';
 
 interface StreamPreviewCardProps extends CardProps {
   streamId: string;

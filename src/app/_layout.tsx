@@ -2,6 +2,7 @@ import 'expo-dev-client';
 
 import { APIProvider } from '@api/APIProvider';
 import AuthProvider from '@modules/auth/AuthProvider';
+import { useStreamStore } from '@modules/webrtc/stores/useStreamStore';
 import { ThemeProvider, DarkTheme, DefaultTheme } from '@react-navigation/native';
 import { useFonts } from 'expo-font';
 import { Slot, SplashScreen } from 'expo-router';
@@ -13,7 +14,6 @@ import { registerGlobals } from 'react-native-webrtc';
 import { TamaguiProvider } from 'tamagui';
 
 import config from '../../tamagui.config';
-import { useStreamStore } from '@modules/webrtc/stores/useStreamStore';
 
 export const unstable_settings = {
   // Ensure that reloading on `/modal` keeps a back button present.
@@ -23,10 +23,8 @@ export const unstable_settings = {
 WebBrowser.maybeCompleteAuthSession();
 
 SplashScreen.preventAutoHideAsync();
-
+registerGlobals();
 export default function RootLayout() {
-  registerGlobals();
-
   useStreamStore.getState().prepare();
   const colorScheme = useColorScheme();
   const [fontsLoaded, fontError] = useFonts({

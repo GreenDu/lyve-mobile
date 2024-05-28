@@ -119,10 +119,8 @@ const StreamPage = () => {
       },
     }).then((res) => res.json());
 
-    console.log(createdStream);
-
-    if (createdStream?.success && createdStream?.data?.id) {
-      router.navigate(`/stream/${createdStream?.data?.id}`);
+    if (createdStream && createdStream.success && createdStream.data.id) {
+      router.navigate(`/stream/${createdStream.data?.id}`);
     }
   };
 

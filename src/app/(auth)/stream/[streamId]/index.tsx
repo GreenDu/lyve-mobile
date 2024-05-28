@@ -12,6 +12,7 @@ const Stream = () => {
 
   useEffect(() => {
     if (socket && !firstLoad.current) {
+      console.log('send join stream');
       socket.emit('join_stream', { streamId: streamId as string }, (data) => {
         console.log(`Send join stream success: ${data?.success}`);
       });

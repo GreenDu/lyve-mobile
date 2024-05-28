@@ -11,6 +11,9 @@ const WebSocketProvider: React.FC<{ children: React.ReactNode }> = ({ children }
   const { session } = useAuth();
 
   useEffect(() => {
+    if (socket && socket.connected) {
+      return;
+    }
     if (!socket && session) {
       // eslint-disable-next-line no-unused-expressions
       const connect = async () => {

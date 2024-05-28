@@ -68,6 +68,8 @@ const createTransport = async (
     });
   }
 
+  console.log(transport.connectionState);
+
   transport.on('connectionstatechange', (state) => {
     console.log(`${direction} transport ${transport.id} connectionstatechange ${state}`);
 

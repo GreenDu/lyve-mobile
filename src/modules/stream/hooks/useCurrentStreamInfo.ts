@@ -4,9 +4,6 @@ import useAuth from '@modules/auth/useAuth';
 const useCurrentStreamInfo = (streamId: string) => {
   const { user } = useAuth();
   const { data, error } = useGetStream({ variables: { id: streamId } });
-
-  console.log(data);
-
   if (!data || !data.success || error) {
     return {
       id: null as unknown as string,
