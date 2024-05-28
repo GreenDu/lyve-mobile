@@ -1,7 +1,7 @@
 import { Feather } from '@expo/vector-icons';
 import { Link } from 'expo-router';
 import React from 'react';
-import { Card, Image, YStack, Text } from 'tamagui';
+import { YStack, Text } from 'tamagui';
 
 const StreamPreviewCardPlaceholder: React.FC = () => {
   return (
@@ -12,7 +12,7 @@ const StreamPreviewCardPlaceholder: React.FC = () => {
       backgroundColor="$color.primaryLight"
       justifyContent="center"
       alignItems="center">
-      <Link href="/stream">
+      <Link href="/stream/">
         <YStack backgroundColor="#151718dd" borderRadius={50} padding="$4">
           <Feather size={28} name="plus" color="#fff" />
         </YStack>

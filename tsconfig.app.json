@@ -14,7 +14,7 @@
       "**/*.tsx", 
       ".expo/types/**/*.ts", 
       "expo-env.d.ts",
-  
+      "./src/**/*",
       "jest.config.ts",
       "metro.config.js",
       "tamagui.config.ts",

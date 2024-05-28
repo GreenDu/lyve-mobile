@@ -6,15 +6,21 @@ import { axiosClient } from '../axiosClient';
 
 type Variables = { id: string };
 
-export const useGetUser = createQuery<
+export const useGetStream = createQuery<
   TypedResponse<{
-    user: {
+    id: string;
+    serverId: string | null;
+    active: boolean;
+    viewerCount: number;
+    previewImgUrl: string;
+    created_at: Date;
+    genre: string;
+    streamer: {
       id: string;
       username: string;
       avatar_url: string | null;
-      bio: string;
+      dispname: string;
       followerCount: number;
-      followingCount: number;
       level: number;
       promotionPoints: number;
     };
@@ -22,8 +28,8 @@ export const useGetUser = createQuery<
   Variables,
   AxiosError
 >({
-  queryKey: ['users'],
+  queryKey: ['streams'],
   fetcher: (variables) => {
-    return axiosClient.get(`api/user/${variables.id}`).then((response) => response.data);
+    return axiosClient.get(`api/stream/${variables.id}`).then((response) => response.data);
   },
 });

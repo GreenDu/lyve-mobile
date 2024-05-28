@@ -1,9 +1,8 @@
+import { formatNumber } from '@utils/formatNumber';
 import { router } from 'expo-router';
 import React from 'react';
 import { Pressable } from 'react-native';
 import { XStack, YStack, SizableText, Avatar, Text } from 'tamagui';
-
-import { formatNumber } from '../utils/formatNumber';
 
 interface StreamCardProps {
   streamId: string;

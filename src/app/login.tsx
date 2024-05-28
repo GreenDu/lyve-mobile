@@ -1,12 +1,11 @@
+import useAuth from '@modules/auth/useAuth';
 import React from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Svg, { Path } from 'react-native-svg';
-import { YStack, Button, Text } from 'tamagui';
-
-import useAuth from '../hooks/useAuth';
+import { YStack, Text, Button } from 'tamagui';
 
 const LoginPage = () => {
-  const { isLoading, session, signIn } = useAuth();
+  const { signIn } = useAuth();
   return (
     <SafeAreaView style={{ backgroundColor: '#151718' }}>
       <YStack

@@ -1,11 +1,10 @@
+import GenreBadge from '@components/GenreBadge';
 import { Feather } from '@expo/vector-icons';
+import useAuth from '@modules/auth/useAuth';
 import { Link, router } from 'expo-router';
 import React, { useState } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Button, H3, XStack, YStack } from 'tamagui';
-
-import GenreBadge from '../../../components/GenreBadge';
-import useAuth from '../../../hooks/useAuth';
 
 const StreamPage = () => {
   const { user } = useAuth();
@@ -86,21 +85,21 @@ const StreamPage = () => {
   const addSelectedGenre = (idx: number) => {
     if (
       selectedGenre.filter((g) => g.selected === true).length >= 3 ||
-      selectedGenre[idx].selected
+      selectedGenre[idx]?.selected
     ) {
       return;
     }
 
     const updatedGenres = [...selectedGenre];
-    updatedGenres[idx].selected = true;
+    updatedGenres[idx]!.selected = true;
     setSelectedGenre(updatedGenres);
   };
 
   const removeSelectedGenre = (idx: number) => {
-    if (!selectedGenre[idx].selected) return;
+    if (!selectedGenre[idx]?.selected) return;
 
     const updatedGenres = [...selectedGenre];
-    updatedGenres[idx].selected = false;
+    updatedGenres[idx]!.selected = false;
     setSelectedGenre(updatedGenres);
   };
 
@@ -108,7 +107,7 @@ const StreamPage = () => {
     const createdStream: any = await fetch(`${process.env.EXPO_PUBLIC_API_URL}/api/stream/create`, {
       method: 'POST',
       body: JSON.stringify({
-        streamerId: user.id ?? 'id',
+        streamerId: user.id,
         previewImgUrl: 'dummy',
         genre: selectedGenre
           .filter((g) => g.selected === true)
@@ -120,15 +119,13 @@ const StreamPage = () => {
       },
     }).then((res) => res.json());
 
-    console.log(createdStream);
-
-    if (createdStream?.success && createdStream?.data?.id) {
-      router.navigate(`/stream/${createdStream?.data?.id}`);
+    if (createdStream && createdStream.success && createdStream.data.id) {
+      router.navigate(`/stream/${createdStream.data?.id}`);
     }
   };
 
   return (
-    <SafeAreaView>
+    <SafeAreaView style={{ backgroundColor: '#151718' }}>
       <YStack height="100%" backgroundColor="#151718" padding="$4" justifyContent="space-between">
         <XStack>
           <Link asChild href={{ pathname: '/' }}>
@@ -158,7 +155,7 @@ const StreamPage = () => {
                   color={g.color}
                   selected={g.selected}
                   onPress={() => {
-                    if (selectedGenre[idx].selected) {
+                    if (selectedGenre[idx]?.selected) {
                       removeSelectedGenre(idx);
                     } else {
                       addSelectedGenre(idx);

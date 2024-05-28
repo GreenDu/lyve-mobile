@@ -1,16 +1,15 @@
+import useAuth from '@modules/auth/useAuth';
 import { Redirect, Stack } from 'expo-router';
 import React from 'react';
 import { ActivityIndicator } from 'react-native';
 import { YStack } from 'tamagui';
-
-import useAuth from '../../hooks/useAuth';
 
 export default function AppLayout() {
   const { isLoading, session } = useAuth();
 
   if (isLoading) {
     return (
-      <YStack flex={1} justifyContent="center" alignItems="center">
+      <YStack fullscreen justifyContent="center" alignItems="center">
         <ActivityIndicator />
       </YStack>
     );
@@ -24,8 +23,8 @@ export default function AppLayout() {
 
   return (
     <Stack>
-      <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-      <Stack.Screen name="stream" options={{ headerShown: false }} />
+      <Stack.Screen name="(tabs)" options={{ headerShown: false, animation: 'fade_from_bottom' }} />
+      <Stack.Screen name="stream" options={{ headerShown: false, animation: 'fade_from_bottom' }} />
     </Stack>
   );
 }

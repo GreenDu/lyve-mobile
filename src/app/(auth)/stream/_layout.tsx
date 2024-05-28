@@ -1,8 +1,8 @@
-import { Slot, Stack } from 'expo-router';
+import { Slot } from 'expo-router';
 import React from 'react';
 
-const StreamLayout = () => {
+const RootStreamLayout = () => {
   return <Slot />;
 };
 
-export default StreamLayout;
+export default RootStreamLayout;
