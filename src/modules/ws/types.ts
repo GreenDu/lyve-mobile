@@ -103,8 +103,6 @@ export interface ClientToServerEvents {
   'get-recv-tracks': (data: { rtpCapabilities: RtpCapabilities }) => void;
   join_stream: (data: { streamId: string }, callback: SocketCallback<null>) => void;
   leave_stream: () => void;
-  start_stream: (data: { streamId: string }, callback: SocketCallback<null>) => void; // Todo maybe we dont need this
-  end_stream: (callback: SocketCallback<null>) => void;
   send_msg: (data: { msg: string }) => void;
   send_reward: (data: {
     msg: string;
