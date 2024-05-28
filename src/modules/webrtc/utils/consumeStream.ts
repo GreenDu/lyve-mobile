@@ -9,6 +9,8 @@ const consumeStream = async (params: Consumer['consumerParameters'], peerId: str
     console.log('skipping consumeAudio because recvTransport is null');
     return false;
   }
+
+  console.log('consumeStream params: ', params);
   const consumer = await recvTransport.consume({
     ...params,
     appData: {
@@ -17,6 +19,7 @@ const consumeStream = async (params: Consumer['consumerParameters'], peerId: str
       mediaTag: 'cam-audio',
     },
   });
+
   useConsumerStore.getState().add(consumer);
 
   return true;
