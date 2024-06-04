@@ -11,11 +11,9 @@ interface ChatMessageBubbleProps {
 const ChatMessageBubble: React.FC<ChatMessageBubbleProps> = ({ msg, sender }) => {
   return (
     <XStack
-      backgroundColor="#24252677"
       justifyContent="flex-start"
       alignItems="center"
       space="$2"
-      borderRadius={25}
       width="80%"
       paddingVertical="$1.5"
       paddingHorizontal="$3"
