@@ -5,17 +5,19 @@ import { combine } from 'zustand/middleware';
 export const useConsumerStore = create(
   combine(
     {
-      consumer: null as Consumer | null,
+      consumers: [] as Consumer[],
     },
     (set) => ({
-      add: (c: Consumer) => set(() => ({ consumer: c })),
-      close: () =>
-        set((s: { consumer: Consumer }) => {
-          if (!s.consumer.closed) {
-            s.consumer.close();
-          }
+      add: (c: Consumer) => set((s) => ({ consumers: [...s.consumers, c] })),
+      closeAll: () =>
+        set((s) => {
+          s.consumers.forEach((c) => {
+            if (!c.closed) {
+              c.close();
+            }
+          });
           return {
-            consumer: null,
+            consumers: [],
           };
         }),
     })

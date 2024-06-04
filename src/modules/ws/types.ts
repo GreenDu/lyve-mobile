@@ -67,6 +67,7 @@ export interface ServerToClientEvents {
   'connect-transport-send-res': (data: { error: string }) => void;
   'connect-transport-recv-res': (data: { error: string }) => void;
   'you-left-stream': () => void;
+  'resume-consumers-done': (data: { error?: string }) => void;
   user_joined: (data: { user: SocketUser }) => void;
   user_leaved: (data: { user: SocketUser }) => void;
   viewer_count: (data: { viewerCount: number }) => void;
@@ -101,6 +102,7 @@ export interface ClientToServerEvents {
     appData: AppData;
   }) => void;
   'get-recv-tracks': (data: { rtpCapabilities: RtpCapabilities }) => void;
+  'resume-consumers': () => void;
   join_stream: (data: { streamId: string }, callback: SocketCallback<null>) => void;
   leave_stream: () => void;
   send_msg: (data: { msg: string }) => void;

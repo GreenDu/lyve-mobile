@@ -4,13 +4,13 @@ import consumeStream from './consumeStream';
 import { useStreamStore } from '../stores/useStreamStore';
 
 const receiveStream = async (socket: MySocket) => {
-  socket.once('get-recv-tracks-res', async ({ consumerParametersArr }) => {
+  socket.on('get-recv-tracks-res', async ({ consumerParametersArr }) => {
     console.log('consumerParametersArr', consumerParametersArr.length);
 
     console.log('send get-recv-tracks-res success');
     try {
       for (const { peerId, consumerParameters } of consumerParametersArr) {
-        if (!(await consumeStream(consumerParameters, peerId))) {
+        if (!(await consumeStream(socket, consumerParameters, peerId))) {
           break;
         }
       }

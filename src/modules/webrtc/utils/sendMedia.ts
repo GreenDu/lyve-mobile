@@ -36,12 +36,12 @@ const sendMedia = async () => {
     const audioTrack = audioTracks[0]!;
     const videoTrack = videoTracks[0]!;
 
-    const audioPoducer: Producer<AppData> = await sendTransport.produce({
+    const audioPoducer = await sendTransport.produce({
       track: audioTrack,
       appData: { mediaTag: 'cam-audio' },
     });
 
-    const videoPoducer: Producer<AppData> = await sendTransport.produce({
+    const videoPoducer = await sendTransport.produce({
       track: videoTrack,
       appData: { mediaTag: 'cam-audio' },
     });
