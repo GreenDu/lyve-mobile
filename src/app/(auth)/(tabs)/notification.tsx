@@ -16,7 +16,7 @@ const NotificationPage = () => {
         }}>
         Logout
       </Button>
-      <Button onPress={() => router.navigate('/stream/clwnvc3lf0001s4y07pv72bgn')}>
+      <Button onPress={() => router.navigate('/stream/clws6ngxl0009ll7fxu0nlaoq')}>
         To stream
       </Button>
     </SafeAreaView>
