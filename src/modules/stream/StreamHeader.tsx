@@ -1,10 +1,9 @@
 import StreamerInfoBadge from '@components/stream/StreamerInfoBadge';
-import ViewCounterBadge from '@components/ViewCounterBadge';
 import { Feather } from '@expo/vector-icons';
 import { SocketUser } from '@modules/ws/types';
 import React from 'react';
-import { Pressable } from 'react-native';
-import { XStack } from 'tamagui';
+
+import { Button, XStack } from 'tamagui';
 
 interface StreamHeaderProps {
   streamer:
@@ -18,21 +17,24 @@ interface StreamHeaderProps {
 
 const StreamHeader: React.FC<StreamHeaderProps> = ({ streamer, viewerCount, onLeave }) => {
   return (
-    <XStack justifyContent="space-between" alignItems="flex-start">
+    <XStack justifyContent="space-between" alignItems="center" space="$3">
       <StreamerInfoBadge
-        username={streamer?.username || ''}
+        username={streamer?.username ?? ''}
         avatar_url={
-          streamer?.avatar_url ||
+          streamer?.avatar_url ??
           'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTSOLGUixXG8-JSCNGgzrdg0tIqAFL9VfHbJBYylyOtU28twsRS'
         }
-        followerCount={streamer?.followerCount || 0}
+        followerCount={streamer?.followerCount ?? 0}
+        viewerCount={viewerCount}
         isStreamer
       />
-      <ViewCounterBadge count={viewerCount} size="normal" />
-
-      <Pressable onPress={onLeave}>
-        <Feather size={28} name="x" color="#fff" />
-      </Pressable>
+      <Button
+        onPress={onLeave}
+        size="$4.5"
+        backgroundColor="#242526CC"
+        circular
+        icon={<Feather size={24} name="x" color="#fff" />}
+      />
     </XStack>
   );
 };
