@@ -9,7 +9,7 @@ import {
   revokeAsync,
   refreshAsync,
 } from 'expo-auth-session';
-import { router, usePathname } from 'expo-router';
+import { router } from 'expo-router';
 import { jwtDecode } from 'jwt-decode';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 
@@ -24,7 +24,6 @@ interface AuthProviderProps {
 }
 
 const AuthProvider: React.FC<AuthProviderProps> = ({ children, config }) => {
-  const pathname = usePathname();
   const [user, setUser] = useState<AuthContextData['user']>({} as AuthContextData['user']);
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState(true);
@@ -48,7 +47,7 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children, config }) => {
   // Create and load an auth request
   const [request, result, promptAsync] = useAuthRequest({ ...authRequestConfig }, discovery);
 
-  const storeTokensAndSetUser = async (tokens: TokenResponse) => {
+  const storeTokensAndSetUser = async (tokens: TokenResponse, initialLogin = false) => {
     const { accessToken, idToken } = tokens;
     await AsyncStorage.multiSet([
       ['tokenConfig', JSON.stringify(tokens)],
@@ -69,7 +68,7 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children, config }) => {
         });
         setIsAuthenticated(true);
 
-        if (pathname === '/login') {
+        if (initialLogin) {
           router.navigate('/');
         }
       }
@@ -220,7 +219,7 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children, config }) => {
     if (result) {
       handleTokenExchange().then((res) => {
         if (res) {
-          storeTokensAndSetUser(res);
+          storeTokensAndSetUser(res, true);
         } else {
           console.error('handleTokenExchange returned null');
           setIsAuthenticated(false);
@@ -229,12 +228,12 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children, config }) => {
     }
   }, [result, handleTokenExchange]);
 
-  // useEffect(() => {
-  //   if (isAuthenticated) {
-  //     const interval = setInterval(handleRefresh, 2 * 60 * 1000);
-  //     return () => clearInterval(interval);
-  //   }
-  // }, [isAuthenticated, handleRefresh]);
+  useEffect(() => {
+    if (isAuthenticated) {
+      const interval = setInterval(handleRefresh, 2 * 60 * 1000);
+      return () => clearInterval(interval);
+    }
+  }, [isAuthenticated, handleRefresh]);
 
   useEffect(() => {
     checkExistingTokens();
