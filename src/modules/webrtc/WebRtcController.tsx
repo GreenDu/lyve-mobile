@@ -1,6 +1,10 @@
+import { useCurrentStreamInfoStore } from '@modules/stream/stores/useCurrentStreamInfoStore';
 import useSocket from '@modules/ws/useSocket';
+import { router } from 'expo-router';
 import React, { useEffect } from 'react';
 
+import { useConsumerStore } from './stores/useConsumerStore';
+import { useProducerStore } from './stores/useProducerStore';
 import { useStreamStore } from './stores/useStreamStore';
 import createTransport from './utils/createTransport';
 import loadDevice from './utils/loadDevice';
@@ -22,6 +26,11 @@ function closeConnections(id: string | null) {
 const WebRtcController = () => {
   const { socket } = useSocket();
 
+  const { reset } = useCurrentStreamInfoStore.getState();
+  const { close } = useProducerStore.getState();
+  const { closeAll } = useConsumerStore.getState();
+  const { nullify } = useStreamStore.getState();
+
   //   useEffect(() => {
   //     if (!initialLoad.current) {
   //       sendMedia();
@@ -32,6 +41,14 @@ const WebRtcController = () => {
 
   useEffect(() => {
     if (socket) {
+      socket.on('you-left-stream', () => {
+        closeConnections(useCurrentStreamInfoStore.getState().id);
+        reset();
+        close();
+        closeAll();
+        nullify();
+        router.navigate('/');
+      });
       socket.on('you-joined-as-streamer', async (data) => {
         console.log('you-joined-as-streamer called');
         closeConnections(null);
@@ -63,8 +80,13 @@ const WebRtcController = () => {
           console.error('Error sending media ', err);
         }
 
-        await createTransport(socket, 'recv', data.recvTransportOptions);
-        await receiveStream(socket);
+        try {
+          await createTransport(socket, 'recv', data.recvTransportOptions);
+        } catch (err) {
+          console.log('error creating recv transport | ', err);
+          return;
+        }
+        receiveStream(socket);
       });
 
       socket.on('you-joined-as-viewer', async (data) => {

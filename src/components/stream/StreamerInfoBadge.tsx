@@ -2,7 +2,7 @@ import { FontAwesome6 } from '@expo/vector-icons';
 import React from 'react';
 import { YStack, XStack, Avatar, SizableText, Button } from 'tamagui';
 
-import { formatNumber } from '../utils/formatNumber';
+import { formatNumber } from '../../utils/formatNumber';
 
 interface StreamerInfoBadgeProps {
   username: string;

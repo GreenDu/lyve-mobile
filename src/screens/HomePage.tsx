@@ -1,6 +1,6 @@
-import StreamCard from '@components/StreamCard';
-import StreamPreviewCard from '@components/StreamPreviewCard';
-import StreamPreviewCardPlaceholder from '@components/StreamPreviewCardPlaceholder';
+import StreamCard from '@components/stream/StreamCard';
+import StreamPreviewCard from '@components/stream/StreamPreviewCard';
+import StreamPreviewCardPlaceholder from '@components/stream/StreamPreviewCardPlaceholder';
 import React from 'react';
 import { ScrollView } from 'react-native';
 import { YStack, XStack, Avatar, H1 } from 'tamagui';
