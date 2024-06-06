@@ -18,12 +18,14 @@ const SettingsPage: React.FC<{ userid: string }> = ({ userid }) => {
         <H2 mt="$10" fontSize={24} mb="$3">
           Account
         </H2>
-        <YStack  overflow="hidden" height="20%" maxHeight="20%" borderRadius={15} backgroundColor="$primaryDark">
-        <SettingButton name='Setting' onPress={() => console.log("setting")}/>
-        <SettingButton name='Another' onPress={() => console.log("another")}/>
-
-        
-
+        <YStack
+          overflow="hidden"
+          height="20%"
+          maxHeight="20%"
+          borderRadius={15}
+          backgroundColor="$primaryDark">
+          <SettingButton name="Setting" onPress={() => console.log('setting')} />
+          <SettingButton name="Another" onPress={() => console.log('another')} />
         </YStack>
       </YStack>
     </View>
