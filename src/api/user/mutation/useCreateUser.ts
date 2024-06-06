@@ -1,8 +1,8 @@
+import { CreateUserResponse } from '@api/responses';
 import type { AxiosError } from 'axios';
 import { createMutation } from 'react-query-kit';
 
-import { TypedResponse } from '../../types/response';
-import { axiosClient } from '../axiosClient';
+import { axiosClient } from '../../axiosClient';
 
 type Variables = {
   id: string;
@@ -10,18 +10,7 @@ type Variables = {
   email: string;
 };
 
-export const useCreateUser = createMutation<
-  TypedResponse<{
-    user: {
-      id: string;
-      username: string;
-      email: string;
-      created_at: string;
-    };
-  }>,
-  Variables,
-  AxiosError
->({
+export const useCreateUser = createMutation<CreateUserResponse, Variables, AxiosError>({
   mutationFn: async (variables) =>
     axiosClient({
       url: '/api/user/create',

@@ -1,3 +1,4 @@
+import { CreateUserResponse, GetUserResponse } from '@api/responses';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { decode } from 'base-64';
 import * as AuthSession from 'expo-auth-session';
@@ -58,11 +59,12 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children, config }) => {
       const userData: any = jwtDecode(idToken);
       const userResponse = await fetchUserData(userData);
 
-      if (userResponse !== null) {
+      if (userResponse) {
         setUser({
           id: userResponse.id,
           username: userResponse.username,
-          avatar_url: userResponse.avatar_url,
+          dispname: userResponse.dispname,
+          avatar_url: userResponse.avatar_url ?? '',
           level: userResponse.level,
           email: userData.email,
         });
@@ -80,13 +82,16 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children, config }) => {
       const userResponse = await fetch(
         `${process.env.EXPO_PUBLIC_API_URL}/api/user/${userData.sub}`
       );
-      const userJson = await userResponse.json();
+      const userJson = (await userResponse.json()) as GetUserResponse;
 
-      if (userJson.success && userJson.data.user) {
+      if (userJson.success && userJson.data) {
         return userJson.data.user;
       } else {
         const createUserResponse = await createUser(userData);
-        return createUserResponse?.data.user;
+        if (createUserResponse && createUserResponse.success && createUserResponse.data) {
+          return createUserResponse.data.user;
+        }
+        return null;
       }
     } catch (error) {
       console.error('Error fetching user data', error);
@@ -94,7 +99,7 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children, config }) => {
     }
   };
 
-  const createUser = async (userData: any) => {
+  const createUser = async (userData: any): Promise<CreateUserResponse | null> => {
     try {
       const createUserResponse = await fetch(`${process.env.EXPO_PUBLIC_API_URL}/api/user/create`, {
         method: 'POST',
@@ -107,7 +112,7 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children, config }) => {
           'Content-Type': 'application/json',
         },
       });
-      return createUserResponse.json();
+      return createUserResponse.json() as Promise<CreateUserResponse>;
     } catch (error) {
       console.error('Error creating user', error);
       return null;

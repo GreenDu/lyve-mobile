@@ -1,7 +1,10 @@
-import { useGetStream } from '@api/stream/useGetStream';
+import { useGetStream } from '@api/stream/query/useGetStream';
+import { useStreamChatStore } from '@modules/chat/stores/useStreamChatStore';
 import useCurrentStreamInfo from '@modules/stream/hooks/useCurrentStreamInfo';
 import { useCurrentStreamInfoStore } from '@modules/stream/stores/useCurrentStreamInfoStore';
 import WebRtcController from '@modules/webrtc/WebRtcController';
+import { useConsumerStore } from '@modules/webrtc/stores/useConsumerStore';
+import { useProducerStore } from '@modules/webrtc/stores/useProducerStore';
 import { useStreamStore } from '@modules/webrtc/stores/useStreamStore';
 import useSocket from '@modules/ws/useSocket';
 import React, { useEffect, useState } from 'react';
@@ -14,13 +17,9 @@ import {
 } from 'react-native';
 import { RTCView, MediaStream } from 'react-native-webrtc';
 
+import StreamEnded from './StreamEnded';
 import StreamerView from './StreamerView';
 import ViewerView from './ViewerView';
-import { useConsumerStore } from '@modules/webrtc/stores/useConsumerStore';
-import StreamEnded from './StreamEnded';
-import { useProducerStore } from '@modules/webrtc/stores/useProducerStore';
-import { useStreamChatStore } from '@modules/chat/stores/useStreamChatStore';
-import { Consumer } from 'mediasoup-client/lib/types';
 
 const StreamPage: React.FC<{ id: string }> = ({ id }) => {
   const { stream } = useStreamStore((state) => ({
@@ -44,8 +43,8 @@ const StreamPage: React.FC<{ id: string }> = ({ id }) => {
   const [streamUrl, setStreamUrl] = useState<any | null>(null);
 
   useEffect(() => {
-    if (data && isSuccess) {
-      const { id: streamId, streamer, viewerCount, active } = data.data;
+    if (data && data.data && isSuccess) {
+      const { id: streamId, streamer, viewerCount, active } = data.data.stream;
 
       setId(streamId);
       setStreamer({
@@ -145,7 +144,7 @@ const StreamPage: React.FC<{ id: string }> = ({ id }) => {
           </SafeAreaView>
         </TouchableWithoutFeedback>
       </KeyboardAvoidingView>
-      {/* <WebRtcController /> */}
+      <WebRtcController />
     </>
   );
 };
