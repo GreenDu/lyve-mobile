@@ -1,12 +1,19 @@
+import { useGetFeed } from '@api/feed/query/useGetFeed';
+import { useGetRecommendedStreams } from '@api/feed/query/useGetRecommendedStreams';
 import { Stream, Streamer, User } from '@api/responses';
-import StreamCard from '@components/stream/StreamCard';
-import StreamPreviewCard from '@components/stream/StreamPreviewCard';
-import StreamPreviewCardPlaceholder from '@components/stream/StreamPreviewCardPlaceholder';
-import React, { useState } from 'react';
-import { ScrollView } from 'react-native';
-import { YStack, XStack, Avatar, H1 } from 'tamagui';
+import useAuth from '@modules/auth/useAuth';
+import HomeHeader from '@modules/home/HomeHeader';
+import MyFeed from '@modules/home/MyFeed';
+import RecommendedFeed from '@modules/home/RecommendedFeed';
+import React, { useEffect, useState } from 'react';
+import { YStack } from 'tamagui';
 
 const HomePage = () => {
+  const { user } = useAuth();
+
+  const { data: feedData } = useGetFeed({ variables: { id: user.id }, refetchInterval: 30 * 1000 });
+  const { data: rsData } = useGetRecommendedStreams({ refetchInterval: 30 * 1000 });
+
   const [myStreamsFeed, setMyStreamsFeed] = useState<
     (Stream & {
       streamer: Pick<
@@ -20,49 +27,22 @@ const HomePage = () => {
       streamer: Streamer;
     })[]
   >([]);
+
+  useEffect(() => {
+    if (feedData && feedData.data) {
+      setMyStreamsFeed(feedData.data.feed);
+    }
+
+    if (rsData && rsData.data) {
+      setRecommendedStreamsFeed(rsData.data.streams);
+    }
+  }, [feedData, rsData]);
   return (
     <YStack height="100%" backgroundColor="$color.background" padding="$4">
-      <XStack>
-        <Avatar circular size="$5">
-          <Avatar.Image
-            accessibilityLabel="Nate Wienert"
-            src="https://images.unsplash.com/photo-1531384441138-2736e62e0919?&w=100&h=100&dpr=2&q=80"
-          />
-          <Avatar.Fallback delayMs={600} backgroundColor="$blue10" />
-        </Avatar>
-      </XStack>
-      <YStack marginTop="$6" backgroundColor="transparent">
-        <H1 fontSize={24} fontWeight="800">
-          Followings
-        </H1>
-        <ScrollView horizontal>
-          <XStack gap="$2.5">
-            {myStreamsFeed.length === 0 ? (
-              <StreamPreviewCardPlaceholder />
-            ) : (
-              myStreamsFeed.map((d) => {
-                return (
-                  <StreamPreviewCard
-                    previewImg={d.previewImgUrl}
-                    streamerName={d.streamer.dispname}
-                    key={d.id}
-                    streamId={d.id}
-                    viewerCount={d.viewerCount}
-                  />
-                );
-              })
-            )}
-          </XStack>
-        </ScrollView>
-      </YStack>
-      <YStack marginTop="$6">
-        <H1 fontSize={24} fontWeight="800">
-          Recommended
-        </H1>
-        <ScrollView>
-          <YStack gap="$2.5" />
-        </ScrollView>
-      </YStack>
+      <HomeHeader />
+      <MyFeed feed={myStreamsFeed} />
+
+      <RecommendedFeed feed={recommendedStreamsFeed} />
     </YStack>
   );
 };
