@@ -44,8 +44,8 @@ const StreamPage: React.FC<{ id: string }> = ({ id }) => {
   const [streamUrl, setStreamUrl] = useState<any | null>(null);
 
   useEffect(() => {
-    if (data && isSuccess) {
-      const { id: streamId, streamer, viewerCount, active } = data.data;
+    if (data && data.data && isSuccess) {
+      const { id: streamId, streamer, viewerCount, active } = data.data.stream;
 
       setId(streamId);
       setStreamer({
