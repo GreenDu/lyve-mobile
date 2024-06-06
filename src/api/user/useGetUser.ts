@@ -11,12 +11,14 @@ export const useGetUser = createQuery<
     user: {
       id: string;
       username: string;
+      dispname: string;
       avatar_url: string | null;
       bio: string;
       followerCount: number;
       followingCount: number;
       level: number;
       promotionPoints: number;
+      coins: number;
     };
   }>,
   Variables,
