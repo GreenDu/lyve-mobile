@@ -1,9 +1,10 @@
-import { useGetStream } from '@api/stream/useGetStream';
+import { useGetStream } from '@api/stream/query/useGetStream';
 import useAuth from '@modules/auth/useAuth';
 
 const useCurrentStreamInfo = (streamId: string) => {
   const { user } = useAuth();
   const { data, error } = useGetStream({ variables: { id: streamId } });
+
   if (!data || !data.success || error) {
     return {
       id: null as unknown as string,
@@ -13,7 +14,7 @@ const useCurrentStreamInfo = (streamId: string) => {
     };
   }
 
-  const { id, streamer } = data.data;
+  const { id, streamer } = data.data.stream;
   return {
     id,
     streamerId: streamer.id,
