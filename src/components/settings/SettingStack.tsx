@@ -10,7 +10,7 @@ const SettingStack: React.FC<SettingStackProps> = ({ children }) => {
     <YStack
       overflow="hidden"
       borderRadius={15}
-      backgroundColor="green"
+      backgroundColor="$background"
     >
       {children}
     </YStack>
