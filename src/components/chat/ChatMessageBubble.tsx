@@ -6,11 +6,13 @@ import { Message } from '@modules/chat/types';
 interface ChatMessageBubbleProps {
   msg: Message['msg'];
   sender: Message['sender'];
+  opacity: number;
 }
 
-const ChatMessageBubble: React.FC<ChatMessageBubbleProps> = ({ msg, sender }) => {
+const ChatMessageBubble: React.FC<ChatMessageBubbleProps> = ({ msg, sender, opacity }) => {
   return (
     <XStack
+      opacity={opacity}
       justifyContent="flex-start"
       alignItems="center"
       space="$2"

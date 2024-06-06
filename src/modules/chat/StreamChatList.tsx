@@ -11,8 +11,8 @@ const StreamChatList = () => {
   const { messages } = useStreamChatStore((state) => ({ messages: state.messages }));
 
   const renderMessage = useCallback(
-    (item: Message) => {
-      return <ChatMessageBubble msg={item.msg} sender={item.sender} />;
+    (item: Message, index: number) => {
+      return <ChatMessageBubble msg={item.msg} sender={item.sender} opacity={1.0} />;
     },
     [messages]
   );
@@ -37,7 +37,7 @@ const StreamChatList = () => {
       <FlatList
         ref={flatListRef}
         data={sortedMessages}
-        renderItem={({ item }) => renderMessage(item)}
+        renderItem={({ item, index }) => renderMessage(item, index)}
         keyExtractor={keyExtractor}
         contentContainerStyle={{ flexDirection: 'column-reverse' }}
         scrollEnabled
