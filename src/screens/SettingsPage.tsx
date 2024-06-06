@@ -31,7 +31,7 @@ const SettingsPage: React.FC<{ userid: string }> = ({ userid }) => {
         </SettingStack>
 
         <H2 mt="$5" fontSize={24} mb="$3">
-          Inhalt
+          Contents
         </H2>
         <SettingStack>
           <SettingButton name="Ads" onPress={() => console.log('setting')} />
