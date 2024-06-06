@@ -1,8 +1,8 @@
 import { TypedResponse } from '../types/response';
 
-type AchievementType = 'NTH_STREAM' | 'NTH_VIEWERS';
+export type AchievementType = 'NTH_STREAM' | 'NTH_VIEWERS';
 
-type User = {
+export type User = {
   id: string;
   username: string;
   dispname: string;
@@ -21,12 +21,12 @@ type User = {
   coins: number;
 };
 
-type Streamer = Pick<
+export type Streamer = Pick<
   User,
   'id' | 'username' | 'dispname' | 'avatar_url' | 'followerCount' | 'promotionPoints' | 'level'
 >;
 
-type Stream = {
+export type Stream = {
   id: string;
   serverId: string | null;
   active: boolean;
@@ -39,7 +39,7 @@ type Stream = {
   genre: string;
 };
 
-type Achievement = {
+export type Achievement = {
   id: string;
   type: AchievementType;
   name: string;
@@ -50,7 +50,7 @@ type Achievement = {
   promotionPoints: number;
 };
 
-type Follows = {
+export type Follows = {
   followedById: string;
   followingId: string;
   created_at: Date;

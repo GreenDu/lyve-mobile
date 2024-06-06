@@ -1,42 +1,50 @@
 import { View } from 'react-native';
-import React from 'react';
-import { useGetUser } from '@api/user/useGetUser';
+import React, { useEffect, useState } from 'react';
+import { useGetUser } from '@api/user/query/useGetUser';
 import { Button, H3, SizableText, XStack, YStack } from 'tamagui';
-import UserStats from '@components/profile/ProfileHeader';
+import ProfileHeader from '@components/profile/ProfileHeader';
 import { Feather } from '@expo/vector-icons';
 import { router } from 'expo-router';
-
-
-
+import { User, Achievement, Stream } from '@api/responses';
 
 const ProfilePage: React.FC<{ userid: string }> = ({ userid }) => {
   const { data } = useGetUser({ variables: { id: userid } });
 
-  if (data) {
-    data.data.user.dispname = "streamer_testname";
-    data.data.user.followerCount = 743928;
-    data.data.user.followingCount = 1344;
-    data.data.user.bio = "Das ist eine Testbeschreibung für einen Testuser";
-  }
+  const [userData, setUserData] = useState<User>();
 
+  useEffect(() => {
+    if (data && data.data) {
+      setUserData(data.data.user);
+    }
+  }, [data]);
+
+  if (userData) {
+    userData.dispname = 'Streamer_testname';
+    userData.followerCount = 464724;
+    userData.followingCount = 1652;
+    userData.bio = 'Das ist eine Testbeschreibung für einen User';
+  }
   return (
     <View>
       <YStack height="100%" backgroundColor="$color.background">
         <YStack height="35%" backgroundColor={'$color.accentDark'} borderRadius={30}>
           <YStack top="$5" left="$5">
-            <UserStats
-              followerCount={data?.data.user.followerCount}
-              followingCount={data?.data.user.followingCount}></UserStats>
+            <ProfileHeader
+              followerCount={userData?.followerCount}
+              followingCount={userData?.followingCount}></ProfileHeader>
 
             <YStack justifyContent="flex-start" gap="$2" maxWidth="90%">
-              <H3 fontWeight="700" mt="$3">{data?.data.user.dispname}</H3>
-              <SizableText opacity={0.8}>@{data?.data.user.username}</SizableText>
-              <SizableText >{data?.data.user.bio.substring(0,100)}</SizableText>
+              <H3 fontWeight="700" mt="$3">
+                {userData?.dispname}
+              </H3>
+              <SizableText opacity={0.8}>@{userData?.username}</SizableText>
+              <SizableText>{userData?.bio.substring(0, 100)}</SizableText>
             </YStack>
-            <XStack gap="$18">
 
+            {/* Button component */}
+            <XStack gap="$18">
               <Button
-                onPress={() => console.log("Edit Profile View")}
+                onPress={() => console.log('Edit Profile View')}
                 backgroundColor="#A372F9"
                 maxWidth="40%"
                 borderRadius="$10"
@@ -45,7 +53,7 @@ const ProfilePage: React.FC<{ userid: string }> = ({ userid }) => {
                 fontSize={18}>
                 Edit Profile
               </Button>
-              
+
               <Button
                 onPress={() => router.push(`profile/${userid}/settings`)}
                 backgroundColor="#A372F9"
@@ -53,11 +61,20 @@ const ProfilePage: React.FC<{ userid: string }> = ({ userid }) => {
                 borderRadius="$10"
                 height="$5"
                 mt="$5"
-                icon={<Feather name="settings" size={24} color="white" />}
-                >
-              </Button>
+                icon={<Feather name="settings" size={24} color="white" />}></Button>
             </XStack>
           </YStack>
+        </YStack>
+        <YStack height="65%">
+
+          <XStack justifyContent='center' mt="$5">
+            <Button flex={1} minHeight="30%" maxWidth="30%" borderRadius={20} backgroundColor="#A372F9">
+              Statistics
+            </Button>
+            <Button flex={1} minHeight="30%" maxWidth="30%" borderRadius={20}>
+              Achievements
+            </Button>
+          </XStack>
         </YStack>
       </YStack>
     </View>

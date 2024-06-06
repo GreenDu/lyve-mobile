@@ -7,7 +7,7 @@ interface Props {
   followingCount?: number | undefined;
 }
 
-const UserStats: React.FC<Props> = ({ followerCount = 0, followingCount = 0 }) => {
+const ProfileHeader: React.FC<Props> = ({ followerCount = 0, followingCount = 0 }) => {
   return (
     <XStack space="$7">
       <Avatar circular size="$7">
@@ -38,4 +38,4 @@ const UserStats: React.FC<Props> = ({ followerCount = 0, followingCount = 0 }) =
   );
 };
 
-export default UserStats;
+export default ProfileHeader;
