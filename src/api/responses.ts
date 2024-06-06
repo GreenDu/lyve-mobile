@@ -66,7 +66,7 @@ export type GetUserResponse = TypedResponse<{
 }>;
 
 export type CreateUserResponse = TypedResponse<{
-  user: Pick<User, 'id' | 'username' | 'dispname' | 'email'>;
+  user: Pick<User, 'id' | 'username' | 'dispname' | 'avatar_url' | 'email' | 'level'>;
 }>;
 
 export type FollowUserResponse = TypedResponse<{

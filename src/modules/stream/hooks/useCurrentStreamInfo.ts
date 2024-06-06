@@ -5,7 +5,7 @@ const useCurrentStreamInfo = (streamId: string) => {
   const { user } = useAuth();
   const { data, error } = useGetStream({ variables: { id: streamId } });
 
-  if (!data || !data.success || error) {
+  if (!data || !data.success || error || !data.data) {
     return {
       id: null as unknown as string,
       streamerId: null as unknown as string,

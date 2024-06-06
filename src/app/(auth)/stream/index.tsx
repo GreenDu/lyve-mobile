@@ -1,3 +1,4 @@
+import { CreateStreamResponse } from '@api/responses';
 import GenreBadge from '@components/GenreBadge';
 import { Feather } from '@expo/vector-icons';
 import useAuth from '@modules/auth/useAuth';
@@ -104,7 +105,7 @@ const StreamPage = () => {
   };
 
   const createStream = async () => {
-    const createdStream: any = await fetch(`${process.env.EXPO_PUBLIC_API_URL}/api/stream/create`, {
+    const createdStream = await fetch(`${process.env.EXPO_PUBLIC_API_URL}/api/stream/create`, {
       method: 'POST',
       body: JSON.stringify({
         streamerId: user.id,
@@ -117,10 +118,10 @@ const StreamPage = () => {
       headers: {
         'Content-Type': 'application/json',
       },
-    }).then((res) => res.json());
+    }).then((res) => res.json() as Promise<CreateStreamResponse>);
 
-    if (createdStream && createdStream.success && createdStream.data.id) {
-      router.navigate(`/stream/${createdStream.data?.id}`);
+    if (createdStream && createdStream.success && createdStream.data) {
+      router.navigate(`/stream/${createdStream.data.stream.id}`);
     }
   };
 
