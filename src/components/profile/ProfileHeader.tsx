@@ -1,3 +1,4 @@
+import { formatNumber } from '@utils/formatNumber';
 import React from 'react';
 import { XStack, YStack, H2, Avatar, Separator } from 'tamagui';
 
@@ -18,7 +19,7 @@ const UserStats: React.FC<Props> = ({ followerCount = 0, followingCount = 0 }) =
       </Avatar>
       <YStack>
         <H2 fontSize={16} fontWeight="300">
-          {followerCount}
+          {formatNumber(followerCount)}
         </H2>
         <H2 fontSize={16} fontWeight="400">
           Followers
@@ -27,7 +28,7 @@ const UserStats: React.FC<Props> = ({ followerCount = 0, followingCount = 0 }) =
       <Separator alignSelf="stretch" vertical borderWidth="$0.25" borderColor="white" />
       <YStack>
         <H2 fontSize={16} fontWeight="300">
-          {followingCount}
+        {formatNumber(followingCount)}
         </H2>
         <H2 fontSize={16} fontWeight="400">
           Following
