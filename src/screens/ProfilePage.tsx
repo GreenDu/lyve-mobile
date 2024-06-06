@@ -4,6 +4,7 @@ import { useGetUser } from '@api/user/useGetUser';
 import { Button, H3, SizableText, XStack, YStack } from 'tamagui';
 import UserStats from '@components/profile/ProfileHeader';
 import { Feather } from '@expo/vector-icons';
+import { router } from 'expo-router';
 
 
 
@@ -35,7 +36,7 @@ const ProfilePage: React.FC<{ userid: string }> = ({ userid }) => {
             <XStack gap="$18">
 
               <Button
-                onPress={() => console.log('Edit Profile View')}
+                onPress={() => console.log("Edit Profile View")}
                 backgroundColor="#A372F9"
                 maxWidth="40%"
                 borderRadius="$10"
@@ -46,7 +47,7 @@ const ProfilePage: React.FC<{ userid: string }> = ({ userid }) => {
               </Button>
               
               <Button
-                onPress={() => console.log('Settings View')}
+                onPress={() => router.push(`profile/${userid}/settings`)}
                 backgroundColor="#A372F9"
                 minWidth="20%"
                 borderRadius="$10"

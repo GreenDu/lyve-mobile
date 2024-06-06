@@ -1,12 +1,16 @@
-import { View, Text } from 'react-native'
-import React from 'react'
+import React from 'react';
+import SettingsPage from '@screens/SettingsPage';
+import { useLocalSearchParams } from 'expo-router';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const Settings = () => {
-  return (
-    <View>
-      <Text>settings</Text>
-    </View>
-  )
-}
+  const { userid } = useLocalSearchParams();
 
-export default Settings
+  return (
+    <SafeAreaView>
+      <SettingsPage userid={userid as string} />
+    </SafeAreaView>
+  );
+};
+
+export default Settings;
