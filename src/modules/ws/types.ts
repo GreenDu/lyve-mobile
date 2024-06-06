@@ -1,3 +1,4 @@
+import { RewardType } from '@modules/reward/types';
 import {
   DtlsParameters,
   IceCandidate,
@@ -106,12 +107,15 @@ export interface ClientToServerEvents {
   join_stream: (data: { streamId: string }, callback: SocketCallback<null>) => void;
   leave_stream: () => void;
   send_msg: (data: { msg: string }) => void;
-  send_reward: (data: {
-    msg: string;
-    reward: {
-      type: string;
-    };
-  }) => void;
+  send_reward: (
+    data: {
+      msg: string;
+      reward: {
+        type: RewardType;
+      };
+    },
+    callback: SocketCallback<null>
+  ) => void;
 }
 
 export type MySocket = Socket<ServerToClientEvents, ClientToServerEvents>;

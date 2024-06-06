@@ -145,7 +145,7 @@ const StreamPage: React.FC<{ id: string }> = ({ id }) => {
           </SafeAreaView>
         </TouchableWithoutFeedback>
       </KeyboardAvoidingView>
-      <WebRtcController />
+      {/* <WebRtcController /> */}
     </>
   );
 };
