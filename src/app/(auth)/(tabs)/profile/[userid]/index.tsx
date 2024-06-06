@@ -1,7 +1,8 @@
-import { View, Text, SafeAreaView } from 'react-native'
 import React from 'react'
 import ProfilePage from '@screens/ProfilePage'
 import { useLocalSearchParams } from 'expo-router'
+import { SafeAreaView } from 'react-native-safe-area-context';
+
 
 const Index = () => {
 
