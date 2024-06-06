@@ -41,7 +41,7 @@ const ProfilePage: React.FC<{ userid: string }> = ({ userid }) => {
               <SizableText>{userData?.bio.substring(0, 100)}</SizableText>
             </YStack>
 
-            {/* Button component */}
+            {/* Button component in profile modal*/}
             <XStack gap="$18">
               <Button
                 onPress={() => console.log('Edit Profile View')}
@@ -65,7 +65,11 @@ const ProfilePage: React.FC<{ userid: string }> = ({ userid }) => {
             </XStack>
           </YStack>
         </YStack>
+
+
         <YStack height="65%">
+
+          {/* Button component for statistics and achievements*/}
 
           <XStack justifyContent='center' mt="$5">
             <Button flex={1} minHeight="30%" maxWidth="30%" borderRadius={20} backgroundColor="#A372F9">
