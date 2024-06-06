@@ -163,28 +163,31 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children, config }) => {
     return null;
   }, [discovery, redirectUri, request, result, config.clientId]);
 
-  const handleRefresh = useCallback(async () => {
-    try {
-      const tokenConfigString = await AsyncStorage.getItem('tokenConfig');
-      if (tokenConfigString) {
-        const tokenConfig = JSON.parse(tokenConfigString);
-        if (tokenConfig.refreshToken && discovery?.tokenEndpoint) {
-          let tokenResponse = new TokenResponse(tokenConfig);
-          if (tokenResponse.shouldRefresh()) {
-            tokenResponse = await refreshAsync(
-              { clientId: config.clientId, refreshToken: tokenConfig.refreshToken },
-              discovery
-            );
+  const handleRefresh = useCallback(
+    async (initialLogin = false) => {
+      try {
+        const tokenConfigString = await AsyncStorage.getItem('tokenConfig');
+        if (tokenConfigString) {
+          const tokenConfig = JSON.parse(tokenConfigString);
+          if (tokenConfig.refreshToken && discovery?.tokenEndpoint) {
+            let tokenResponse = new TokenResponse(tokenConfig);
+            if (tokenResponse.shouldRefresh()) {
+              tokenResponse = await refreshAsync(
+                { clientId: config.clientId, refreshToken: tokenConfig.refreshToken },
+                discovery
+              );
 
-            await storeTokensAndSetUser(tokenResponse);
+              await storeTokensAndSetUser(tokenResponse, initialLogin);
+            }
           }
         }
+      } catch (error) {
+        console.error('Error refreshing token', error);
+        await clearUserData();
       }
-    } catch (error) {
-      console.error('Error refreshing token', error);
-      await clearUserData();
-    }
-  }, [config.clientId, discovery]);
+    },
+    [config.clientId, discovery]
+  );
 
   const checkExistingTokens = useCallback(async () => {
     try {
@@ -202,7 +205,7 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children, config }) => {
         );
 
         if (new TokenResponse(tokenConfig).shouldRefresh()) {
-          await handleRefresh();
+          await handleRefresh(true);
         } else {
           await storeTokensAndSetUser(new TokenResponse(tokenConfig));
         }
