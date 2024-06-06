@@ -1,42 +1,25 @@
+import { Stream, Streamer, User } from '@api/responses';
 import StreamCard from '@components/stream/StreamCard';
 import StreamPreviewCard from '@components/stream/StreamPreviewCard';
 import StreamPreviewCardPlaceholder from '@components/stream/StreamPreviewCardPlaceholder';
-import React from 'react';
+import React, { useState } from 'react';
 import { ScrollView } from 'react-native';
 import { YStack, XStack, Avatar, H1 } from 'tamagui';
 
 const HomePage = () => {
-  const fakeFollowingStreamData: {
-    viewerCount: number;
-    streamerName: string;
-    previewImg: string;
-  }[] = [
-    {
-      viewerCount: 1200000,
-      streamerName: 'Nic',
-      previewImg: 'https://random.imagecdn.app/181/310',
-    },
-    {
-      viewerCount: 10000,
-      streamerName: 'Tom',
-      previewImg: 'https://random.imagecdn.app/181/310',
-    },
-    {
-      viewerCount: 100000,
-      streamerName: 'Tom',
-      previewImg: 'https://random.imagecdn.app/181/310',
-    },
-    {
-      viewerCount: 1200,
-      streamerName: 'Julia',
-      previewImg: 'https://random.imagecdn.app/181/310',
-    },
-    {
-      viewerCount: 80,
-      streamerName: 'Kevin',
-      previewImg: 'https://random.imagecdn.app/181/310',
-    },
-  ];
+  const [myStreamsFeed, setMyStreamsFeed] = useState<
+    (Stream & {
+      streamer: Pick<
+        User,
+        'id' | 'username' | 'dispname' | 'avatar_url' | 'promotionPoints' | 'level'
+      >;
+    })[]
+  >([]);
+  const [recommendedStreamsFeed, setRecommendedStreamsFeed] = useState<
+    (Stream & {
+      streamer: Streamer;
+    })[]
+  >([]);
   return (
     <YStack height="100%" backgroundColor="$color.background" padding="$4">
       <XStack>
@@ -54,11 +37,19 @@ const HomePage = () => {
         </H1>
         <ScrollView horizontal>
           <XStack gap="$2.5">
-            {fakeFollowingStreamData.length === 0 ? (
+            {myStreamsFeed.length === 0 ? (
               <StreamPreviewCardPlaceholder />
             ) : (
-              fakeFollowingStreamData.map((d, idx) => {
-                return <StreamPreviewCard key={idx} {...d} streamId={idx.toString()} />;
+              myStreamsFeed.map((d) => {
+                return (
+                  <StreamPreviewCard
+                    previewImg={d.previewImgUrl}
+                    streamerName={d.streamer.dispname}
+                    key={d.id}
+                    streamId={d.id}
+                    viewerCount={d.viewerCount}
+                  />
+                );
               })
             )}
           </XStack>
@@ -69,39 +60,7 @@ const HomePage = () => {
           Recommended
         </H1>
         <ScrollView>
-          <YStack gap="$2.5">
-            <StreamCard
-              streamId="1"
-              name="Anna"
-              viewerCount={1200000}
-              avatar_url="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTSOLGUixXG8-JSCNGgzrdg0tIqAFL9VfHbJBYylyOtU28twsRS"
-            />
-
-            <StreamCard
-              streamId="1"
-              name="Anna"
-              viewerCount={1200000}
-              avatar_url="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTSOLGUixXG8-JSCNGgzrdg0tIqAFL9VfHbJBYylyOtU28twsRS"
-            />
-            <StreamCard
-              streamId="1"
-              name="Anna"
-              viewerCount={1200000}
-              avatar_url="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTSOLGUixXG8-JSCNGgzrdg0tIqAFL9VfHbJBYylyOtU28twsRS"
-            />
-            <StreamCard
-              streamId="1"
-              name="Anna"
-              viewerCount={1200000}
-              avatar_url="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTSOLGUixXG8-JSCNGgzrdg0tIqAFL9VfHbJBYylyOtU28twsRS"
-            />
-            <StreamCard
-              streamId="1"
-              name="Anna"
-              viewerCount={1200000}
-              avatar_url="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTSOLGUixXG8-JSCNGgzrdg0tIqAFL9VfHbJBYylyOtU28twsRS"
-            />
-          </YStack>
+          <YStack gap="$2.5" />
         </ScrollView>
       </YStack>
     </YStack>
