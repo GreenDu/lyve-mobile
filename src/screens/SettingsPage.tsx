@@ -25,9 +25,9 @@ const SettingsPage: React.FC<{ userid: string }> = ({ userid }) => {
         </H2>
         <SettingStack>
           <SettingButton name="Account" onPress={() => console.log('setting')} />
-          <SettingButton name="Safety" onPress={() => console.log('another')} />
-          <SettingButton name="Share" onPress={() => console.log('more')} />
-          <SettingButton name="Permissions" onPress={() => console.log('last')} />
+          <SettingButton name="Safety" onPress={() => console.log('setting')} />
+          <SettingButton name="Share" onPress={() => console.log('setting')} />
+          <SettingButton name="Permissions" onPress={() => console.log('setting')} />
         </SettingStack>
 
         <H2 mt="$5" fontSize={24} mb="$3">
@@ -35,8 +35,8 @@ const SettingsPage: React.FC<{ userid: string }> = ({ userid }) => {
         </H2>
         <SettingStack>
           <SettingButton name="Ads" onPress={() => console.log('setting')} />
-          <SettingButton name="Language" onPress={() => console.log('another')} />
-          <SettingButton name="Notifications" onPress={() => console.log('more')} />
+          <SettingButton name="Language" onPress={() => console.log('setting')} />
+          <SettingButton name="Notifications" onPress={() => console.log('setting')} />
         </SettingStack>
 
         <H2 mt="$5" fontSize={24} mb="$3">
