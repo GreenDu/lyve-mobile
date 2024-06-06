@@ -1,9 +1,13 @@
 import FloatingButton from '@components/FloatingButton';
 import { Feather } from '@expo/vector-icons';
+import useAuth from '@modules/auth/useAuth';
 import { Tabs } from 'expo-router';
 import React from 'react';
 
 export default function TabLayout() {
+
+  const { user } = useAuth();
+
   return (
     <Tabs
       screenOptions={{
@@ -63,6 +67,12 @@ export default function TabLayout() {
         name="profile"
         options={{
           title: 'Profile',
+          href: {
+            pathname: '/profile/[userid]',
+            params: {
+              userid: user.id,
+            },
+          },
           tabBarIcon: ({ color, size }) => <Feather size={size} name="user" color={color} />,
         }}
       />
