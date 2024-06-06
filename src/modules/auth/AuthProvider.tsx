@@ -169,7 +169,7 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children, config }) => {
   }, [discovery, redirectUri, request, result, config.clientId]);
 
   const handleRefresh = useCallback(
-    async (initialLogin=falseinitialLogin = false) => {
+    async (initialLogin = false) => {
       try {
         const tokenConfigString = await AsyncStorage.getItem('tokenConfig');
         if (tokenConfigString) {
@@ -182,7 +182,7 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children, config }) => {
                 discovery
               );
 
-              await storeTokensAndSetUser(tokenResponse, initialLogin, initialLogin);
+              await storeTokensAndSetUser(tokenResponse, initialLogin);
             }
           }
         }
@@ -210,7 +210,7 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children, config }) => {
         );
 
         if (new TokenResponse(tokenConfig).shouldRefresh()) {
-          await handleRefresh(truetrue);
+          await handleRefresh(true);
         } else {
           await storeTokensAndSetUser(new TokenResponse(tokenConfig));
         }
