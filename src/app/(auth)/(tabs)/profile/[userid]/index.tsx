@@ -6,7 +6,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 
 const Index = () => {
 
-    const { userid } = useLocalSearchParams();
+  const { userid } = useLocalSearchParams();
 
   return (
     <SafeAreaView>
