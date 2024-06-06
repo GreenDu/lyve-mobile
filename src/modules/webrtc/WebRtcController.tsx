@@ -42,6 +42,7 @@ const WebRtcController = () => {
   useEffect(() => {
     if (socket) {
       socket.on('you-left-stream', () => {
+        console.log('you-left-stream event recv');
         closeConnections(useCurrentStreamInfoStore.getState().id);
         reset();
         close();
@@ -80,13 +81,13 @@ const WebRtcController = () => {
           console.error('Error sending media ', err);
         }
 
-        try {
-          await createTransport(socket, 'recv', data.recvTransportOptions);
-        } catch (err) {
-          console.log('error creating recv transport | ', err);
-          return;
-        }
-        receiveStream(socket);
+        // try {
+        //   await createTransport(socket, 'recv', data.recvTransportOptions);
+        // } catch (err) {
+        //   console.log('error creating recv transport | ', err);
+        //   return;
+        // }
+        // receiveStream(socket);
       });
 
       socket.on('you-joined-as-viewer', async (data) => {
