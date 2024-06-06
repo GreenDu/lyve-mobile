@@ -11,6 +11,7 @@ export const useGetUser = createQuery<
     user: {
       id: string;
       username: string;
+      dispname: string;
       avatar_url: string | null;
       bio: string;
       followerCount: number;
