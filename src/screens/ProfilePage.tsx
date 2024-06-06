@@ -1,7 +1,7 @@
 import { View, Text } from 'react-native';
 import React from 'react';
 import { useGetUser } from '@api/user/useGetUser';
-import { H1, H2, SizableText, XStack, YStack } from 'tamagui';
+import { Button, H1, H2, SizableText, XStack, YStack } from 'tamagui';
 import UserStats from '@components/profile/ProfileHeader';
 
 const ProfilePage: React.FC<{ userid: string }> = ({ userid }) => {
@@ -21,6 +21,17 @@ const ProfilePage: React.FC<{ userid: string }> = ({ userid }) => {
               <SizableText>@{data?.data.user.username}</SizableText>
               <SizableText>{data?.data.user.bio}This is a user bio</SizableText>
             </YStack>
+
+            <Button
+              onPress={() => console.log('Edit Profile View')}
+              backgroundColor="$primaryLight"
+              maxWidth="40%"
+              borderRadius="$10"
+              height="$5"
+              mt="$5"
+              fontSize={20}>
+              Edit Profile
+            </Button>
           </YStack>
         </YStack>
       </YStack>
