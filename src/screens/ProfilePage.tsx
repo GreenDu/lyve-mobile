@@ -1,9 +1,12 @@
 import { View } from 'react-native';
 import React from 'react';
 import { useGetUser } from '@api/user/useGetUser';
-import { Button, H2, H3, SizableText, XStack, YStack } from 'tamagui';
+import { Button, H3, SizableText, XStack, YStack } from 'tamagui';
 import UserStats from '@components/profile/ProfileHeader';
 import { Feather } from '@expo/vector-icons';
+
+
+
 
 const ProfilePage: React.FC<{ userid: string }> = ({ userid }) => {
   const { data } = useGetUser({ variables: { id: userid } });
