@@ -146,3 +146,9 @@ export type DeleteStreamResponse = TypedResponse<{
     streamer: Streamer;
   };
 }>;
+
+export type StartStreamResponse = TypedResponse<{
+  stream: Stream & {
+    streamer: Streamer;
+  };
+}>;
