@@ -65,6 +65,7 @@ const StreamPage: React.FC<{ id: string }> = ({ id }) => {
       socket.on('viewer_count', (data) => {
         setViewerCount(data.viewerCount);
       });
+
       socket.on('stream_ended', ({ ended_at, duration }) => {
         console.log(`Stream ended at: ${ended_at}, duration: ${duration / 60}`);
         setEnded(true);
