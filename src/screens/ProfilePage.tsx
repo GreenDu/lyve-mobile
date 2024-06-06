@@ -1,7 +1,7 @@
 import { View } from 'react-native';
 import React from 'react';
 import { useGetUser } from '@api/user/useGetUser';
-import { Button, H2, SizableText, XStack, YStack } from 'tamagui';
+import { Button, H2, H3, SizableText, XStack, YStack } from 'tamagui';
 import UserStats from '@components/profile/ProfileHeader';
 import { Feather } from '@expo/vector-icons';
 
@@ -9,7 +9,10 @@ const ProfilePage: React.FC<{ userid: string }> = ({ userid }) => {
   const { data } = useGetUser({ variables: { id: userid } });
 
   if (data) {
-    data.data.user.bio = "fjbgjkrkgjkgrfbrhjgbdrgfbjlbgfjlbgjrbjgerjgberjgbrjgbjrbgjlrgtrgjntrgjntrgbjrtbgjrbjhrgtfbrhbgrbgjerfnejtngejbgjerbgjebjfnke";
+    data.data.user.dispname = "streamer_testname";
+    data.data.user.followerCount = 743928;
+    data.data.user.followingCount = 1344;
+    data.data.user.bio = "Das ist eine Testbeschreibung für einen Testuser";
   }
 
   return (
@@ -22,7 +25,7 @@ const ProfilePage: React.FC<{ userid: string }> = ({ userid }) => {
               followingCount={data?.data.user.followingCount}></UserStats>
 
             <YStack justifyContent="flex-start" gap="$2" maxWidth="90%">
-              <H2 fontWeight="800">{data?.data.user.username}</H2>
+              <H3 fontWeight="700" mt="$3">{data?.data.user.dispname}</H3>
               <SizableText opacity={0.8}>@{data?.data.user.username}</SizableText>
               <SizableText >{data?.data.user.bio.substring(0,100)}</SizableText>
             </YStack>

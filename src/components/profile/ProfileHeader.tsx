@@ -18,19 +18,19 @@ const UserStats: React.FC<Props> = ({ followerCount = 0, followingCount = 0 }) =
         <Avatar.Fallback delayMs={600} backgroundColor="$blue10" />
       </Avatar>
       <YStack>
-        <H2 fontSize={16} fontWeight="300">
+        <H2 fontSize={16} fontWeight="500">
           {formatNumber(followerCount)}
         </H2>
-        <H2 fontSize={16} fontWeight="400" mt="$-3">
+        <H2 fontSize={16} fontWeight="400" mt="$-3" opacity={0.5}>
           Followers
         </H2>
       </YStack>
       <Separator alignSelf="stretch" vertical borderWidth="$0.25" borderColor="white" />
       <YStack>
-        <H2 fontSize={16} fontWeight="300">
+        <H2 fontSize={16} fontWeight="500">
         {formatNumber(followingCount)}
         </H2>
-        <H2 fontSize={16} fontWeight="400" mt="$-3">
+        <H2 fontSize={16} fontWeight="400" mt="$-3" opacity={0.5}>
           Following
         </H2>
       </YStack>
