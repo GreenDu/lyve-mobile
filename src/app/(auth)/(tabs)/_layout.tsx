@@ -22,7 +22,7 @@ export default function TabLayout() {
           right: 0,
           left: 0,
           elevation: 0,
-          height: 110,
+          height: 80,
           borderWidth: 0,
           borderColor: '#151718',
           borderTopColor: '#151718',
@@ -33,7 +33,7 @@ export default function TabLayout() {
         tabBarLabelStyle: {
           fontSize: 12,
           fontWeight: '300',
-          marginBottom: 20,
+          marginBottom: 10,
         },
       }}>
       <Tabs.Screen
