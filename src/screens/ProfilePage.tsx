@@ -16,7 +16,7 @@ const ProfilePage: React.FC<{ userid: string }> = ({ userid }) => {
               followerCount={data?.data.user.followerCount}
               followingCount={data?.data.user.followingCount}></UserStats>
 
-            <YStack justifyContent="flex-start">
+            <YStack justifyContent="flex-start" gap="$3">
               <H2>{data?.data.user.username}</H2>
               <SizableText>@{data?.data.user.username}</SizableText>
               <SizableText>{data?.data.user.bio}This is a user bio</SizableText>
