@@ -1,4 +1,4 @@
-import { useGetStream } from '@api/stream/useGetStream';
+import { useGetStream } from '@api/stream/query/useGetStream';
 import useCurrentStreamInfo from '@modules/stream/hooks/useCurrentStreamInfo';
 import { useCurrentStreamInfoStore } from '@modules/stream/stores/useCurrentStreamInfoStore';
 import WebRtcController from '@modules/webrtc/WebRtcController';
