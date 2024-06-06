@@ -21,7 +21,7 @@ const UserStats: React.FC<Props> = ({ followerCount = 0, followingCount = 0 }) =
         <H2 fontSize={16} fontWeight="300">
           {formatNumber(followerCount)}
         </H2>
-        <H2 fontSize={16} fontWeight="400">
+        <H2 fontSize={16} fontWeight="400" mt="$-3">
           Followers
         </H2>
       </YStack>
@@ -30,7 +30,7 @@ const UserStats: React.FC<Props> = ({ followerCount = 0, followingCount = 0 }) =
         <H2 fontSize={16} fontWeight="300">
         {formatNumber(followingCount)}
         </H2>
-        <H2 fontSize={16} fontWeight="400">
+        <H2 fontSize={16} fontWeight="400" mt="$-3">
           Following
         </H2>
       </YStack>
