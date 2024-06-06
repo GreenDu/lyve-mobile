@@ -21,17 +21,29 @@ const ProfilePage: React.FC<{ userid: string }> = ({ userid }) => {
               <SizableText>@{data?.data.user.username}</SizableText>
               <SizableText>{data?.data.user.bio}This is a user bio</SizableText>
             </YStack>
+            <XStack gap="$15">
+              <Button
+                onPress={() => console.log('Edit Profile View')}
+                backgroundColor="$primaryLight"
+                maxWidth="40%"
+                borderRadius="$10"
+                height="$5"
+                mt="$5"
+                fontSize={20}>
+                Edit Profile
+              </Button>
 
-            <Button
-              onPress={() => console.log('Edit Profile View')}
-              backgroundColor="$primaryLight"
-              maxWidth="40%"
-              borderRadius="$10"
-              height="$5"
-              mt="$5"
-              fontSize={20}>
-              Edit Profile
-            </Button>
+              <Button
+                onPress={() => console.log('Settings View')}
+                backgroundColor="$primaryLight"
+                maxWidth="40%"
+                borderRadius="$10"
+                height="$5"
+                mt="$5"
+                fontSize={20}>
+                Settings
+              </Button>
+            </XStack>
           </YStack>
         </YStack>
       </YStack>
