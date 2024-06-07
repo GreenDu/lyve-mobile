@@ -11,8 +11,13 @@ import { YStack } from 'tamagui';
 const HomePage = () => {
   const { user } = useAuth();
 
-  const { data: feedData } = useGetFeed({ variables: { id: user.id }, refetchInterval: 30 * 1000 });
-  const { data: rsData } = useGetRecommendedStreams({ refetchInterval: 30 * 1000 });
+  const { data: feedData, isSuccess: isFeedSuccess } = useGetFeed({
+    variables: { id: user.id },
+    refetchInterval: 30 * 1000,
+  });
+  const { data: rsData, isSuccess: isRsSuccess } = useGetRecommendedStreams({
+    refetchInterval: 30 * 1000,
+  });
 
   const [myStreamsFeed, setMyStreamsFeed] = useState<
     (Stream & {
@@ -29,14 +34,14 @@ const HomePage = () => {
   >([]);
 
   useEffect(() => {
-    if (feedData && feedData.data) {
+    if (isFeedSuccess && feedData && feedData.data) {
       setMyStreamsFeed(feedData.data.feed);
     }
 
-    if (rsData && rsData.data) {
+    if (isRsSuccess && rsData && rsData.data) {
       setRecommendedStreamsFeed(rsData.data.streams);
     }
-  }, [feedData, rsData]);
+  }, [feedData, rsData, isFeedSuccess, isRsSuccess]);
   return (
     <YStack height="100%" backgroundColor="$color.background" padding="$4">
       <HomeHeader />
