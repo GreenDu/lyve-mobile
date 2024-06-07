@@ -5,6 +5,8 @@ import { Feather } from '@expo/vector-icons';
 import SettingButton from '@components/settings/SettingButton';
 import SettingStack from '@components/settings/SettingStack';
 import useAuth from '@modules/auth/useAuth';
+import { router } from 'expo-router';
+
 
 const SettingsPage: React.FC<{ userid: string }> = ({ userid }) => {
 
@@ -16,7 +18,8 @@ const SettingsPage: React.FC<{ userid: string }> = ({ userid }) => {
         <XStack alignItems="center">
           <Button
             icon={<Feather name="chevron-left" size={24} color="white" />}
-            backgroundColor="black"></Button>
+            backgroundColor="black"
+            onPress={() => router.push(`profile/${userid}`)}></Button>
           <H1 fontSize={32}>Settings</H1>
         </XStack>
 
