@@ -20,6 +20,7 @@ import { RTCView, MediaStream } from 'react-native-webrtc';
 import StreamEnded from './StreamEnded';
 import StreamerView from './StreamerView';
 import ViewerView from './ViewerView';
+import { useIncomingRewardStore } from '@modules/reward/stores/useIncomingRewardStore';
 
 const StreamPage: React.FC<{ id: string }> = ({ id }) => {
   const { stream } = useStreamStore((state) => ({
@@ -37,6 +38,8 @@ const StreamPage: React.FC<{ id: string }> = ({ id }) => {
   const { ended } = useCurrentStreamInfoStore((state) => ({ ended: state.ended }));
 
   const { data, isSuccess } = useGetStream({ variables: { id }, refetchInterval: 30 * 1000 }); // refetch every 30 seconds
+
+  const { add: addReward } = useIncomingRewardStore.getState();
 
   const { socket } = useSocket();
 
@@ -60,7 +63,6 @@ const StreamPage: React.FC<{ id: string }> = ({ id }) => {
   }, [data]);
 
   useEffect(() => {
-    console.log('socket', socket);
     if (socket) {
       socket.on('viewer_count', (data) => {
         setViewerCount(data.viewerCount);
@@ -74,18 +76,23 @@ const StreamPage: React.FC<{ id: string }> = ({ id }) => {
       socket.on('new_msg', (data) => {
         addMessage(data);
       });
+      socket.on('resv_reward', (data) => {
+        addReward(data);
+      });
     }
   }, [socket]);
 
   useEffect(() => {
-    const consumer = consumers.find((c) => c.kind === 'video');
+    if (isViewer) {
+      const consumer = consumers.find((c) => c.kind === 'video');
 
-    if (consumer) {
-      // Create a MediaStream from the consumer's track
-      const stream = new MediaStream([consumer.track as any]);
+      if (consumer) {
+        // Create a MediaStream from the consumer's track
+        const stream = new MediaStream([consumer.track as any]);
 
-      // Set the stream URL for the RTCView
-      setStreamUrl(stream.toURL());
+        // Set the stream URL for the RTCView
+        setStreamUrl(stream.toURL());
+      }
     }
   }, [consumers]);
 

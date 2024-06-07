@@ -1,5 +1,5 @@
 import ChatInput from '@components/chat/ChatInput';
-import RewardModal from '@components/reward/RewardModal';
+import RewardModal from '@modules/reward/RewardModal';
 import { Feather } from '@expo/vector-icons';
 import { useMessageStore } from '@modules/chat/stores/useMessageStore';
 import { useRewardModalStore } from '@modules/reward/stores/useRewardModalStore';

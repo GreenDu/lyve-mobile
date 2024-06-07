@@ -22,7 +22,7 @@ const RecommendedFeed: React.FC<{
                 key={d.id}
                 streamId={d.id}
                 viewerCount={d.viewerCount}
-                avatar_url={d.streamer.avatar_url ?? ''}
+                avatar_url={d.streamer.avatar_url ?? 'https://random.imagecdn.app/100/100'}
                 name={d.streamer.dispname}
               />
             );

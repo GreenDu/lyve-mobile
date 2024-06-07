@@ -78,8 +78,7 @@ export interface ServerToClientEvents {
     msg: string;
     reward: {
       id: string;
-      type: string;
-      image: string;
+      type: RewardType;
       points: number; // the promotion points one receives for receiving the reward
     };
     sender: SocketUser;
