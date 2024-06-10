@@ -6,6 +6,7 @@ import useSocket from '@modules/ws/useSocket';
 import React from 'react';
 import { ScrollView } from 'react-native';
 import Modal from 'react-native-modal';
+import Toast from 'react-native-toast-message';
 import { XStack, YStack } from 'tamagui';
 
 const RewardModal: React.FC = () => {
@@ -22,8 +23,11 @@ const RewardModal: React.FC = () => {
       console.log(type);
       socket.emit('send_reward', { msg: '', reward: { type } }, (ack) => {
         if (ack) {
-          // add success toast
-          console.log(ack.success);
+          Toast.show({
+            type: 'success',
+            text1: 'Successfully sended Reward',
+            text2: '',
+          });
         }
       });
     }

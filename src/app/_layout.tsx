@@ -11,6 +11,7 @@ import * as WebBrowser from 'expo-web-browser';
 import React, { useCallback } from 'react';
 import { Platform, useColorScheme } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
+import Toast from 'react-native-toast-message';
 import { registerGlobals } from 'react-native-webrtc';
 import { TamaguiProvider } from 'tamagui';
 
@@ -65,6 +66,7 @@ export default function RootLayout() {
             }}>
             <SafeAreaProvider onLayout={onLayoutRootView}>
               <Slot />
+              <Toast />
             </SafeAreaProvider>
           </AuthProvider>
         </APIProvider>
