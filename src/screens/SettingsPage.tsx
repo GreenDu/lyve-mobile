@@ -13,7 +13,7 @@ const SettingsPage: React.FC<{ userid: string }> = ({ userid }) => {
   const { signOut } = useAuth();
 
   return (
-    <View>
+    <View style={{ backgroundColor: '#151718' }}>
       <YStack height="100%" padding="$4">
         <XStack alignItems="center">
           <Button
