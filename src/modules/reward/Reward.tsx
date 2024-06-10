@@ -2,7 +2,7 @@ import React from 'react';
 import { Image } from 'react-native';
 import { H3, SizableText, YStack } from 'tamagui';
 
-import { rewards } from './rewards';
+import { rewardMap } from './rewardMap';
 import { IncomingReward } from './types';
 
 const Reward: React.FC<{ data: IncomingReward; color: string }> = ({ data, color }) => {
@@ -15,7 +15,7 @@ const Reward: React.FC<{ data: IncomingReward; color: string }> = ({ data, color
       alignItems="center"
       justifyContent="flex-end">
       <Image
-        source={rewards[data.reward.type].asset}
+        source={rewardMap[data.reward.type].asset}
         style={{ position: 'absolute', top: '-90%', width: 200, height: 200 }}
       />
       <YStack alignItems="center" space="$4" paddingVertical="$4">

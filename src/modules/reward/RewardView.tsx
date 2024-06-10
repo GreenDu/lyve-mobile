@@ -1,8 +1,9 @@
+import { getRandomLightHexColor } from '@utils/getRandomLightHexColor';
 import React, { useEffect, useState } from 'react';
 import { YStack } from 'tamagui';
-import { useIncomingRewardStore } from './stores/useIncomingRewardStore';
+
 import Reward from './Reward';
-import { getRandomLightHexColor } from '@utils/getRandomLightHexColor';
+import { useIncomingRewardStore } from './stores/useIncomingRewardStore';
 import { IncomingReward } from './types';
 
 const RewardView = () => {
@@ -13,23 +14,22 @@ const RewardView = () => {
   const [visible, setVisible] = useState<boolean>(false);
 
   const [color, setColor] = useState<string>('#000');
-  const [currentDisplayedReward, setcurrentDisplayedReward] = useState<IncomingReward>();
+  const [currentDisplayedReward, setCurrentDisplayedReward] = useState<IncomingReward>();
 
-  const handleIncominReward = () => {
+  const handleIncomingReward = () => {
     // run only if no other reward is displayed at the moment
     if (!visible) {
       // check if defined
       const d = rewardQueue.at(0);
       if (d) {
-        console.log(d);
-        setcurrentDisplayedReward(d);
+        setCurrentDisplayedReward(d);
         setColor(getRandomLightHexColor());
 
         setVisible(true);
 
         const t = setTimeout(() => {
           setVisible(false);
-          setcurrentDisplayedReward(undefined);
+          setCurrentDisplayedReward(undefined);
           clearTimeout(t);
         }, 3000);
 
@@ -40,9 +40,9 @@ const RewardView = () => {
 
   useEffect(() => {
     if (rewardQueue.length) {
-      handleIncominReward();
+      handleIncomingReward();
     }
-  }, [rewardQueue, handleIncominReward]);
+  }, [rewardQueue, handleIncomingReward]);
 
   return (
     <YStack flex={1} alignItems="center" justifyContent="flex-end" padding="$4">

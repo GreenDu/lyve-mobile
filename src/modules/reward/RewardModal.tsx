@@ -1,6 +1,5 @@
 import RewardItem from '@components/reward/RewardItem';
-import { rewards } from '@modules/reward/rewards';
-import { useIncomingRewardStore } from '@modules/reward/stores/useIncomingRewardStore';
+import { rewardMap } from '@modules/reward/rewardMap';
 import { useRewardModalStore } from '@modules/reward/stores/useRewardModalStore';
 import { RewardType } from '@modules/reward/types';
 import useSocket from '@modules/ws/useSocket';
@@ -62,7 +61,7 @@ const RewardModal: React.FC = () => {
             paddingTop="$4"
             rowGap="$4"
             columnGap="$0.25">
-            {Object.entries(rewards).map(([key, value]) => {
+            {Object.entries(rewardMap).map(([key, value]) => {
               return (
                 <RewardItem
                   onPress={() => {
