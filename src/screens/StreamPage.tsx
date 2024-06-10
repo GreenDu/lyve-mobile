@@ -121,15 +121,6 @@ const StreamPage: React.FC<{ id: string }> = ({ id }) => {
 
   return (
     <>
-      {/* {streamUrl && (
-        <RTCView
-          streamURL={streamUrl}
-          zOrder={0}
-          objectFit="cover"
-          mirror
-          style={{ position: 'absolute', top: 0, bottom: 0, left: 0, right: 0 }}
-        />
-      )} */}
       {isStreamer && stream ? (
         <RTCView
           streamURL={stream.id}
@@ -163,7 +154,7 @@ const StreamPage: React.FC<{ id: string }> = ({ id }) => {
         </KeyboardAvoidingView>
       ) : (
         <SafeAreaView style={{ backgroundColor: 'transparent', height: '100%' }}>
-          <StreamEnded onLeave={leaveStream} />
+          {isViewer && <StreamEnded onLeave={leaveStream} />}
         </SafeAreaView>
       )}
       <WebRtcController />
