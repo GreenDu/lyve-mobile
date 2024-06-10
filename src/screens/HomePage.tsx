@@ -10,6 +10,7 @@ import { YStack } from 'tamagui';
 
 const HomePage = () => {
 
+
   const { user } = useAuth();
 
   const { data: feedData, isSuccess: isFeedSuccess } = useGetFeed({
