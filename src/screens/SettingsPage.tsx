@@ -1,4 +1,4 @@
-import { View, Text } from 'react-native';
+import { View } from 'react-native';
 import React from 'react';
 import { YStack, XStack, H1, Button, H2 } from 'tamagui';
 import { Feather } from '@expo/vector-icons';
