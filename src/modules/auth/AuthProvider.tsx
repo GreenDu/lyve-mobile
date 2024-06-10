@@ -211,6 +211,7 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children, config }) => {
 
         if (new TokenResponse(tokenConfig).shouldRefresh()) {
           await handleRefresh(true);
+          await handleRefresh(true);
         } else {
           await storeTokensAndSetUser(new TokenResponse(tokenConfig));
         }
