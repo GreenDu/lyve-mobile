@@ -1,3 +1,4 @@
+import { ChatMessage, GIF } from '@modules/chat/types';
 import { RewardType } from '@modules/reward/types';
 import {
   DtlsParameters,
@@ -9,6 +10,8 @@ import {
   AppData,
 } from 'mediasoup-client/lib/types';
 import { Socket } from 'socket.io-client';
+
+import { RequireOnlyOne } from '../../types/types';
 
 export interface Consumer {
   peerId: string;
@@ -73,13 +76,12 @@ export interface ServerToClientEvents {
   user_leaved: (data: { user: SocketUser }) => void;
   viewer_count: (data: { viewerCount: number }) => void;
   stream_ended: (data: { ended_at: string; duration: number }) => void;
-  new_msg: (data: { id: string; msg: string; sender: SocketUser; created_at: string }) => void;
+  new_msg: (data: ChatMessage) => void;
   resv_reward: (data: {
     msg: string;
     reward: {
       id: string;
-      type: string;
-      image: string;
+      type: RewardType;
       points: number; // the promotion points one receives for receiving the reward
     };
     sender: SocketUser;
@@ -106,7 +108,7 @@ export interface ClientToServerEvents {
   'resume-consumers': () => void;
   join_stream: (data: { streamId: string }, callback: SocketCallback<null>) => void;
   leave_stream: () => void;
-  send_msg: (data: { msg: string }) => void;
+  send_msg: (data: RequireOnlyOne<{ msg?: string; gif?: GIF }, 'gif' | 'msg'>) => void;
   send_reward: (
     data: {
       msg: string;

@@ -1,4 +1,5 @@
 import { MySocket, StreamSendDirection, TransportOptions } from '@modules/ws/types';
+import Toast from 'react-native-toast-message';
 
 import { useStreamStore } from '../stores/useStreamStore';
 
@@ -71,9 +72,19 @@ const createTransport = async (
   transport.on('connectionstatechange', (state) => {
     console.log(`${direction} transport ${transport.id} connectionstatechange ${state}`);
 
-    if (state === 'closed' || state === 'failed' || state === 'disconnected') {
-      // Todo leave stream;
-      console.log(`connectionstatechange state ${state}`);
+    if (state === 'failed') {
+      Toast.show({
+        type: 'error',
+        text1: 'Connection Problem',
+        text2: 'Unable to connect to the stream. Please try again later.',
+      });
+    } else if (state === 'disconnected') {
+      Toast.show({
+        type: 'error',
+        text1: 'Connection Failed',
+        text2: 'Oops! Your connection has been lost. Please check your internet connection.',
+      });
+    } else if (state === 'closed') {
     }
   });
 
