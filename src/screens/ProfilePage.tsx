@@ -67,13 +67,16 @@ const ProfilePage: React.FC<{ userid: string }> = ({ userid }) => {
           </YStack>
         </YStack>
 
-
         <YStack height="65%">
-
           {/* Button component for statistics and achievements*/}
 
-          <XStack justifyContent='center' mt="$5" maxHeight="10%">
-            <Button flex={1} minHeight="30%" maxWidth="30%" borderRadius={20} backgroundColor="#A372F9">
+          <XStack justifyContent="center" mt="$5" maxHeight="10%">
+            <Button
+              flex={1}
+              minHeight="30%"
+              maxWidth="30%"
+              borderRadius={20}
+              backgroundColor="#A372F9">
               Statistics
             </Button>
             <Button flex={1} minHeight="30%" maxWidth="30%" borderRadius={20}>
@@ -81,16 +84,16 @@ const ProfilePage: React.FC<{ userid: string }> = ({ userid }) => {
             </Button>
           </XStack>
 
-          <XStack height="30%" justifyContent='center' gap="$6" mt="$8">
-          <GenreBadge />
-          <GenreBadge />
-          <GenreBadge />
+          <XStack height="30%" justifyContent="center" gap="$6" mt="$8">
+            <GenreBadge />
+            <GenreBadge />
+            <GenreBadge />
           </XStack>
 
-          <XStack height="30%" justifyContent='center' gap="$6">
-          <GenreBadge />
-          <GenreBadge />
-          <GenreBadge />
+          <XStack height="30%" justifyContent="center" gap="$6">
+            <GenreBadge />
+            <GenreBadge />
+            <GenreBadge />
           </XStack>
         </YStack>
       </YStack>
