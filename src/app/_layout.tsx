@@ -16,6 +16,7 @@ import { registerGlobals } from 'react-native-webrtc';
 import { TamaguiProvider } from 'tamagui';
 
 import config from '../../tamagui.config';
+import { toastConfig } from '@modules/toast/config';
 
 export const unstable_settings = {
   // Ensure that reloading on `/modal` keeps a back button present.
@@ -66,7 +67,7 @@ export default function RootLayout() {
             }}>
             <SafeAreaProvider onLayout={onLayoutRootView}>
               <Slot />
-              <Toast />
+              <Toast config={toastConfig} />
             </SafeAreaProvider>
           </AuthProvider>
         </APIProvider>

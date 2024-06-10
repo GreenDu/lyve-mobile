@@ -23,11 +23,20 @@ const RewardModal: React.FC = () => {
       console.log(type);
       socket.emit('send_reward', { msg: '', reward: { type } }, (ack) => {
         if (ack) {
-          Toast.show({
-            type: 'success',
-            text1: 'Successfully sended Reward',
-            text2: '',
-          });
+          if (ack.success) {
+            Toast.show({
+              type: 'success',
+              text1: 'Your reward was sent successfully!',
+              text2: 'Want to send another?',
+            });
+          } else {
+            if (ack.error[0])
+              Toast.show({
+                type: 'error',
+                text1: ack.error[0].name,
+                text2: ack.error[0].msg,
+              });
+          }
         }
       });
     }
