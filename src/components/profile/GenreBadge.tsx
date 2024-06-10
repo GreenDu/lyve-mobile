@@ -8,7 +8,7 @@ interface Props {
 
 const ProfileHeader: React.FC<Props> = ({ genre = "NaN", percent = 0 }) => {
   return (
-    <YStack backgroundColor="red"  height="$12" width="$10" borderRadius={30}></YStack>
+    <YStack backgroundColor="$primaryLight"  height="$12" width="$10" borderRadius={30}></YStack>
   );
 };
 
