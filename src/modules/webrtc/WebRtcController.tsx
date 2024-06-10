@@ -2,6 +2,7 @@ import { useCurrentStreamInfoStore } from '@modules/stream/stores/useCurrentStre
 import useSocket from '@modules/ws/useSocket';
 import { router } from 'expo-router';
 import React, { useEffect } from 'react';
+import InCallManager from 'react-native-incall-manager';
 
 import { useConsumerStore } from './stores/useConsumerStore';
 import { useProducerStore } from './stores/useProducerStore';
@@ -10,6 +11,7 @@ import createTransport from './utils/createTransport';
 import loadDevice from './utils/loadDevice';
 import receiveStream from './utils/receiveStream';
 import sendMedia from './utils/sendMedia';
+import { useStreamChatStore } from '@modules/chat/stores/useStreamChatStore';
 
 function closeConnections(id: string | null) {
   const { streamId, streamVideoTracks, streamAudioTracks, nullify } = useStreamStore.getState();
@@ -23,13 +25,17 @@ function closeConnections(id: string | null) {
   }
 }
 
+const inCallManagerStart = () => {
+  InCallManager.start({ media: 'video' });
+};
+
 const WebRtcController = () => {
   const { socket } = useSocket();
 
   const { reset } = useCurrentStreamInfoStore.getState();
   const { close } = useProducerStore.getState();
   const { closeAll } = useConsumerStore.getState();
-  const { nullify } = useStreamStore.getState();
+  const { clearChat } = useStreamChatStore.getState();
 
   //   useEffect(() => {
   //     if (!initialLoad.current) {
@@ -44,11 +50,13 @@ const WebRtcController = () => {
       socket.on('you-left-stream', () => {
         console.log('you-left-stream event recv');
         closeConnections(useCurrentStreamInfoStore.getState().id);
-        reset();
-        close();
-        closeAll();
-        nullify();
-        router.navigate('/');
+        reset(); // reset stream info store
+        close(); // close producers
+        closeAll(); // close all consumers
+        clearChat();
+
+        router.replace('/(auth)/(tabs)/');
+        InCallManager.stop();
       });
       socket.on('you-joined-as-streamer', async (data) => {
         console.log('you-joined-as-streamer called');
@@ -88,6 +96,8 @@ const WebRtcController = () => {
         //   return;
         // }
         // receiveStream(socket);
+
+        inCallManagerStart();
       });
 
       socket.on('you-joined-as-viewer', async (data) => {
@@ -109,8 +119,9 @@ const WebRtcController = () => {
           return;
         }
 
-        await createTransport(socket, 'recv', data.recvTransportOptions);
         await receiveStream(socket);
+
+        inCallManagerStart();
       });
     }
 

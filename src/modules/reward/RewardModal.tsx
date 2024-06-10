@@ -1,12 +1,12 @@
 import RewardItem from '@components/reward/RewardItem';
-import { rewards } from '@modules/reward/rewards';
-import { useIncomingRewardStore } from '@modules/reward/stores/useIncomingRewardStore';
+import { rewardMap } from '@modules/reward/rewardMap';
 import { useRewardModalStore } from '@modules/reward/stores/useRewardModalStore';
 import { RewardType } from '@modules/reward/types';
 import useSocket from '@modules/ws/useSocket';
 import React from 'react';
 import { ScrollView } from 'react-native';
 import Modal from 'react-native-modal';
+import Toast from 'react-native-toast-message';
 import { XStack, YStack } from 'tamagui';
 
 const RewardModal: React.FC = () => {
@@ -23,8 +23,20 @@ const RewardModal: React.FC = () => {
       console.log(type);
       socket.emit('send_reward', { msg: '', reward: { type } }, (ack) => {
         if (ack) {
-          // add success toast
-          console.log(ack.success);
+          if (ack.success) {
+            Toast.show({
+              type: 'success',
+              text1: 'Your reward was sent successfully!',
+              text2: 'Want to send another?',
+            });
+          } else {
+            if (ack.error[0])
+              Toast.show({
+                type: 'error',
+                text1: ack.error[0].name,
+                text2: ack.error[0].msg,
+              });
+          }
         }
       });
     }
@@ -62,7 +74,7 @@ const RewardModal: React.FC = () => {
             paddingTop="$4"
             rowGap="$4"
             columnGap="$0.25">
-            {Object.entries(rewards).map(([key, value]) => {
+            {Object.entries(rewardMap).map(([key, value]) => {
               return (
                 <RewardItem
                   onPress={() => {

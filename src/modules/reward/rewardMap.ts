@@ -1,6 +1,6 @@
 import { RewardType } from './types';
 
-export const rewards: { [Key in RewardType]: { asset: any; cost: number } } = {
+export const rewardMap: { [Key in RewardType]: { asset: any; cost: number } } = {
   popsicle: { asset: require('../../../assets/rewards/popsicle.png'), cost: 1 },
   pizza: { asset: require('../../../assets/rewards/pizza.png'), cost: 4 },
   gift: { asset: require('../../../assets/rewards/gift.png'), cost: 10 },

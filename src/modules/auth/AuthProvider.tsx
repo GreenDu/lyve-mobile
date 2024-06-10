@@ -13,6 +13,7 @@ import {
 import { router } from 'expo-router';
 import { jwtDecode } from 'jwt-decode';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import Toast from 'react-native-toast-message';
 
 import { AuthContext } from './AuthContext';
 import { AuthContextData, KeycloakConfiguration } from '../../types/auth';
@@ -90,6 +91,14 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children, config }) => {
         const createUserResponse = await createUser(userData);
         if (createUserResponse && createUserResponse.success && createUserResponse.data) {
           return createUserResponse.data.user;
+        }
+
+        if (createUserResponse?.error[0]) {
+          Toast.show({
+            type: 'error',
+            text1: createUserResponse.error[0]?.name,
+            text2: createUserResponse.error[0]?.msg,
+          });
         }
         return null;
       }
@@ -246,6 +255,23 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children, config }) => {
   useEffect(() => {
     checkExistingTokens();
   }, [checkExistingTokens]);
+
+  useEffect(() => {
+    if (result?.type === 'error') {
+      if (result.error) {
+        Toast.show({
+          type: 'error',
+          text1: result.error.name,
+          text2: result.error.message,
+        });
+      }
+      Toast.show({
+        type: 'error',
+        text1: 'Authentication Error',
+        text2: 'An error occurred. Please try logging in again.',
+      });
+    }
+  }, [result]);
 
   const authContextValue = useMemo(
     () => ({

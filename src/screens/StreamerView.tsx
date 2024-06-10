@@ -35,7 +35,7 @@ const StreamerView: React.FC<{ onLeave: () => void }> = ({ onLeave }) => {
           Start Stream
         </Button>
       ) : (
-        <YStack backgroundColor="$colorTransparent" height="50%" space="$7">
+        <YStack backgroundColor="$colorTransparent" height="50%">
           <StreamChatList />
           <StreamFooter />
         </YStack>

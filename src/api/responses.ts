@@ -2,6 +2,11 @@ import { TypedResponse } from '../types/response';
 
 export type AchievementType = 'NTH_STREAM' | 'NTH_VIEWERS';
 
+export type NotificationType =
+  | 'STREAM_STARTED'
+  | 'REWARD_RECEIVED'
+  | 'ACHIEVEMENT_RECEIVED'
+  | 'NEW_FOLLOWER';
 export type User = {
   id: string;
   username: string;
@@ -54,6 +59,16 @@ export type Follows = {
   followedById: string;
   followingId: string;
   created_at: Date;
+};
+
+export type Notification = {
+  id: string;
+  type: NotificationType;
+  streamId: string | null;
+  userWhoFiredEvent: string | null;
+  recipientId: string;
+  created_at: Date;
+  updated_at: Date;
 };
 
 export type GetUserResponse = TypedResponse<{
@@ -113,6 +128,10 @@ export type GetMostStreamedGenresResponse = TypedResponse<{
       percent: number;
     }[];
   };
+}>;
+
+export type GetNotificationsResponse = TypedResponse<{
+  notifications: Notification[];
 }>;
 
 export type UpdateUserResponse = TypedResponse<{

@@ -1,5 +1,4 @@
 import { CreateStreamResponse } from '@api/responses';
-import GenreBadge from '@components/GenreBadge';
 import { Feather } from '@expo/vector-icons';
 import useAuth from '@modules/auth/useAuth';
 import GenrePicker from '@modules/stream/GenrePicker';
@@ -7,6 +6,7 @@ import { genres } from '@modules/stream/genres';
 import { router, Link } from 'expo-router';
 import React, { useState } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import Toast from 'react-native-toast-message';
 import { YStack, XStack, Button, H3 } from 'tamagui';
 
 const CreateStreamPage = () => {
@@ -50,8 +50,18 @@ const CreateStreamPage = () => {
       },
     }).then((res) => res.json() as Promise<CreateStreamResponse>);
 
-    if (createdStream && createdStream.success && createdStream.data) {
-      router.navigate(`/stream/${createdStream.data.stream.id}`);
+    if (createdStream && createdStream.data) {
+      if (createdStream.success) {
+        router.navigate(`/stream/${createdStream.data.stream.id}`);
+      } else {
+        if (createdStream.error[0]) {
+          Toast.show({
+            type: 'error',
+            text1: createdStream.error[0]?.name,
+            text2: createdStream.error[0]?.msg,
+          });
+        }
+      }
     }
   };
 

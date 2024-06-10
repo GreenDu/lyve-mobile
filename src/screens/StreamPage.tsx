@@ -16,6 +16,7 @@ import {
   TouchableWithoutFeedback,
 } from 'react-native';
 import { RTCView, MediaStream } from 'react-native-webrtc';
+import * as Crypto from 'expo-crypto';
 
 import StreamEnded from './StreamEnded';
 import StreamerView from './StreamerView';
@@ -64,6 +65,24 @@ const StreamPage: React.FC<{ id: string }> = ({ id }) => {
 
   useEffect(() => {
     if (socket) {
+      socket.on('user_joined', (data) => {
+        addMessage({
+          id: Crypto.randomUUID(),
+          type: 'joined',
+          msg: `${data.user.dispname} joined the stream`,
+          created_at: Date.now().toString(),
+        });
+      });
+
+      socket.on('user_leaved', (data) => {
+        addMessage({
+          id: Crypto.randomUUID(),
+          type: 'leaved',
+          msg: `${data.user.dispname} joined the stream`,
+          created_at: Date.now().toString(),
+        });
+      });
+
       socket.on('viewer_count', (data) => {
         setViewerCount(data.viewerCount);
       });
@@ -97,31 +116,11 @@ const StreamPage: React.FC<{ id: string }> = ({ id }) => {
   }, [consumers]);
 
   const leaveStream = () => {
-    if (socket) {
-      console.log('leave stream');
-      socket.emit('leave_stream');
-    }
+    socket.emit('leave_stream');
   };
-
-  if (ended) {
-    return (
-      <SafeAreaView style={{ backgroundColor: 'transparent', height: '100%' }}>
-        <StreamEnded />
-      </SafeAreaView>
-    );
-  }
 
   return (
     <>
-      {/* {streamUrl && (
-        <RTCView
-          streamURL={streamUrl}
-          zOrder={0}
-          objectFit="cover"
-          mirror
-          style={{ position: 'absolute', top: 0, bottom: 0, left: 0, right: 0 }}
-        />
-      )} */}
       {isStreamer && stream ? (
         <RTCView
           streamURL={stream.id}
@@ -141,17 +140,23 @@ const StreamPage: React.FC<{ id: string }> = ({ id }) => {
       ) : (
         <></>
       )}
-      <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
-        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-          <SafeAreaView style={{ backgroundColor: 'transparent', height: '100%' }}>
-            {isStreamer ? (
-              <StreamerView onLeave={leaveStream} />
-            ) : (
-              <ViewerView onLeave={leaveStream} />
-            )}
-          </SafeAreaView>
-        </TouchableWithoutFeedback>
-      </KeyboardAvoidingView>
+      {!ended ? (
+        <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+          <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+            <SafeAreaView style={{ backgroundColor: 'transparent', height: '100%' }}>
+              {isStreamer ? (
+                <StreamerView onLeave={leaveStream} />
+              ) : (
+                <ViewerView onLeave={leaveStream} />
+              )}
+            </SafeAreaView>
+          </TouchableWithoutFeedback>
+        </KeyboardAvoidingView>
+      ) : (
+        <SafeAreaView style={{ backgroundColor: 'transparent', height: '100%' }}>
+          {isViewer && <StreamEnded onLeave={leaveStream} />}
+        </SafeAreaView>
+      )}
       <WebRtcController />
     </>
   );
