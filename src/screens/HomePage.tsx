@@ -9,6 +9,7 @@ import React, { useEffect, useState } from 'react';
 import { YStack } from 'tamagui';
 
 const HomePage = () => {
+
   const { user } = useAuth();
 
   const { data: feedData, isSuccess: isFeedSuccess } = useGetFeed({
@@ -42,6 +43,7 @@ const HomePage = () => {
       setRecommendedStreamsFeed(rsData.data.streams);
     }
   }, [feedData, rsData, isFeedSuccess, isRsSuccess]);
+
   return (
     <YStack height="100%" backgroundColor="$color.background" padding="$4">
       <HomeHeader />

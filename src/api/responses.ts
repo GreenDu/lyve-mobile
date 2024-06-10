@@ -2,11 +2,7 @@ import { TypedResponse } from '../types/response';
 
 export type AchievementType = 'NTH_STREAM' | 'NTH_VIEWERS';
 
-export type NotificationType =
-  | 'STREAM_STARTED'
-  | 'REWARD_RECEIVED'
-  | 'ACHIEVEMENT_RECEIVED'
-  | 'NEW_FOLLOWER';
+
 export type User = {
   id: string;
   username: string;
