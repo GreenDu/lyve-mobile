@@ -14,7 +14,7 @@ const HomePage = () => {
     {
       viewerCount: 1200000,
       streamerName: 'Nic',
-      previewImg: 'https://random.imagecdn.app/182/310',
+      previewImg: 'https://random.imagecdn.app/186/310',
     },
     {
       viewerCount: 10000,
