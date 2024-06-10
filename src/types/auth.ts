@@ -8,6 +8,7 @@ export type AuthContextData = {
   user: {
     id: string;
     username: string;
+    dispname: string;
     avatar_url: string;
     level: number;
     email: string;

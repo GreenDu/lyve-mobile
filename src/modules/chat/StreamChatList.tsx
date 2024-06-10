@@ -12,7 +12,13 @@ const StreamChatList = () => {
 
   const renderMessage = useCallback(
     (item: Message, index: number) => {
-      return <ChatMessageBubble msg={item.msg} sender={item.sender} opacity={1.0} />;
+      const totalMessages = messages.length;
+      let opacity = 1.0;
+
+      if (index < totalMessages - 1) {
+        opacity = 0.4 + 0.6 * (index / (totalMessages - 1));
+      }
+      return <ChatMessageBubble message={item} opacity={opacity} />;
     },
     [messages]
   );
