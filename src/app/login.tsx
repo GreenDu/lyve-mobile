@@ -1,5 +1,6 @@
 import useAuth from '@modules/auth/useAuth';
 import React from 'react';
+import { Image, StyleSheet, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Svg, { Path } from 'react-native-svg';
 import { YStack, Text, Button } from 'tamagui';
@@ -7,12 +8,14 @@ import { YStack, Text, Button } from 'tamagui';
 const LoginPage = () => {
   const { signIn } = useAuth();
   return (
-    <SafeAreaView style={{ backgroundColor: '#151718' }}>
+    
+    <View style={{ backgroundColor: '#151718' }}>
       <YStack
         height="100%"
         justifyContent="center"
         alignItems="center"
         backgroundColor="$color.background">
+                      <Image source={require('../../assets/login.png')}  style={styles.image}></Image>
         <YStack justifyContent="center" alignItems="center" marginBottom="$20">
           <Text fontWeight="500" fontSize={35} color="$color.textMain">
             Welcome to
@@ -32,8 +35,17 @@ const LoginPage = () => {
           Login
         </Button>
       </YStack>
-    </SafeAreaView>
+    </View>
   );
 };
+
+const styles = StyleSheet.create({
+  image: {
+    position: 'absolute',
+    zIndex: -1,
+    width: '100%',
+    height: '100%',
+  }
+})
 
 export default LoginPage;
