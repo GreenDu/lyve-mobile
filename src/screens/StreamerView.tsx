@@ -8,11 +8,7 @@ import React, { useEffect } from 'react';
 import { YStack, Button } from 'tamagui';
 
 const StreamerView: React.FC<{ onLeave: () => void }> = ({ onLeave }) => {
-  const { streamer } = useCurrentStreamInfoStore((state) => ({ streamer: state.streamer }));
   const { active } = useCurrentStreamInfoStore((state) => ({ active: state.active }));
-  const { viewerCount } = useCurrentStreamInfoStore((state) => ({
-    viewerCount: state.viewerCount,
-  }));
 
   const startStream = async () => {
     await axiosClient
@@ -20,15 +16,13 @@ const StreamerView: React.FC<{ onLeave: () => void }> = ({ onLeave }) => {
       .then(() => {
         useCurrentStreamInfoStore.setState({ active: true });
       });
-
-    console.log('startStream');
   };
 
   useEffect(() => {}, [active]);
 
   return (
     <YStack padding="$4" height="100%" justifyContent="space-between">
-      <StreamHeader streamer={streamer} viewerCount={viewerCount} onLeave={onLeave} />
+      <StreamHeader onLeave={onLeave} />
       <RewardView />
       {!active ? (
         <Button backgroundColor="$accentMain" width="$20" alignSelf="center" onPress={startStream}>
