@@ -18,7 +18,7 @@ const SettingsPage: React.FC<{ userid: string }> = ({ userid }) => {
         <XStack alignItems="center">
           <Button
             icon={<Feather name="chevron-left" size={24} color="white" />}
-            backgroundColor="black"
+            backgroundColor="#151718"
             onPress={() => router.push(`profile/${userid}`)}></Button>
           <H1 fontSize={32}>Settings</H1>
         </XStack>
