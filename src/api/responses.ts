@@ -65,7 +65,10 @@ export type Notification = {
   id: string;
   type: NotificationType;
   streamId: string | null;
+  achievemntId: string | null;
+  rewardId: string | null;
   userWhoFiredEvent: string | null;
+  message: string;
   recipientId: string;
   created_at: Date;
   updated_at: Date;
