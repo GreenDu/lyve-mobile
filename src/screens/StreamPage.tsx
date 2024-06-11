@@ -8,12 +8,7 @@ import { useProducerStore } from '@modules/webrtc/stores/useProducerStore';
 import { useStreamStore } from '@modules/webrtc/stores/useStreamStore';
 import useSocket from '@modules/ws/useSocket';
 import React, { useEffect, useState } from 'react';
-import {
-  Keyboard,
-  KeyboardAvoidingView,
-  Platform,
-  TouchableWithoutFeedback,
-} from 'react-native';
+import { Keyboard, KeyboardAvoidingView, Platform, TouchableWithoutFeedback } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { RTCView, MediaStream } from 'react-native-webrtc';
@@ -58,6 +53,7 @@ const StreamPage: React.FC<{ id: string }> = ({ id }) => {
         dispname: streamer.dispname,
         avatar_url: streamer.avatar_url,
         followerCount: streamer.followerCount,
+        subscribed: streamer.followed,
       });
       setViewerCount(viewerCount);
       setActive(active);
