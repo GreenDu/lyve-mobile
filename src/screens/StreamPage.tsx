@@ -12,9 +12,10 @@ import {
   Keyboard,
   KeyboardAvoidingView,
   Platform,
-  SafeAreaView,
   TouchableWithoutFeedback,
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+
 import { RTCView, MediaStream } from 'react-native-webrtc';
 import * as Crypto from 'expo-crypto';
 
