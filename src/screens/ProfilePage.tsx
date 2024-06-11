@@ -85,15 +85,15 @@ const ProfilePage: React.FC<{ userid: string }> = ({ userid }) => {
           </XStack>
 
           <XStack height="30%" justifyContent="center" gap="$6" padding="$7">
-            <GenreBadge />
-            <GenreBadge />
-            <GenreBadge />
+            <GenreBadge genre='Education 👨‍🏫' percent={30}/>
+            <GenreBadge genre='Music 🎶' percent={20}/>
+            <GenreBadge genre='Football ⚽️'percent={13}/>
           </XStack>
 
           <XStack height="30%" justifyContent="center" gap="$6" padding="$7">
-            <GenreBadge />
-            <GenreBadge />
-            <GenreBadge />
+            <GenreBadge genre='IRL 😄' percent={9}/>
+            <GenreBadge genre='Art 🎨' percent={5}/>
+            <GenreBadge genre='Sport 🏈' percent={2}/>
           </XStack>
         </YStack>
       </YStack>
