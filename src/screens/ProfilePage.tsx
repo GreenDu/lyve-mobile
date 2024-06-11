@@ -84,13 +84,13 @@ const ProfilePage: React.FC<{ userid: string }> = ({ userid }) => {
             </Button>
           </XStack>
 
-          <XStack height="30%" justifyContent="center" gap="$6" mt="$8">
+          <XStack height="30%" justifyContent="center" gap="$6" padding="$7">
             <GenreBadge />
             <GenreBadge />
             <GenreBadge />
           </XStack>
 
-          <XStack height="30%" justifyContent="center" gap="$6">
+          <XStack height="30%" justifyContent="center" gap="$6" padding="$7">
             <GenreBadge />
             <GenreBadge />
             <GenreBadge />
