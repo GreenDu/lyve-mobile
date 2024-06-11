@@ -6,7 +6,7 @@ export const useCurrentStreamInfoStore = create(
   combine(
     {
       id: '',
-      streamer: null as (SocketUser & { followerCount: number }) | null,
+      streamer: null as (SocketUser & { followerCount: number; subscribed: boolean }) | null,
       viewerCount: 0,
       active: false,
       ended: false,
@@ -14,7 +14,8 @@ export const useCurrentStreamInfoStore = create(
     (set) => ({
       setId: (id: string) => set(() => ({ id })),
       setViewerCount: (c: number) => set(() => ({ viewerCount: c })),
-      setStreamer: (s: SocketUser & { followerCount: number }) => set(() => ({ streamer: s })),
+      setStreamer: (s: SocketUser & { followerCount: number; subscribed: boolean }) =>
+        set(() => ({ streamer: s })),
       setActive: (a: boolean) => set(() => ({ active: a })),
       setEnded: (e: boolean) => set(() => ({ ended: e })),
       reset: () =>

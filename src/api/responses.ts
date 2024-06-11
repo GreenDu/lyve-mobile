@@ -8,7 +8,6 @@ export type NotificationType =
   | 'ACHIEVEMENT_RECEIVED'
   | 'NEW_FOLLOWER';
 
-
 export type User = {
   id: string;
   username: string;

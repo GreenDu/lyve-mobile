@@ -9,6 +9,8 @@ import useSocket from '@modules/ws/useSocket';
 import { useEffect } from 'react';
 import { Keyboard } from 'react-native';
 import { Button, XStack, YStack } from 'tamagui';
+import { useCurrentStreamInfoStore } from './stores/useCurrentStreamInfoStore';
+import useCurrentStreamInfo from './hooks/useCurrentStreamInfo';
 
 const StreamFooter: React.FC = () => {
   const { socket } = useSocket();
@@ -18,6 +20,10 @@ const StreamFooter: React.FC = () => {
   const { visible: rewardModalVisisble } = useRewardModalStore((state) => ({
     visible: state.visible,
   }));
+
+  const { id } = useCurrentStreamInfoStore((state) => ({ id: state.id }));
+
+  const { isStreamer } = useCurrentStreamInfo(id);
 
   const handleSendMessage = () => {
     const { message } = useMessageStore.getState();
@@ -72,13 +78,15 @@ const StreamFooter: React.FC = () => {
       <RewardModal />
       <ChatInput onPress={handleSendMessage} />
       <YStack space="$3">
-        <Button
-          size="$5"
-          onPress={toggleRewardModal}
-          backgroundColor="$accentMain"
-          circular
-          icon={<Feather name="gift" size={22} color="white" />}
-        />
+        {!isStreamer && (
+          <Button
+            size="$5"
+            onPress={toggleRewardModal}
+            backgroundColor="$accentMain"
+            circular
+            icon={<Feather name="gift" size={22} color="white" />}
+          />
+        )}
         <Button
           size="$5"
           onPress={() => GiphyDialog.show()}

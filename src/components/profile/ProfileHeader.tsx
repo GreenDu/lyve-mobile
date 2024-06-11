@@ -7,14 +7,10 @@ import { router } from 'expo-router';
 import { User } from '@api/responses';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-interface Props {
-  followerCount?: number | undefined;
-  followingCount?: number | undefined;
-}
-
-const ProfileHeader: React.FC<{ user: User }> = ({ user }) => {
+const ProfileHeader: React.FC<{ user: User | null }> = ({ user }) => {
   return (
     <YStack
+      height={340}
       height={340}
       backgroundColor="$color.accentDark"
       borderBottomEndRadius="$4"
@@ -34,7 +30,11 @@ const ProfileHeader: React.FC<{ user: User }> = ({ user }) => {
             <Avatar.Fallback delayMs={600} backgroundColor="$blue10" />
           </Avatar>
 
-          <FollowStats followerCount={user?.followerCount} followingCount={user?.followingCount} />
+          <FollowStats
+            userId={user?.id ?? ''}
+            followerCount={user?.followerCount ?? 0}
+            followingCount={user?.followingCount ?? 0}
+          />
         </XStack>
         <YStack justifyContent="flex-start" gap="$2" maxWidth="90%" paddingVertical="$3">
           <YStack>
@@ -49,16 +49,16 @@ const ProfileHeader: React.FC<{ user: User }> = ({ user }) => {
           <Button
             onPress={() => console.log('Edit Profile View')}
             backgroundColor="#A372F9"
-            maxWidth="40%"
+            size="$4"
             borderRadius="$10"
             fontSize={18}>
             Edit Profile
           </Button>
 
           <Button
-            onPress={() => router.push(`/profile/${user.id}/settings`)}
+            onPress={() => router.push(`/profile/${user?.id}/settings`)}
             backgroundColor="#A372F9"
-            minWidth="20%"
+            size="$4"
             borderRadius="$10"
             icon={<Feather name="settings" size={24} color="white" />}
           />

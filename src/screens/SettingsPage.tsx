@@ -1,4 +1,5 @@
 import { Platform, ScrollView, View } from 'react-native';
+import { Platform, ScrollView, View } from 'react-native';
 import React from 'react';
 import { YStack, XStack, H1, Button, H2 } from 'tamagui';
 import { Feather } from '@expo/vector-icons';
@@ -11,7 +12,10 @@ const SettingsPage: React.FC<{ userid: string }> = ({ userid }) => {
   const { signOut } = useAuth();
 
   return (
-    <YStack backgroundColor="$background" padding="$4" style={Platform.OS === 'ios' ? { flexGrow: 1 } : { height: '100%' }}>
+    <YStack
+      backgroundColor="$background"
+      padding="$4"
+      style={Platform.OS === 'ios' ? { flexGrow: 1 } : { height: '100%' }}>
       <XStack alignItems="center">
         <Button
           backgroundColor="#151718"
