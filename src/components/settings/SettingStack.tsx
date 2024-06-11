@@ -7,11 +7,7 @@ interface SettingStackProps {
 
 const SettingStack: React.FC<SettingStackProps> = ({ children }) => {
   return (
-    <YStack
-      overflow="hidden"
-      borderRadius={15}
-      backgroundColor="$background"
-    >
+    <YStack overflow="hidden" borderRadius={15} backgroundColor="$background">
       {children}
     </YStack>
   );

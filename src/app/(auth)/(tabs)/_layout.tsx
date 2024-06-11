@@ -5,7 +5,6 @@ import { Tabs } from 'expo-router';
 import React from 'react';
 
 export default function TabLayout() {
-
   const { user } = useAuth();
 
   return (
@@ -17,17 +16,17 @@ export default function TabLayout() {
         tabBarStyle: {
           justifyContent: 'center',
           alignItems: 'center',
-          position: 'absolute',
-          bottom: 0,
-          right: 0,
-          left: 0,
           elevation: 0,
-          height: 80,
           borderWidth: 0,
+          height: 85,
           borderColor: '#151718',
           borderTopColor: '#151718',
           backgroundColor: '#151718',
           paddingHorizontal: 16,
+        },
+
+        tabBarItemStyle: {
+          marginTop: 5,
         },
 
         tabBarLabelStyle: {
