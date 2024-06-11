@@ -19,15 +19,6 @@ const SettingsPage: React.FC<{ userid: string }> = ({ userid }) => {
         />
         <H1 fontSize={32}>Settings</H1>
       </XStack>
-    <View style={{ backgroundColor: '#151718' }}>
-      <YStack height="100%" padding="$4">
-        <XStack alignItems="center">
-          <Button
-            icon={<Feather name="chevron-left" size={24} color="white" />}
-            backgroundColor="#151718"
-            onPress={() => router.push(`profile/${userid}`)}></Button>
-          <H1 fontSize={32}>Settings</H1>
-        </XStack>
 
       <ScrollView>
         <H2 mt="$8" fontSize={24} mb="$3">
