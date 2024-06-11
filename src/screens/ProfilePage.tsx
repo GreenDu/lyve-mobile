@@ -43,13 +43,13 @@ const ProfilePage: React.FC<{ userid: string }> = ({ userid }) => {
           <XStack justifyContent="center" mt="$5">
             <Button
               flex={1}
-              minHeight="30%"
-              maxWidth="30%"
+              height="$5"
+              maxWidth="40%"
               borderRadius={20}
               backgroundColor="#A372F9">
               Statistics
             </Button>
-            <Button flex={1} height="$5"maxWidth="40%" borderRadius={20}>
+            <Button flex={1} height="$5" maxWidth="40%" borderRadius={20}>
               Achievements
             </Button>
           </XStack>

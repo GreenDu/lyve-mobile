@@ -15,7 +15,7 @@ interface Props {
 const ProfileHeader: React.FC<{ user: User }> = ({ user }) => {
   return (
     <YStack
-      height="45%"
+      height={330}
       backgroundColor="$color.accentDark"
       borderBottomEndRadius="$4"
       borderBottomStartRadius="$4"
@@ -34,14 +34,14 @@ const ProfileHeader: React.FC<{ user: User }> = ({ user }) => {
             <Avatar.Fallback delayMs={600} backgroundColor="$blue10" />
           </Avatar>
 
-          <FollowStats followerCount={user.followerCount} followingCount={user.followingCount} />
+          <FollowStats followerCount={user?.followerCount} followingCount={user?.followingCount} />
         </XStack>
         <YStack justifyContent="flex-start" gap="$2" maxWidth="90%" paddingVertical="$3">
           <YStack>
-            <H3 fontWeight="700">{user.dispname}</H3>
-            <SizableText opacity={0.8}>@{user.username}</SizableText>
+            <H3 fontWeight="700">{user?.dispname}</H3>
+            <SizableText opacity={0.8}>@{user?.username}</SizableText>
           </YStack>
-          <SizableText>{user.bio.substring(0, 100)}</SizableText>
+          <SizableText>{user?.bio.substring(0, 100)}</SizableText>
         </YStack>
 
         {/* Button component in profile header*/}
