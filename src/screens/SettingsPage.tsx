@@ -1,4 +1,4 @@
-import { View } from 'react-native';
+import { ScrollView, View } from 'react-native';
 import React from 'react';
 import { YStack, XStack, H1, Button, H2 } from 'tamagui';
 import { Feather } from '@expo/vector-icons';
@@ -7,12 +7,18 @@ import SettingStack from '@components/settings/SettingStack';
 import useAuth from '@modules/auth/useAuth';
 import { router } from 'expo-router';
 
-
 const SettingsPage: React.FC<{ userid: string }> = ({ userid }) => {
-
   const { signOut } = useAuth();
 
   return (
+    <YStack backgroundColor="$background" padding="$4">
+      <XStack alignItems="center">
+        <Button
+          icon={<Feather name="chevron-left" size={24} color="white" />}
+          onPress={() => router.back()}
+        />
+        <H1 fontSize={32}>Settings</H1>
+      </XStack>
     <View style={{ backgroundColor: '#151718' }}>
       <YStack height="100%" padding="$4">
         <XStack alignItems="center">
@@ -23,6 +29,7 @@ const SettingsPage: React.FC<{ userid: string }> = ({ userid }) => {
           <H1 fontSize={32}>Settings</H1>
         </XStack>
 
+      <ScrollView>
         <H2 mt="$8" fontSize={24} mb="$3">
           Account
         </H2>
@@ -53,12 +60,15 @@ const SettingsPage: React.FC<{ userid: string }> = ({ userid }) => {
           Logout
         </H2>
         <SettingStack>
-          <SettingButton name="Logout" onPress={async () => {
-          signOut();
-        }} />
+          <SettingButton
+            name="Logout"
+            onPress={async () => {
+              signOut();
+            }}
+          />
         </SettingStack>
-      </YStack>
-    </View>
+      </ScrollView>
+    </YStack>
   );
 };
 
