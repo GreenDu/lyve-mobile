@@ -1,12 +1,12 @@
 import { View, Text, ScrollView } from 'react-native';
 import React, { useEffect } from 'react';
-import { useGetFollowedBy } from '@api/user/query/useGetFollowedBy';
+import { useGetFollowing } from '@api/user/query/useGetFollowing';
 import { H1, SizableText, YStack } from 'tamagui';
 import UserFollowerCard from '@components/UserFollowerCard';
 
 const FollowingPage: React.FC<{ id: string }> = ({ id }) => {
   console.log(id);
-  const { data, isSuccess } = useGetFollowedBy({ variables: { id } });
+  const { data, isSuccess } = useGetFollowing({ variables: { id } });
 
   useEffect(() => {
     console.log(data);
@@ -20,7 +20,7 @@ const FollowingPage: React.FC<{ id: string }> = ({ id }) => {
       {isSuccess && (
         <ScrollView>
           <YStack>
-            {data?.data?.user.followedBy.map((u) => {
+            {data?.data?.user.following.map((u) => {
               return (
                 <UserFollowerCard
                   key={u.user.id}
@@ -28,7 +28,7 @@ const FollowingPage: React.FC<{ id: string }> = ({ id }) => {
                   username={u.user.username}
                   dispname={u.user.dispname}
                   avatar_url={u.user.avatar_url}
-                  subscribed={u.subscribed}
+                  subscribed={true}
                 />
               );
             })}
