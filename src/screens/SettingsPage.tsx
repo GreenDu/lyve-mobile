@@ -14,6 +14,7 @@ const SettingsPage: React.FC<{ userid: string }> = ({ userid }) => {
     <YStack backgroundColor="$background" padding="$4">
       <XStack alignItems="center">
         <Button
+          backgroundColor="#151718"
           icon={<Feather name="chevron-left" size={24} color="white" />}
           onPress={() => router.back()}
         />
