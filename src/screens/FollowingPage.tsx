@@ -15,7 +15,7 @@ const FollowingPage: React.FC<{ id: string }> = ({ id }) => {
   return (
     <YStack padding="$4" height="100%">
       <H1 marginVertical="$4" fontSize={24} fontWeight="800">
-        Followers
+        Following
       </H1>
       {isSuccess && (
         <ScrollView>

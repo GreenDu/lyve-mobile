@@ -11,7 +11,6 @@ const ProfileHeader: React.FC<{ user: User | null }> = ({ user }) => {
   return (
     <YStack
       height={340}
-      height={340}
       backgroundColor="$color.accentDark"
       borderBottomEndRadius="$4"
       borderBottomStartRadius="$4"

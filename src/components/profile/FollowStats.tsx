@@ -32,12 +32,17 @@ const FollowStats: React.FC<{ userId: string; followerCount: number; followingCo
         opacity={0.5}
       />
       <YStack>
-        <H2 fontSize={16} fontWeight="500">
-          {formatNumber(followingCount)}
-        </H2>
-        <H2 fontSize={16} fontWeight="400" mt="$-3.5" opacity={0.5}>
-          Following
-        </H2>
+        <Pressable
+          onPress={() => {
+            router.push(`/profile/${userId}/following`);
+          }}>
+          <H2 fontSize={16} fontWeight="500">
+            {formatNumber(followingCount)}
+          </H2>
+          <H2 fontSize={16} fontWeight="400" mt="$-3.5" opacity={0.5}>
+            Following
+          </H2>
+        </Pressable>
       </YStack>
     </XStack>
   );
