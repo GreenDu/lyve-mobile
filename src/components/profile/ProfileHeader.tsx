@@ -15,7 +15,7 @@ interface Props {
 const ProfileHeader: React.FC<{ user: User }> = ({ user }) => {
   return (
     <YStack
-      height={330}
+      height={340}
       backgroundColor="$color.accentDark"
       borderBottomEndRadius="$4"
       borderBottomStartRadius="$4"
