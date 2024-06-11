@@ -8,8 +8,8 @@ interface Props {
 
 const ProfileHeader: React.FC<Props> = ({ genre = "NaN", percent = 0 }) => {
   return (
-    <YStack gap="$2" alignItems='center' backgroundColor="$primaryLight"  height="$12" width="$10" borderRadius={30}>
-        <YStack justifyContent='center' alignItems='center' mt="$3" height="$5" width="$5" backgroundColor="#151718" borderRadius={90}>
+    <YStack padding="$3" gap="$2" alignItems='center' backgroundColor="$primaryLight"  height="$12" width="$10" borderRadius={15}>
+        <YStack justifyContent='center' alignItems='center' height="$5" width="$5" backgroundColor="#151718" borderRadius={15}>
             <SizableText fontSize={28}>
             🎮
             </SizableText>
