@@ -9,7 +9,7 @@ import { ActivityIndicator, View } from 'react-native';
 import { Button, H3, SizableText, XStack, YStack } from 'tamagui';
 
 const ProfilePage: React.FC<{ userid: string }> = ({ userid }) => {
-  const { data, isFetching } = useGetUser({ variables: { id: userid }, refetchOnMount: true });
+  const { data, isFetching } = useGetUser({ variables: { id: userid }, refetchOnMount: true, refetchOnWindowFocus: true });
 
   const [userData, setUserData] = useState<User>();
 
@@ -43,13 +43,13 @@ const ProfilePage: React.FC<{ userid: string }> = ({ userid }) => {
           <XStack justifyContent="center" mt="$5">
             <Button
               flex={1}
-              height="$5"
+              size="$5"
               maxWidth="40%"
               borderRadius={20}
               backgroundColor="#A372F9">
               Statistics
             </Button>
-            <Button flex={1} height="$5" maxWidth="40%" borderRadius={20}>
+            <Button flex={1} size="$5" maxWidth="40%" borderRadius={20}>
               Achievements
             </Button>
           </XStack>
