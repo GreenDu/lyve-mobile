@@ -28,7 +28,7 @@ const FollowingPage: React.FC<{ id: string }> = ({ id }) => {
       </XStack>
       {isSuccess && (
         <ScrollView>
-          <YStack>
+          <YStack space="$3">
             {data?.data?.user.following.map((u) => {
               return (
                 <UserFollowerCard
