@@ -1,4 +1,5 @@
-import { CreateUserResponse, GetUserResponse } from '@api/responses';
+import { GetUserResponse } from '@api/responses';
+import { useCreateUser } from '@api/user/mutation/useCreateUser';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { decode } from 'base-64';
 import * as AuthSession from 'expo-auth-session';
@@ -16,6 +17,7 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import Toast from 'react-native-toast-message';
 
 import { AuthContext } from './AuthContext';
+import { IdTokenPayload } from './types';
 import { AuthContextData, KeycloakConfiguration } from '../../types/auth';
 
 // This is needed for ios
@@ -29,6 +31,8 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children, config }) => {
   const [user, setUser] = useState<AuthContextData['user']>({} as AuthContextData['user']);
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState(true);
+
+  const createUserMutation = useCreateUser();
 
   const discovery = useAutoDiscovery(config.realmUrl);
 
@@ -51,13 +55,15 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children, config }) => {
 
   const storeTokensAndSetUser = async (tokens: TokenResponse, initialLogin = false) => {
     const { accessToken, idToken } = tokens;
+
     await AsyncStorage.multiSet([
       ['tokenConfig', JSON.stringify(tokens)],
       ['accessToken', accessToken],
     ]);
 
     if (idToken) {
-      const userData: any = jwtDecode(idToken);
+      const userData = jwtDecode<IdTokenPayload>(idToken);
+
       const userResponse = await fetchUserData(userData);
 
       if (userResponse) {
@@ -78,52 +84,41 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children, config }) => {
     }
   };
 
-  const fetchUserData = async (userData: any) => {
+  const fetchUserData = async (userData: IdTokenPayload) => {
     try {
       const userResponse = await fetch(
-        `${process.env.EXPO_PUBLIC_API_URL}/api/user/${userData.sub}`
-      );
-      const userJson = (await userResponse.json()) as GetUserResponse;
+        `${process.env.EXPO_PUBLIC_API_URL}/api/user/${userData.sub}`,
+        {
+          headers: {
+            Authorization: 'Bearer ' + (await AsyncStorage.getItem('accessToken')),
+          },
+        }
+      ).then((res) => res.json() as unknown as GetUserResponse);
 
-      if (userJson.success && userJson.data) {
-        return userJson.data.user;
+      if (userResponse.success && userResponse.data) {
+        return userResponse.data.user;
       } else {
-        const createUserResponse = await createUser(userData);
-        if (createUserResponse && createUserResponse.success && createUserResponse.data) {
-          return createUserResponse.data.user;
-        }
-
-        if (createUserResponse?.error[0]) {
-          Toast.show({
-            type: 'error',
-            text1: createUserResponse.error[0]?.name,
-            text2: createUserResponse.error[0]?.msg,
-          });
-        }
-        return null;
-      }
-    } catch (error) {
-      console.error('Error fetching user data', error);
-      return null;
-    }
-  };
-
-  const createUser = async (userData: any): Promise<CreateUserResponse | null> => {
-    try {
-      const createUserResponse = await fetch(`${process.env.EXPO_PUBLIC_API_URL}/api/user/create`, {
-        method: 'POST',
-        body: JSON.stringify({
+        const createdUserData = await createUserMutation.mutateAsync({
           id: userData.sub,
           username: userData.preferred_username,
           email: userData.email,
-        }),
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-      return createUserResponse.json() as Promise<CreateUserResponse>;
+        });
+
+        if (createdUserData.success && createdUserData.data) {
+          return createdUserData.data.user;
+        }
+
+        if (createdUserData.error[0]) {
+          Toast.show({
+            type: 'error',
+            text1: createdUserData.error[0].name,
+            text2: createdUserData.error[0].msg,
+          });
+        }
+      }
+      return null;
     } catch (error) {
-      console.error('Error creating user', error);
+      console.error('Error fetching user data', error);
       return null;
     }
   };
@@ -220,7 +215,6 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children, config }) => {
 
         if (new TokenResponse(tokenConfig).shouldRefresh()) {
           await handleRefresh(true);
-          await handleRefresh(true);
         } else {
           await storeTokensAndSetUser(new TokenResponse(tokenConfig));
         }
@@ -251,6 +245,7 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children, config }) => {
       const interval = setInterval(handleRefresh, 2 * 60 * 1000);
       return () => clearInterval(interval);
     }
+    return () => {};
   }, [isAuthenticated, handleRefresh]);
 
   useEffect(() => {
