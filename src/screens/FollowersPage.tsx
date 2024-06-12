@@ -19,7 +19,7 @@ const FollowersPage: React.FC<{ id: string }> = ({ id }) => {
       </H1>
       {isSuccess && (
         <ScrollView>
-          <YStack>
+          <YStack space="$3">
             {data?.data?.user.followedBy.map((u) => {
               return (
                 <UserFollowerCard
