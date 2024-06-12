@@ -3,6 +3,7 @@ import { Feather } from '@expo/vector-icons';
 import useAuth from '@modules/auth/useAuth';
 import { Tabs } from 'expo-router';
 import React from 'react';
+import { Platform } from 'react-native';
 
 export default function TabLayout() {
   const { user } = useAuth();
@@ -14,15 +15,14 @@ export default function TabLayout() {
         tabBarInactiveTintColor: '#676D75',
         headerShown: false,
         tabBarStyle: {
+          position: 'absolute',
           justifyContent: 'center',
           alignItems: 'center',
-          elevation: 0,
           borderWidth: 0,
-          height: 85,
+          height: Platform.OS === 'ios' ? '11%' : '8%',
           borderColor: '#151718',
           borderTopColor: '#151718',
           backgroundColor: '#151718',
-
           paddingHorizontal: 16,
         },
 
@@ -32,8 +32,8 @@ export default function TabLayout() {
 
         tabBarLabelStyle: {
           fontSize: 12,
-          fontWeight: '300',
-          marginBottom: 10,
+          fontWeight: '400',
+          paddingBottom: 10,
         },
       }}>
       <Tabs.Screen
