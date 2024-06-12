@@ -8,7 +8,7 @@ import { router } from 'expo-router';
 
 const FollowingPage: React.FC<{ id: string }> = ({ id }) => {
   console.log(id);
-  const { data, isSuccess } = useGetFollowing({ variables: { id } });
+  const { data, isSuccess } = useGetFollowing({ variables: { id }, refetchOnMount: true, refetchOnWindowFocus: true });
 
   useEffect(() => {
     console.log(data);
