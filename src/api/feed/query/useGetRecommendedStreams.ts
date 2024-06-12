@@ -1,4 +1,5 @@
 import { GetRecommendedStreamsResponse } from '@api/responses';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import type { AxiosError } from 'axios';
 import { createQuery } from 'react-query-kit';
 
@@ -12,7 +13,11 @@ export const useGetRecommendedStreams = createQuery<
   AxiosError
 >({
   queryKey: ['recommended-streams'],
-  fetcher: () => {
-    return axiosClient.get(`api/stream/recommended`).then((response) => response.data);
+  fetcher: async () => {
+    return axiosClient
+      .get(`api/stream/recommended`, {
+        headers: { Authorization: 'Bearer ' + (await AsyncStorage.getItem('accessToken')) },
+      })
+      .then((response) => response.data);
   },
 });

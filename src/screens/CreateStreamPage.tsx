@@ -1,4 +1,5 @@
 import { CreateStreamResponse } from '@api/responses';
+import { useCreateStream } from '@api/stream/mutation/useCreateStream';
 import { Feather } from '@expo/vector-icons';
 import useAuth from '@modules/auth/useAuth';
 import GenrePicker from '@modules/stream/GenrePicker';
@@ -10,7 +11,24 @@ import Toast from 'react-native-toast-message';
 import { YStack, XStack, Button, H3 } from 'tamagui';
 
 const CreateStreamPage = () => {
-  const { user } = useAuth();
+  const mutation = useCreateStream({
+    onSettled(data, error) {
+      if (error) {
+        console.error(error);
+      }
+      if (data) {
+        if (data.success && data.data) {
+          router.navigate(`/stream/${data.data.stream.id}`);
+        } else {
+          Toast.show({
+            type: 'error',
+            text1: data.error[0]!.name,
+            text2: data.error[0]!.msg,
+          });
+        }
+      }
+    },
+  });
   const [selectedGenre, setSelectedGenre] = useState(genres);
 
   const addSelectedGenre = (idx: number) => {
@@ -35,34 +53,13 @@ const CreateStreamPage = () => {
   };
 
   const createStream = async () => {
-    const createdStream = await fetch(`${process.env.EXPO_PUBLIC_API_URL}/api/stream/create`, {
-      method: 'POST',
-      body: JSON.stringify({
-        streamerId: user.id,
-        previewImgUrl: 'dummy',
-        genre: selectedGenre
-          .filter((g) => g.selected === true)
-          .map((m) => m.text)
-          .join(','),
-      }),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    }).then((res) => res.json() as Promise<CreateStreamResponse>);
-
-    if (createdStream && createdStream.data) {
-      if (createdStream.success) {
-        router.navigate(`/stream/${createdStream.data.stream.id}`);
-      } else {
-        if (createdStream.error[0]) {
-          Toast.show({
-            type: 'error',
-            text1: createdStream.error[0]?.name,
-            text2: createdStream.error[0]?.msg,
-          });
-        }
-      }
-    }
+    mutation.mutate({
+      previewImgUrl: 'dummy', // Todo use real image
+      genre: selectedGenre
+        .filter((g) => g.selected === true)
+        .map((m) => m.text)
+        .join(','),
+    });
   };
 
   return (
