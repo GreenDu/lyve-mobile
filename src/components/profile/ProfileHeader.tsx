@@ -6,8 +6,14 @@ import { Feather } from '@expo/vector-icons';
 import { router } from 'expo-router';
 import { User } from '@api/responses';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import FollowButton from '@components/FollowButton';
 
-const ProfileHeader: React.FC<{ user: User | null }> = ({ user }) => {
+interface ProfileHeaderProps {
+  user: User | null;
+  isSelf: boolean;
+}
+
+const ProfileHeader: React.FC<ProfileHeaderProps> = ({ user, isSelf }) => {
   return (
     <YStack
       height={340}
@@ -47,22 +53,31 @@ const ProfileHeader: React.FC<{ user: User | null }> = ({ user }) => {
 
         {/* Button component in profile header*/}
         <XStack justifyContent="space-between">
-          <Button
-            onPress={() => console.log('Edit Profile View')}
-            backgroundColor="#A372F9"
-            size="$4"
-            borderRadius="$10"
-            fontSize={18}>
-            Edit Profile
-          </Button>
-
-          <Button
-            onPress={() => router.push(`/profile/${user?.id}/settings`)}
-            backgroundColor="#A372F9"
-            size="$4"
-            borderRadius="$10"
-            icon={<Feather name="settings" size={24} color="white" />}
-          />
+          {isSelf ? (
+            <>
+              <Button
+                onPress={() => console.log('Edit Profile View')}
+                backgroundColor="#A372F9"
+                size="$4"
+                borderRadius="$10"
+                fontSize={18}>
+                Edit Profile
+              </Button>
+              <Button
+                onPress={() => router.push(`/profile/${user?.id}/settings`)}
+                backgroundColor="#A372F9"
+                size="$4"
+                borderRadius="$10"
+                icon={<Feather name="settings" size={24} color="white" />}
+              />
+            </>
+          ) : (
+            <>
+              <XStack>
+                <FollowButton size="large" userId={user?.id ?? ''} subscribed={true} />
+              </XStack>
+            </>
+          )}
         </XStack>
       </SafeAreaView>
     </YStack>
