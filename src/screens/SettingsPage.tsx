@@ -24,7 +24,7 @@ const SettingsPage: React.FC<{ userid: string }> = ({ userid }) => {
         <H1 fontSize={32}>Settings</H1>
       </XStack>
 
-      <ScrollView>
+      <ScrollView style={{marginBottom: 50}}>
         <H2 mt="$8" fontSize={24} mb="$3">
           Account
         </H2>
