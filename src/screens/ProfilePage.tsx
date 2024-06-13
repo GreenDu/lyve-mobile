@@ -5,7 +5,7 @@ import GenreBadge from '@components/profile/GenreBadge';
 import { Feather } from '@expo/vector-icons';
 import { router } from 'expo-router';
 import React, { useEffect, useState } from 'react';
-import { ActivityIndicator, View } from 'react-native';
+import { ActivityIndicator, ScrollView, View } from 'react-native';
 import { Button, H3, SizableText, XStack, YStack } from 'tamagui';
 
 const ProfilePage: React.FC<{ userid: string }> = ({ userid }) => {
@@ -33,7 +33,7 @@ const ProfilePage: React.FC<{ userid: string }> = ({ userid }) => {
   }
 
   return (
-    <View>
+    <ScrollView>
       <YStack height="100%" backgroundColor="$color.background">
         <ProfileHeader user={userData!} />
 
@@ -53,21 +53,22 @@ const ProfilePage: React.FC<{ userid: string }> = ({ userid }) => {
               Achievements
             </Button>
           </XStack>
-
-          <XStack height="30%" justifyContent="center" gap="$6" padding="$7">
+          <YStack gap="$-8" marginBottom="$8">
+          <XStack flex={1} justifyContent="center" gap="$6" padding="$7">
             <GenreBadge genre='Education 👨‍🏫' percent={30}/>
             <GenreBadge genre='Music 🎶' percent={20}/>
             <GenreBadge genre='Football ⚽️'percent={13}/>
           </XStack>
 
-          <XStack height="30%" justifyContent="center" gap="$6" padding="$7">
+          <XStack flex={1} justifyContent="center" gap="$6" padding="$7">
             <GenreBadge genre='IRL 😄' percent={9}/>
             <GenreBadge genre='Art 🎨' percent={5}/>
             <GenreBadge genre='Sport 🏈' percent={2}/>
           </XStack>
+          </YStack>
         </YStack>
       </YStack>
-    </View>
+    </ScrollView>
   );
 };
 
