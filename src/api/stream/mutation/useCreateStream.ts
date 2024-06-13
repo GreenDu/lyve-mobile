@@ -6,16 +6,17 @@ import { createMutation } from 'react-query-kit';
 import { axiosClient } from '../../axiosClient';
 
 type Variables = {
-  previewImgUrl: string;
-  genre: string;
+  data: FormData;
 };
 
 export const useCreateStream = createMutation<CreateStreamResponse, Variables, AxiosError>({
   mutationFn: async (variables) =>
-    axiosClient({
-      url: '/api/stream/create',
-      method: 'POST',
-      data: variables,
-      headers: { Authorization: 'Bearer ' + (await AsyncStorage.getItem('accessToken')) },
-    }).then((response) => response.data),
+    axiosClient
+      .post('/api/stream/create', variables.data, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          Authorization: 'Bearer ' + (await AsyncStorage.getItem('accessToken')),
+        },
+      })
+      .then((response) => response.data),
 });
