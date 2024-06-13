@@ -46,7 +46,10 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({ user, isSelf }) => {
             <H3 fontWeight="700">{user?.dispname}</H3>
             <SizableText opacity={0.8}>@{user?.username}</SizableText>
           </YStack>
-          <SizableText>{user?.bio.substring(0, 100)}</SizableText>
+
+          <YStack minHeight="$4.5">
+            <SizableText>{user?.bio.substring(0, 100)}</SizableText>
+          </YStack>
         </YStack>
 
         {/* Button component in profile header*/}
