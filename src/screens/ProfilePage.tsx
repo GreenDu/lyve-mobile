@@ -3,15 +3,22 @@ import { useGetUser } from '@api/user/query/useGetUser';
 import ProfileHeader from '@components/profile/ProfileHeader';
 import GenreBadge from '@components/profile/GenreBadge';
 import { Feather } from '@expo/vector-icons';
-import { router } from 'expo-router';
+import { router, useLocalSearchParams } from 'expo-router';
 import React, { useEffect, useState } from 'react';
 import { ActivityIndicator, ScrollView, View } from 'react-native';
 import { Button, H3, SizableText, XStack, YStack } from 'tamagui';
+import useAuth from '@modules/auth/useAuth';
 
 const ProfilePage: React.FC<{ userid: string }> = ({ userid }) => {
   const { data, isFetching } = useGetUser({ variables: { id: userid }, refetchOnMount: true, refetchOnWindowFocus: true });
 
+  const localID  = useLocalSearchParams();
+
+  const { user: me } = useAuth(); 
+
   const [userData, setUserData] = useState<User>();
+
+  const [isSelf, setIsSelf] = useState(true);
 
   useEffect(() => {
     if (data && data.data) {
@@ -19,7 +26,14 @@ const ProfilePage: React.FC<{ userid: string }> = ({ userid }) => {
     }
   }, [data]);
 
+
+  useEffect(() => {
+    setIsSelf(localID?.userid === me?.id);
+  }, [localID, me]);
+  
+  
   if (isFetching) {
+
     return (
       <YStack
         padding="$4"
@@ -33,14 +47,13 @@ const ProfilePage: React.FC<{ userid: string }> = ({ userid }) => {
   }
 
   return (
-    <ScrollView>
-      <YStack height="100%" backgroundColor="$color.background">
-        <ProfileHeader user={userData!} />
+      <YStack height="100%" backgroundColor='$color.background'>
+        <ProfileHeader user={userData!} isSelf={isSelf} />
 
         <YStack flex={1}>
           {/* Button component for statistics and achievements*/}
 
-          <XStack justifyContent="center" mt="$5">
+          <XStack justifyContent="center" paddingVertical="$4">
             <Button
               flex={1}
               size="$4"
@@ -53,6 +66,7 @@ const ProfilePage: React.FC<{ userid: string }> = ({ userid }) => {
               Achievements
             </Button>
           </XStack>
+          <ScrollView bounces>
           <YStack gap="$-8" marginBottom="$8">
           <XStack flex={1} justifyContent="center" gap="$6" padding="$7">
             <GenreBadge genre='Education 👨‍🏫' percent={30}/>
@@ -65,10 +79,12 @@ const ProfilePage: React.FC<{ userid: string }> = ({ userid }) => {
             <GenreBadge genre='Art 🎨' percent={5}/>
             <GenreBadge genre='Sport 🏈' percent={2}/>
           </XStack>
+          
           </YStack>
+          </ScrollView>
         </YStack>
       </YStack>
-    </ScrollView>
+
   );
 };
 
