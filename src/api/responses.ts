@@ -175,3 +175,13 @@ export type StartStreamResponse = TypedResponse<{
     streamer: Streamer;
   };
 }>;
+
+export type SearchResponse = TypedResponse<{
+  result: {
+    users: (Pick<User, 'id' | 'username' | 'dispname' | 'avatar_url' | 'followerCount'> & {
+      subscribed: boolean;
+    })[];
+  };
+  nextCursor: string;
+  hasNext: boolean;
+}>;
