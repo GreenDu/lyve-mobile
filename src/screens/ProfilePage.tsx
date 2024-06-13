@@ -1,4 +1,4 @@
-import { User } from '@api/responses';
+import { GetUserResponse } from '@api/responses';
 import { useGetUser } from '@api/user/query/useGetUser';
 import SwitchButton from '@components/SwitchButton';
 import GenreBadge from '@components/profile/GenreBadge';
@@ -18,7 +18,7 @@ const ProfilePage: React.FC<{ userid: string }> = ({ userid }) => {
 
   const { user: me } = useAuth();
 
-  const [userData, setUserData] = useState<User>();
+  const [userData, setUserData] = useState<GetUserResponse['data']>(null);
 
   const [activeState, setActiveState] = useState<States>('Statistics');
 
@@ -28,7 +28,7 @@ const ProfilePage: React.FC<{ userid: string }> = ({ userid }) => {
 
   useEffect(() => {
     if (data && data.data) {
-      setUserData(data.data.user);
+      setUserData(data.data);
     }
   }, [data]);
 
@@ -47,7 +47,7 @@ const ProfilePage: React.FC<{ userid: string }> = ({ userid }) => {
 
   return (
     <YStack height="100%" backgroundColor="$color.background">
-      <ProfileHeader user={userData!} isSelf={me.id === userid} />
+      <ProfileHeader user={userData?.user!} isSelf={me.id === userid} />
 
       <YStack flex={1}>
         {/* Button component for statistics and achievements*/}
