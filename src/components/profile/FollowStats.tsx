@@ -15,7 +15,7 @@ const FollowStats: React.FC<{ userId: string; followerCount: number; followingCo
         onPress={() => {
           router.push(`/profile/${userId}/followers`);
         }}>
-        <YStack>
+        <YStack paddingRight="$3">
           <H2 fontSize={16} fontWeight="500">
             {formatNumber(followerCount)}
           </H2>
@@ -31,7 +31,7 @@ const FollowStats: React.FC<{ userId: string; followerCount: number; followingCo
         borderColor="$textMain"
         opacity={0.5}
       />
-      <YStack>
+      <YStack paddingLeft="$3">
         <Pressable
           onPress={() => {
             router.push(`/profile/${userId}/following`);
