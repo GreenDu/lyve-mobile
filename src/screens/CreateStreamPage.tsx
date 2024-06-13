@@ -1,12 +1,11 @@
 import { useCreateStream } from '@api/stream/mutation/useCreateStream';
 import StreamPreviewImage from '@components/StreamPreviewImage';
 import { Feather } from '@expo/vector-icons';
-import useCamera from '@hooks/useCamera';
-import useImagePicker from '@hooks/useImagePicker';
+import useCameraActionSheet from '@hooks/useCameraActionSheet';
 import GenrePicker from '@modules/stream/GenrePicker';
 import { genres } from '@modules/stream/genres';
 import { Link, router } from 'expo-router';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Toast from 'react-native-toast-message';
 import { YStack, XStack, Button, H3, Spinner } from 'tamagui';
@@ -31,8 +30,7 @@ const CreateStreamPage = () => {
     },
   });
 
-  const { pickImage } = useImagePicker();
-  const { openCamera } = useCamera();
+  const { show, assets } = useCameraActionSheet();
 
   const [selectedGenre, setSelectedGenre] = useState(
     genres.map((g) => ({ ...g, selected: false }))
@@ -46,14 +44,17 @@ const CreateStreamPage = () => {
     };
   } | null>(null);
 
-  const openImagePicker = async () => {
-    const assets = await pickImage();
+  useEffect(() => {
     if (assets && assets[0]) {
       const { uri, mimeType, fileName, assetId } = assets[0];
       setImageUri({
         image: { uri, type: mimeType ?? 'image/jpeg', name: fileName ?? assetId ?? 'image' },
       });
     }
+  }, [assets]);
+
+  const openActionSheet = async () => {
+    await show();
   };
 
   const addSelectedGenre = (idx: number) => {
@@ -111,7 +112,7 @@ const CreateStreamPage = () => {
 
         <StreamPreviewImage
           uri={imageUri?.image.uri ?? null}
-          handleAddImage={openImagePicker}
+          handleAddImage={openActionSheet}
           clearImage={() => {
             setImageUri(null);
           }}
