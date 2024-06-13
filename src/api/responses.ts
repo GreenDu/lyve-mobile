@@ -79,6 +79,7 @@ export type Notification = {
 
 export type GetUserResponse = TypedResponse<{
   user: User & {
+    subscribed: boolean;
     userToAchievement: {
       achievement: Achievement;
     }[];
