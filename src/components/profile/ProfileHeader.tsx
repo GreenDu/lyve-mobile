@@ -11,9 +11,10 @@ import FollowStats from './FollowStats';
 interface ProfileHeaderProps {
   user: User | null;
   isSelf: boolean;
+  subscribed: boolean;
 }
 
-const ProfileHeader: React.FC<ProfileHeaderProps> = ({ user, isSelf }) => {
+const ProfileHeader: React.FC<ProfileHeaderProps> = ({ user, isSelf, subscribed }) => {
   return (
     <YStack
       height={340}
@@ -77,7 +78,7 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({ user, isSelf }) => {
           ) : (
             <>
               <XStack>
-                <FollowButton size="large" userId={user?.id ?? ''} subscribed />
+                <FollowButton size="large" userId={user?.id ?? ''} subscribed={subscribed} />
               </XStack>
             </>
           )}

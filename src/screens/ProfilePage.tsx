@@ -32,7 +32,7 @@ const ProfilePage: React.FC<{ userid: string }> = ({ userid }) => {
     }
   }, [data]);
 
-  if (isFetching) {
+  if (isFetching && !userData) {
     return (
       <YStack
         padding="$4"
@@ -47,7 +47,11 @@ const ProfilePage: React.FC<{ userid: string }> = ({ userid }) => {
 
   return (
     <YStack height="100%" backgroundColor="$color.background">
-      <ProfileHeader user={userData?.user!} isSelf={me.id === userid} />
+      <ProfileHeader
+        user={userData?.user!}
+        isSelf={me.id === userid}
+        subscribed={userData?.user.subscribed ?? false}
+      />
 
       <YStack flex={1}>
         {/* Button component for statistics and achievements*/}
