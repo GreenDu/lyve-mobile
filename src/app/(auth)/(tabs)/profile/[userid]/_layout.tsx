@@ -13,6 +13,10 @@ const ProfileLayout = () => {
         name="followers"
         options={{ headerShown: false, animation: 'fade_from_bottom' }}
       />
+      <Stack.Screen
+        name="following"
+        options={{ headerShown: false, animation: 'fade_from_bottom' }}
+      />
     </Stack>
   );
 };

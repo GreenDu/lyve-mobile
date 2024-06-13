@@ -9,7 +9,7 @@ export default function TabLayout() {
   const { user } = useAuth();
 
   return (
-    <Tabs
+<Tabs
       screenOptions={{
         tabBarActiveTintColor: 'white',
         tabBarInactiveTintColor: '#676D75',

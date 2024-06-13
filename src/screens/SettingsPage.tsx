@@ -17,13 +17,14 @@ const SettingsPage: React.FC<{ userid: string }> = ({ userid }) => {
       style={Platform.OS === 'ios' ? { flexGrow: 1 } : { height: '100%' }}>
       <XStack alignItems="center">
         <Button
+          backgroundColor="#151718"
           icon={<Feather name="chevron-left" size={24} color="white" />}
           onPress={() => router.back()}
         />
         <H1 fontSize={32}>Settings</H1>
       </XStack>
 
-      <ScrollView>
+      <ScrollView style={{marginBottom: 50}}>
         <H2 mt="$8" fontSize={24} mb="$3">
           Account
         </H2>
