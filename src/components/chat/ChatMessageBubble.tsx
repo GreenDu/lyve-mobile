@@ -28,7 +28,7 @@ const ChatMessageBubble: React.FC<ChatMessageBubbleProps> = ({ message, opacity 
             accessibilityLabel={sender.username}
             src={
               sender.avatar_url ??
-              'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTSOLGUixXG8-JSCNGgzrdg0tIqAFL9VfHbJBYylyOtU28twsRS'
+              'https://lyveblobstorage.blob.core.windows.net/images/avatar_placeholder.png'
             }
           />
           <Avatar.Fallback delayMs={600} />

@@ -22,7 +22,10 @@ const UserFollowerCard: React.FC<{
           <Avatar circular size="$5">
             <Avatar.Image
               accessibilityLabel="Nate Wienert"
-              src={avatar_url || 'https://placehold.co/100x100'}
+              src={
+                avatar_url ??
+                'https://lyveblobstorage.blob.core.windows.net/images/avatar_placeholder.png'
+              }
             />
             <Avatar.Fallback delayMs={600} backgroundColor="$blue10" />
           </Avatar>

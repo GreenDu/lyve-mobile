@@ -30,7 +30,10 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({ user, isSelf }) => {
           <Avatar circular size="$7">
             <Avatar.Image
               accessibilityLabel="Nate Wienert"
-              src="https://images.unsplash.com/photo-1531384441138-2736e62e0919?&w=100&h=100&dpr=2&q=80"
+              src={
+                user?.avatar_url ??
+                'https://lyveblobstorage.blob.core.windows.net/images/avatar_placeholder.png'
+              }
             />
             <Avatar.Fallback delayMs={600} backgroundColor="$blue10" />
           </Avatar>

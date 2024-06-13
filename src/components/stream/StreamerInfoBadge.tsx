@@ -33,7 +33,10 @@ const StreamerInfoBadge: React.FC = () => {
         <Avatar circular size="$4">
           <Avatar.Image
             accessibilityLabel={streamer?.username}
-            src={streamer?.avatar_url ?? 'https://placehold.co/200x200'}
+            src={
+              streamer?.avatar_url ??
+              'https://lyveblobstorage.blob.core.windows.net/images/avatar_placeholder.png'
+            }
           />
           <Avatar.Fallback delayMs={600} backgroundColor="$blue10" />
         </Avatar>

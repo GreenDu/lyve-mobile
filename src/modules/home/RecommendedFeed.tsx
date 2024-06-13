@@ -22,7 +22,10 @@ const RecommendedFeed: React.FC<{
                 key={d.id}
                 streamId={d.id}
                 viewerCount={d.viewerCount}
-                avatar_url={d.streamer.avatar_url ?? 'https://random.imagecdn.app/100/100'}
+                avatar_url={
+                  d.streamer.avatar_url ??
+                  'https://lyveblobstorage.blob.core.windows.net/images/avatar_placeholder.png'
+                }
                 name={d.streamer.dispname}
               />
             );
