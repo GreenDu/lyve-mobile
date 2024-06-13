@@ -7,7 +7,6 @@ import Animated, {
 } from 'react-native-reanimated';
 import { YStack, Button, SizableText, XStack } from 'tamagui';
 
-type StatesArr = [string, string];
 interface SwitchButtonProps {
   states: [string, string];
   onStateChange: (newState: string) => void;
@@ -41,9 +40,9 @@ const SwitchButton: React.FC<SwitchButtonProps> = ({ states, onStateChange }) =>
   return (
     <YStack justifyContent="center" alignItems="center" flex={1}>
       <XStack
-        backgroundColor="$primaryLight"
+        backgroundColor="$primaryDark"
         width={300}
-        height={50}
+        height={30}
         borderRadius={25}
         position="relative"
         overflow="hidden">
@@ -51,10 +50,9 @@ const SwitchButton: React.FC<SwitchButtonProps> = ({ states, onStateChange }) =>
           style={[
             {
               position: 'absolute',
-
               width: '50%',
               height: '100%',
-              backgroundColor: '#FFFFFF',
+              backgroundColor: '#242526',
               borderRadius: 25,
               zIndex: -1,
             },
@@ -72,11 +70,12 @@ const SwitchButton: React.FC<SwitchButtonProps> = ({ states, onStateChange }) =>
               alignItems="center"
               borderRadius={25}
               backgroundColor="transparent"
+              pressStyle={{
+                backgroundColor: 'transparent',
+                borderColor: 'tranparent',
+              }}
               onPress={() => toggleSwitch(state)}>
-              <SizableText
-                size="$5"
-                fontWeight="bold"
-                color={state === active ? 'black' : undefined}>
+              <SizableText size="$5" fontWeight="bold">
                 {state}
               </SizableText>
             </Button>
