@@ -1,8 +1,10 @@
 import 'expo-dev-client';
 
 import { APIProvider } from '@api/APIProvider';
+import { ActionSheetProvider } from '@expo/react-native-action-sheet';
 import { GiphySDK } from '@giphy/react-native-sdk';
 import AuthProvider from '@modules/auth/AuthProvider';
+import { toastConfig } from '@modules/toast/config';
 import { useStreamStore } from '@modules/webrtc/stores/useStreamStore';
 import { ThemeProvider, DarkTheme, DefaultTheme } from '@react-navigation/native';
 import { useFonts } from 'expo-font';
@@ -16,7 +18,6 @@ import { registerGlobals } from 'react-native-webrtc';
 import { TamaguiProvider } from 'tamagui';
 
 import config from '../../tamagui.config';
-import { toastConfig } from '@modules/toast/config';
 
 export const unstable_settings = {
   // Ensure that reloading on `/modal` keeps a back button present.
@@ -65,10 +66,12 @@ export default function RootLayout() {
               realmUrl: process.env.EXPO_PUBLIC_KEYCLOAK_REALM_URL as string,
               scheme: 'lyve-mobile',
             }}>
-            <SafeAreaProvider onLayout={onLayoutRootView}>
-              <Slot />
-              <Toast config={toastConfig} />
-            </SafeAreaProvider>
+            <ActionSheetProvider>
+              <SafeAreaProvider onLayout={onLayoutRootView}>
+                <Slot />
+                <Toast config={toastConfig} />
+              </SafeAreaProvider>
+            </ActionSheetProvider>
           </AuthProvider>
         </APIProvider>
       </ThemeProvider>
