@@ -1,17 +1,17 @@
-import { CreateStreamResponse } from '@api/responses';
 import { useCreateStream } from '@api/stream/mutation/useCreateStream';
+import StreamPreviewImage from '@components/StreamPreviewImage';
 import { Feather } from '@expo/vector-icons';
-import useAuth from '@modules/auth/useAuth';
+import useCameraActionSheet from '@hooks/useCameraActionSheet';
 import GenrePicker from '@modules/stream/GenrePicker';
 import { genres } from '@modules/stream/genres';
-import { router, Link } from 'expo-router';
-import React, { useState } from 'react';
+import { Link, router } from 'expo-router';
+import React, { useEffect, useState } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Toast from 'react-native-toast-message';
-import { YStack, XStack, Button, H3 } from 'tamagui';
+import { YStack, XStack, Button, H3, Spinner } from 'tamagui';
 
 const CreateStreamPage = () => {
-  const mutation = useCreateStream({
+  const { mutate, isPending } = useCreateStream({
     onSettled(data, error) {
       if (error) {
         console.error(error);
@@ -29,7 +29,33 @@ const CreateStreamPage = () => {
       }
     },
   });
-  const [selectedGenre, setSelectedGenre] = useState(genres);
+
+  const { show, assets } = useCameraActionSheet();
+
+  const [selectedGenre, setSelectedGenre] = useState(
+    genres.map((g) => ({ ...g, selected: false }))
+  );
+
+  const [imageUri, setImageUri] = useState<{
+    image: {
+      uri: string;
+      name: string;
+      type: string;
+    };
+  } | null>(null);
+
+  useEffect(() => {
+    if (assets && assets[0]) {
+      const { uri, mimeType, fileName, assetId } = assets[0];
+      setImageUri({
+        image: { uri, type: mimeType ?? 'image/jpeg', name: fileName ?? assetId ?? 'image' },
+      });
+    }
+  }, [assets]);
+
+  const openActionSheet = async () => {
+    await show();
+  };
 
   const addSelectedGenre = (idx: number) => {
     if (
@@ -53,12 +79,25 @@ const CreateStreamPage = () => {
   };
 
   const createStream = async () => {
-    mutation.mutate({
-      previewImgUrl: 'dummy', // Todo use real image
-      genre: selectedGenre
-        .filter((g) => g.selected === true)
-        .map((m) => m.text)
-        .join(','),
+    const formData = new FormData();
+
+    if (imageUri) {
+      // Dont remove this comment below
+      // its needed bc typescript is a hurensohn
+      // @ts-ignore
+      formData.append('image', { ...imageUri.image });
+    }
+
+    formData.append(
+      'genre',
+      selectedGenre
+        .filter((g) => g.selected)
+        .map((g) => g.text)
+        .join(',')
+    );
+
+    mutate({
+      data: formData,
     });
   };
 
@@ -70,18 +109,15 @@ const CreateStreamPage = () => {
             <Feather size={28} name="x" color="#fff" />
           </Link>
         </XStack>
-        <YStack
-          width="60%"
-          height="45%"
-          backgroundColor="#ddd"
-          borderRadius={25}
-          alignSelf="center"
-          alignItems="center"
-          justifyContent="center">
-          <YStack backgroundColor="#00000044" borderRadius={25} padding="$4">
-            <Feather size={28} name="plus" color="#fff" />
-          </YStack>
-        </YStack>
+
+        <StreamPreviewImage
+          uri={imageUri?.image.uri ?? null}
+          handleAddImage={openActionSheet}
+          clearImage={() => {
+            setImageUri(null);
+          }}
+        />
+
         <YStack gap="$5">
           <H3>Pick your Genre {selectedGenre.filter((g) => g.selected === true).length}/3</H3>
           <GenrePicker
@@ -98,6 +134,12 @@ const CreateStreamPage = () => {
 
         <Button
           onPress={() => createStream()}
+          icon={isPending ? () => <Spinner size="small" color="$textMain" /> : undefined}
+          backgroundColor={
+            selectedGenre.filter((g) => g.selected === true).length < 1
+              ? '$primaryLight'
+              : '$accentMain'
+          }
           disabled={selectedGenre.filter((g) => g.selected === true).length < 1}>
           Create Stream
         </Button>

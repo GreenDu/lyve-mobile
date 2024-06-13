@@ -18,8 +18,8 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({ user, isSelf }) => {
     <YStack
       height={340}
       backgroundColor="$color.accentDark"
-      borderBottomEndRadius="$4"
-      borderBottomStartRadius="$4"
+      borderBottomEndRadius="$8"
+      borderBottomStartRadius="$8"
       padding="$4">
       <SafeAreaView
         style={{
@@ -41,15 +41,12 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({ user, isSelf }) => {
             followingCount={user?.followingCount ?? 0}
           />
         </XStack>
-        <YStack justifyContent="flex-start" gap="$2" maxWidth="90%" paddingVertical="$3">
+        <YStack justifyContent="flex-start" gap="$1" maxWidth="90%" paddingVertical="$3">
           <YStack>
             <H3 fontWeight="700">{user?.dispname}</H3>
             <SizableText opacity={0.8}>@{user?.username}</SizableText>
           </YStack>
-
-          <YStack minHeight="$4.5">
-            <SizableText>{user?.bio.substring(0, 100)}</SizableText>
-          </YStack>
+          <SizableText>{user?.bio.substring(0, 100)}</SizableText>
         </YStack>
 
         {/* Button component in profile header*/}
