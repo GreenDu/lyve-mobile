@@ -25,7 +25,7 @@ const NotificationPage = () => {
   }
   return (
     <YStack padding="$4" height="100%">
-      <H1 marginVertical="$4" fontSize={24} fontWeight="800">
+      <H1 marginTop="$2" fontSize={28} fontWeight="800">
         Notifications
       </H1>
 
