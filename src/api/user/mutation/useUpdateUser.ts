@@ -7,19 +7,17 @@ import { axiosClient } from '../../axiosClient';
 
 type Variables = {
   id: string;
-  body: {
-    dispname?: string;
-    avatar_url?: string;
-    bio?: string;
-  };
+  data: FormData;
 };
 
 export const useUpdateUser = createMutation<UpdateUserResponse, Variables, AxiosError>({
   mutationFn: async (variables) =>
-    axiosClient({
-      url: `api/user/${variables.id}/update`,
-      method: 'PUT',
-      data: variables.body,
-      headers: { Authorization: 'Bearer ' + (await AsyncStorage.getItem('accessToken')) },
-    }).then((response) => response.data),
+    axiosClient
+      .put(`api/user/${variables.id}/update`, variables.data, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          Authorization: 'Bearer ' + (await AsyncStorage.getItem('accessToken')),
+        },
+      })
+      .then((response) => response.data),
 });
