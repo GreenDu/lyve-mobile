@@ -1,8 +1,8 @@
-import { View, Text, ScrollView } from 'react-native';
-import React, { useEffect } from 'react';
 import { useGetFollowedBy } from '@api/user/query/useGetFollowedBy';
-import { H1, SizableText, YStack } from 'tamagui';
 import UserFollowerCard from '@components/UserFollowerCard';
+import React, { useEffect } from 'react';
+import { ScrollView } from 'react-native';
+import { H1, YStack } from 'tamagui';
 
 const FollowersPage: React.FC<{ id: string }> = ({ id }) => {
   console.log(id);
