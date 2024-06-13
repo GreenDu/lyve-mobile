@@ -17,9 +17,9 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({ user, isSelf }) => {
   return (
     <YStack
       height={340}
-      backgroundColor="$color.accentDark"
-      borderBottomEndRadius="$8"
-      borderBottomStartRadius="$8"
+      backgroundColor="$primaryDark"
+      borderBottomColor="$primaryLight"
+      borderBottomWidth={1}
       padding="$4">
       <SafeAreaView
         style={{

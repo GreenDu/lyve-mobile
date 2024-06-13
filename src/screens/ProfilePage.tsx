@@ -1,14 +1,12 @@
 import { User } from '@api/responses';
 import { useGetUser } from '@api/user/query/useGetUser';
-import ProfileHeader from '@components/profile/ProfileHeader';
-import GenreBadge from '@components/profile/GenreBadge';
-import { Feather } from '@expo/vector-icons';
-import { router, useLocalSearchParams } from 'expo-router';
-import React, { useEffect, useState } from 'react';
-import { ActivityIndicator, ScrollView, View } from 'react-native';
-import { Button, H3, SizableText, XStack, YStack } from 'tamagui';
-import useAuth from '@modules/auth/useAuth';
 import SwitchButton from '@components/SwitchButton';
+import GenreBadge from '@components/profile/GenreBadge';
+import ProfileHeader from '@components/profile/ProfileHeader';
+import useAuth from '@modules/auth/useAuth';
+import React, { useEffect, useState } from 'react';
+import { ActivityIndicator, ScrollView } from 'react-native';
+import { XStack, YStack } from 'tamagui';
 
 type States = 'Statistics' | 'Achievements';
 const ProfilePage: React.FC<{ userid: string }> = ({ userid }) => {
