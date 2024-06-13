@@ -1,12 +1,12 @@
-import { formatNumber } from '@utils/formatNumber';
-import React from 'react';
-import { XStack, YStack, H2, Avatar, Separator, Button, H3, SizableText } from 'tamagui';
-import FollowStats from './FollowStats';
+import { User } from '@api/responses';
+import FollowButton from '@components/FollowButton';
 import { Feather } from '@expo/vector-icons';
 import { router } from 'expo-router';
-import { User } from '@api/responses';
+import React from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import FollowButton from '@components/FollowButton';
+import { XStack, YStack, Avatar, Button, H3, SizableText } from 'tamagui';
+
+import FollowStats from './FollowStats';
 
 interface ProfileHeaderProps {
   user: User | null;
@@ -60,7 +60,7 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({ user, isSelf }) => {
             <>
               <Button
                 onPress={() => console.log('Edit Profile View')}
-                backgroundColor="#A372F9"
+                backgroundColor="$textWashedOut"
                 size="$4"
                 borderRadius="$10"
                 fontSize={18}>
@@ -68,7 +68,7 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({ user, isSelf }) => {
               </Button>
               <Button
                 onPress={() => router.push(`/profile/${user?.id}/settings`)}
-                backgroundColor="#A372F9"
+                backgroundColor="$textWashedOut"
                 size="$4"
                 borderRadius="$10"
                 icon={<Feather name="settings" size={24} color="white" />}
@@ -77,7 +77,7 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({ user, isSelf }) => {
           ) : (
             <>
               <XStack>
-                <FollowButton size="large" userId={user?.id ?? ''} subscribed={true} />
+                <FollowButton size="large" userId={user?.id ?? ''} subscribed />
               </XStack>
             </>
           )}
