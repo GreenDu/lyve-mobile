@@ -9,6 +9,7 @@ import { Pressable, TextInput, View } from 'react-native';
 const EditProfilePage = () => {
   const { user } = useAuth();
 
+
   return (
     <YStack padding="$4" backgroundColor="$background" gap="$5">
       <XStack alignItems="center" justifyContent="space-between">
@@ -40,26 +41,32 @@ const EditProfilePage = () => {
               <YStack gap="$2">
                 <XStack justifyContent="space-between">
                   <SizableText color="$textWashedOut">Displayname</SizableText>
-                  <SizableText color="$textWashedOut">0/20</SizableText>
-                </XStack>
+                  <SizableText color="$textWashedOut">{props.values.displayname.length}/20</SizableText>
+                  </XStack>
                 <Input
                   placeholderTextColor="$textWashedOut"
                   placeholder="displayname"
-                  onChangeText={props.handleChange('displayname')}
+                  onChangeText={(text) => {
+                    props.handleChange('displayname')(text.substring(0,20)); 
+                    console.log(`Character count: ${text}`); 
+                  }}
                   value={props.values.displayname}
+                  
                 />
               </YStack>
 
               <YStack gap="$2">
                 <XStack justifyContent="space-between">
                   <SizableText color="$textWashedOut">Bio</SizableText>
-                  <SizableText color="$textWashedOut">0/100</SizableText>
+                  <SizableText color="$textWashedOut">{props.values.bio.length}/100</SizableText>
                 </XStack>
                 <TextArea
-                  maxHeight="$8"
                   placeholderTextColor="$textWashedOut"
                   placeholder="bio"
-                  onChangeText={props.handleChange('bio')}
+                  onChangeText={(text) => {
+                    props.handleChange('bio')(text.substring(0,100)); 
+                    console.log(`Character count: ${text}`); 
+                  }}
                   value={props.values.bio}
                 />
               </YStack>
