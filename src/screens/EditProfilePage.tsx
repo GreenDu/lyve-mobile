@@ -1,16 +1,10 @@
 import React from 'react';
 import useAuth from '@modules/auth/useAuth';
-import {
-  Avatar,
-  Button,
-  H1,
-  SizableText,
-  XStack,
-  YStack,
-} from 'tamagui';
+import { Avatar, Button, H1, Input, SizableText, XStack, YStack } from 'tamagui';
 import { Feather } from '@expo/vector-icons';
 import { router } from 'expo-router';
-
+import { Formik } from 'formik';
+import { TextInput, View } from 'react-native';
 
 const EditProfilePage = () => {
   const { user } = useAuth();
@@ -40,11 +34,36 @@ const EditProfilePage = () => {
         </Avatar>
         <SizableText color="$textWashedOut">Edit Avatar</SizableText>
       </YStack>
+
       <YStack gap="$2">
-        <XStack justifyContent="space-between">
-          <SizableText>Display-name</SizableText>
-          <SizableText>0/20</SizableText>
-        </XStack>
+        <Formik initialValues={{ displayname: '', bio: '' }} onSubmit={(values) => {}}>
+          {(props) => (
+            <YStack gap="$2">
+              <XStack justifyContent="space-between">
+                <SizableText color="$textWashedOut">Displayname</SizableText>
+                <SizableText color="$textWashedOut">0/20</SizableText>
+              </XStack>
+              <Input
+                placeholderTextColor="$textWashedOut"
+                placeholder="displayname"
+                onChangeText={props.handleChange('displayname')}
+                value={props.values.displayname}
+              />
+
+              <XStack justifyContent="space-between">
+                <SizableText color="$textWashedOut">Bio</SizableText>
+                <SizableText color="$textWashedOut">0/100</SizableText>
+              </XStack>
+              <Input
+                multiline
+                placeholderTextColor="$textWashedOut"
+                placeholder="bio"
+                onChangeText={props.handleChange('bio')}
+                value={props.values.bio}
+              />
+            </YStack>
+          )}
+        </Formik>
       </YStack>
     </YStack>
   );
