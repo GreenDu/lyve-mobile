@@ -38,29 +38,33 @@ const EditProfilePage = () => {
       <YStack gap="$2">
         <Formik initialValues={{ displayname: '', bio: '' }} onSubmit={(values) => {}}>
           {(props) => (
-            <YStack gap="$2">
-              <XStack justifyContent="space-between">
-                <SizableText color="$textWashedOut">Displayname</SizableText>
-                <SizableText color="$textWashedOut">0/20</SizableText>
-              </XStack>
-              <Input
-                placeholderTextColor="$textWashedOut"
-                placeholder="displayname"
-                onChangeText={props.handleChange('displayname')}
-                value={props.values.displayname}
-              />
+            <YStack gap="$6">
+              <YStack gap="$2">
+                <XStack justifyContent="space-between">
+                  <SizableText color="$textWashedOut">Displayname</SizableText>
+                  <SizableText color="$textWashedOut">0/20</SizableText>
+                </XStack>
+                <Input
+                  placeholderTextColor="$textWashedOut"
+                  placeholder="displayname"
+                  onChangeText={props.handleChange('displayname')}
+                  value={props.values.displayname}
+                />
+              </YStack>
 
-              <XStack justifyContent="space-between">
-                <SizableText color="$textWashedOut">Bio</SizableText>
-                <SizableText color="$textWashedOut">0/100</SizableText>
-              </XStack>
-              <TextArea
-                maxHeight="$8"
-                placeholderTextColor="$textWashedOut"
-                placeholder="bio"
-                onChangeText={props.handleChange('bio')}
-                value={props.values.bio}
-              />
+              <YStack gap="$2">
+                <XStack justifyContent="space-between">
+                  <SizableText color="$textWashedOut">Bio</SizableText>
+                  <SizableText color="$textWashedOut">0/100</SizableText>
+                </XStack>
+                <TextArea
+                  maxHeight="$8"
+                  placeholderTextColor="$textWashedOut"
+                  placeholder="bio"
+                  onChangeText={props.handleChange('bio')}
+                  value={props.values.bio}
+                />
+              </YStack>
             </YStack>
           )}
         </Formik>
