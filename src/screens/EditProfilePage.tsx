@@ -11,7 +11,7 @@ const EditProfilePage = () => {
 
 
   return (
-    <YStack padding="$4" backgroundColor="$background" gap="$5">
+    <YStack padding="$4" backgroundColor="$background" gap="$5" height="100%">
       <XStack alignItems="center" justifyContent="space-between">
         <XStack alignItems="center">
         <Pressable onPress={() => router.back()}>
@@ -23,6 +23,7 @@ const EditProfilePage = () => {
           Finish
         </SizableText>
       </XStack>
+
       <YStack alignItems="center">
         <Avatar circular size="$10">
           <Avatar.Image
