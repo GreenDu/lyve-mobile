@@ -4,7 +4,7 @@ import { Avatar, Button, H1, Input, SizableText, TextArea, XStack, YStack } from
 import { Feather } from '@expo/vector-icons';
 import { router } from 'expo-router';
 import { Formik } from 'formik';
-import { TextInput, View } from 'react-native';
+import { Pressable, TextInput, View } from 'react-native';
 
 const EditProfilePage = () => {
   const { user } = useAuth();
@@ -13,11 +13,9 @@ const EditProfilePage = () => {
     <YStack padding="$4" backgroundColor="$background" gap="$5">
       <XStack alignItems="center" justifyContent="space-between">
         <XStack alignItems="center">
-          <Button
-            backgroundColor="#151718"
-            icon={<Feather name="chevron-left" size={24} color="white" />}
-            onPress={() => router.back()}
-          />
+        <Pressable onPress={() => router.back()}>
+          <Feather name="chevron-left" size={28} color="white" />
+        </Pressable>
           <H1 fontSize={24}>Edit Profile</H1>
         </XStack>
         <SizableText fontSize={18} color="$accentWashedOut">
