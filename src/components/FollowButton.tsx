@@ -35,7 +35,7 @@ const FollowButton: React.FC<{
 
   return (
     <Button
-      backgroundColor={followed ? '$primaryLight' : size === 'large' ? '#A372F9' : '$accentMain'}
+      backgroundColor={followed ? '$primaryLight' : '$accentMain'}
       paddingHorizontal="$4"
       size={size === 'small' ? '$2' : size === 'medium' ? '$3' : '$4'}
       borderRadius={25}

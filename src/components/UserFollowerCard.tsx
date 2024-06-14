@@ -4,6 +4,7 @@ import { Pressable } from 'react-native';
 import { XStack, Avatar, YStack, SizableText } from 'tamagui';
 
 import FollowButton from './FollowButton';
+import useAuth from '@modules/auth/useAuth';
 
 const UserFollowerCard: React.FC<{
   id: string;
@@ -12,6 +13,7 @@ const UserFollowerCard: React.FC<{
   avatar_url: string | null;
   subscribed: boolean;
 }> = ({ id, username, dispname, avatar_url, subscribed }) => {
+  const { user: me } = useAuth();
   return (
     <Pressable
       onPress={() => {
@@ -22,7 +24,10 @@ const UserFollowerCard: React.FC<{
           <Avatar circular size="$5">
             <Avatar.Image
               accessibilityLabel="Nate Wienert"
-              src={avatar_url || 'https://placehold.co/100x100'}
+              src={
+                avatar_url ??
+                'https://lyveblobstorage.blob.core.windows.net/images/avatar_placeholder.png'
+              }
             />
             <Avatar.Fallback delayMs={600} backgroundColor="$blue10" />
           </Avatar>
@@ -34,7 +39,7 @@ const UserFollowerCard: React.FC<{
             </SizableText>
           </YStack>
         </XStack>
-        <FollowButton size="medium" userId={id} subscribed={subscribed} />
+        {me.id !== id && <FollowButton size="medium" userId={id} subscribed={subscribed} />}
       </XStack>
     </Pressable>
   );

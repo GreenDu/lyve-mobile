@@ -1,4 +1,4 @@
-import { View, Text, ScrollView } from 'react-native';
+import { View, Text, ScrollView, Pressable } from 'react-native';
 import React, { useEffect } from 'react';
 import { useGetFollowing } from '@api/user/query/useGetFollowing';
 import { Button, H1, SizableText, XStack, YStack } from 'tamagui';
@@ -8,7 +8,11 @@ import { router } from 'expo-router';
 
 const FollowingPage: React.FC<{ id: string }> = ({ id }) => {
   console.log(id);
-  const { data, isSuccess } = useGetFollowing({ variables: { id }, refetchOnMount: true, refetchOnWindowFocus: true });
+  const { data, isSuccess } = useGetFollowing({
+    variables: { id },
+    refetchOnMount: true,
+    refetchOnWindowFocus: true,
+  });
 
   useEffect(() => {
     console.log(data);
@@ -16,15 +20,18 @@ const FollowingPage: React.FC<{ id: string }> = ({ id }) => {
 
   return (
     <YStack padding="$4" height="100%">
-      <XStack alignItems='center'>
-      <Button
-        backgroundColor="#151718"
-        icon={<Feather name="chevron-left" size={24} color="white" />}
-        onPress={() => router.back()}
-      />
-      <H1 marginVertical="$4" fontSize={24} fontWeight="800">
-        Following
-      </H1>
+      <XStack
+        alignItems="center"
+        space="$2"
+        justifyContent="flex-start"
+        marginTop="$2"
+        paddingBottom="$4">
+        <Pressable onPress={() => router.back()}>
+          <Feather name="chevron-left" size={28} color="white" />
+        </Pressable>
+        <H1 fontSize={28} fontWeight="800">
+          Following
+        </H1>
       </XStack>
       {isSuccess && (
         <ScrollView>

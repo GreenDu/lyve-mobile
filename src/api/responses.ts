@@ -1,4 +1,5 @@
 import { TypedResponse } from '../types/response';
+import { Days } from '../types/types';
 
 export type AchievementType = 'NTH_STREAM' | 'NTH_VIEWERS';
 
@@ -43,6 +44,7 @@ export type Stream = {
   ended_at: Date | null;
   duration: number;
   genre: string;
+  mostViewers: number;
 };
 
 export type Achievement = {
@@ -77,6 +79,7 @@ export type Notification = {
 
 export type GetUserResponse = TypedResponse<{
   user: User & {
+    subscribed: boolean;
     userToAchievement: {
       achievement: Achievement;
     }[];
@@ -130,6 +133,8 @@ export type GetMostStreamedGenresResponse = TypedResponse<{
     genres: {
       name: string;
       percent: number;
+      days: Days[];
+      avgViewers: number;
     }[];
   };
 }>;

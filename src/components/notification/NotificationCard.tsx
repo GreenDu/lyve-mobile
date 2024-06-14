@@ -19,7 +19,7 @@ const NotificationCard: React.FC<{ notification: Notification }> = ({ notificati
 
   return (
     <XStack
-      backgroundColor="$primaryLight"
+      backgroundColor="transparent"
       borderRadius="$4"
       paddingVertical="$3"
       paddingHorizontal="$3"

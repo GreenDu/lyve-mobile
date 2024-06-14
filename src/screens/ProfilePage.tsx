@@ -1,14 +1,12 @@
-import { User } from '@api/responses';
+import { GetUserResponse } from '@api/responses';
 import { useGetUser } from '@api/user/query/useGetUser';
-import ProfileHeader from '@components/profile/ProfileHeader';
-import GenreBadge from '@components/profile/GenreBadge';
-import { Feather } from '@expo/vector-icons';
-import { router, useLocalSearchParams } from 'expo-router';
-import React, { useEffect, useState } from 'react';
-import { ActivityIndicator, ScrollView, View } from 'react-native';
-import { Button, H3, SizableText, XStack, YStack } from 'tamagui';
-import useAuth from '@modules/auth/useAuth';
 import SwitchButton from '@components/SwitchButton';
+import GenreBadge from '@components/profile/GenreBadge';
+import ProfileHeader from '@components/profile/ProfileHeader';
+import useAuth from '@modules/auth/useAuth';
+import React, { useEffect, useState } from 'react';
+import { ActivityIndicator, ScrollView } from 'react-native';
+import { XStack, YStack } from 'tamagui';
 
 type States = 'Statistics' | 'Achievements';
 const ProfilePage: React.FC<{ userid: string }> = ({ userid }) => {
@@ -20,7 +18,7 @@ const ProfilePage: React.FC<{ userid: string }> = ({ userid }) => {
 
   const { user: me } = useAuth();
 
-  const [userData, setUserData] = useState<User>();
+  const [userData, setUserData] = useState<GetUserResponse['data']>(null);
 
   const [activeState, setActiveState] = useState<States>('Statistics');
 
@@ -30,11 +28,11 @@ const ProfilePage: React.FC<{ userid: string }> = ({ userid }) => {
 
   useEffect(() => {
     if (data && data.data) {
-      setUserData(data.data.user);
+      setUserData(data.data);
     }
   }, [data]);
 
-  if (isFetching) {
+  if (isFetching && !userData) {
     return (
       <YStack
         padding="$4"
@@ -49,7 +47,11 @@ const ProfilePage: React.FC<{ userid: string }> = ({ userid }) => {
 
   return (
     <YStack height="100%" backgroundColor="$color.background">
-      <ProfileHeader user={userData!} isSelf={me.id === userid} />
+      <ProfileHeader
+        user={userData?.user!}
+        isSelf={me.id === userid}
+        subscribed={userData?.user.subscribed ?? false}
+      />
 
       <YStack flex={1}>
         {/* Button component for statistics and achievements*/}

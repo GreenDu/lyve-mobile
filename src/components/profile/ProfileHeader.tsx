@@ -1,25 +1,26 @@
-import { formatNumber } from '@utils/formatNumber';
-import React from 'react';
-import { XStack, YStack, H2, Avatar, Separator, Button, H3, SizableText } from 'tamagui';
-import FollowStats from './FollowStats';
+import { User } from '@api/responses';
+import FollowButton from '@components/FollowButton';
 import { Feather } from '@expo/vector-icons';
 import { router } from 'expo-router';
-import { User } from '@api/responses';
+import React from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import FollowButton from '@components/FollowButton';
+import { XStack, YStack, Avatar, Button, H3, SizableText } from 'tamagui';
+
+import FollowStats from './FollowStats';
 
 interface ProfileHeaderProps {
   user: User | null;
   isSelf: boolean;
+  subscribed: boolean;
 }
 
-const ProfileHeader: React.FC<ProfileHeaderProps> = ({ user, isSelf }) => {
+const ProfileHeader: React.FC<ProfileHeaderProps> = ({ user, isSelf, subscribed }) => {
   return (
     <YStack
       height={340}
-      backgroundColor="$color.accentDark"
-      borderBottomEndRadius="$8"
-      borderBottomStartRadius="$8"
+      backgroundColor="$primaryDark"
+      borderBottomColor="$primaryLight"
+      borderBottomWidth={1}
       padding="$4">
       <SafeAreaView
         style={{
@@ -30,7 +31,10 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({ user, isSelf }) => {
           <Avatar circular size="$7">
             <Avatar.Image
               accessibilityLabel="Nate Wienert"
-              src="https://images.unsplash.com/photo-1531384441138-2736e62e0919?&w=100&h=100&dpr=2&q=80"
+              src={
+                user?.avatar_url ??
+                'https://lyveblobstorage.blob.core.windows.net/images/avatar_placeholder.png'
+              }
             />
             <Avatar.Fallback delayMs={600} backgroundColor="$blue10" />
           </Avatar>
@@ -55,7 +59,7 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({ user, isSelf }) => {
             <>
               <Button
                 onPress={() => router.push('/(auth)/(tabs)/profile/editProfile')}
-                backgroundColor="#A372F9"
+                backgroundColor="$textWashedOut"
                 size="$4"
                 borderRadius="$10"
                 fontSize={18}>
@@ -63,7 +67,7 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({ user, isSelf }) => {
               </Button>
               <Button
                 onPress={() => router.push(`/profile/${user?.id}/settings`)}
-                backgroundColor="#A372F9"
+                backgroundColor="$textWashedOut"
                 size="$4"
                 borderRadius="$10"
                 icon={<Feather name="settings" size={24} color="white" />}
@@ -72,7 +76,7 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({ user, isSelf }) => {
           ) : (
             <>
               <XStack>
-                <FollowButton size="large" userId={user?.id ?? ''} subscribed={true} />
+                <FollowButton size="large" userId={user?.id ?? ''} subscribed={subscribed} />
               </XStack>
             </>
           )}
