@@ -45,10 +45,11 @@ const EditProfilePage = () => {
                   <SizableText color="$textWashedOut">{props.values.displayname.length}/20</SizableText>
                   </XStack>
                 <Input
+                  maxLength={20}
                   placeholderTextColor="$textWashedOut"
                   placeholder="displayname"
                   onChangeText={(text) => {
-                    props.handleChange('displayname')(text.substring(0,20)); 
+                    props.handleChange('displayname')(text); 
                   }}
                   value={props.values.displayname}
                 />
@@ -60,10 +61,11 @@ const EditProfilePage = () => {
                   <SizableText color="$textWashedOut">{props.values.bio.length}/100</SizableText>
                 </XStack>
                 <TextArea
+                  maxLength={100}
                   placeholderTextColor="$textWashedOut"
                   placeholder="bio"
                   onChangeText={(text) => {
-                    props.handleChange('bio')(text.substring(0,100)); 
+                    props.handleChange('bio')(text); 
                   }}
                   value={props.values.bio}
                 />
