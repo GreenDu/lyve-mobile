@@ -6,9 +6,10 @@ interface Props {
   genre: string;
   percent: number;
   avgViewer: number;
+  days: string[];
 }
 
-const GenreBadge: React.FC<Props> = ({ genre, percent, avgViewer }) => {
+const GenreBadge: React.FC<Props> = ({ genre, percent, avgViewer, days }) => {
   return (
     <YStack padding="$2" backgroundColor="$primaryLight" borderRadius={15}>
       <YStack gap="$2" paddingLeft="$2" paddingRight="$2">
@@ -17,7 +18,7 @@ const GenreBadge: React.FC<Props> = ({ genre, percent, avgViewer }) => {
         </SizableText>
         <XStack justifyContent='space-between'>
           <SizableText fontSize={13} color="$color.textWashedOut">Avg. Viewers: {formatNumber(avgViewer)}</SizableText>
-          <SizableText fontSize={13} color="$color.textWashedOut">Mostly Mo or Fr</SizableText>
+          <SizableText fontSize={13} color="$color.textWashedOut">Mostly {days}</SizableText>
         </XStack>
       </YStack>
     </YStack>

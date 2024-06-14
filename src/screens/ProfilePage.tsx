@@ -93,10 +93,11 @@ const ProfilePage: React.FC<{ userid: string }> = ({ userid }) => {
             <YStack flex={1} gap="$3">
               {genreData.map((genre, index) => (
                 <GenreBadge
-                  key={index} // Key prop should be unique for each item in the array
-                  genre={genre.name} // Assuming genre name is stored in `name` property
+                  key={index} 
+                  genre={genre.name} 
                   percent={genre.percent}
                   avgViewer={genre.avgViewers}
+                  days={genre.days}
                 />
               ))}
             </YStack>
