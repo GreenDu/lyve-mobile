@@ -1,6 +1,6 @@
 import React from 'react';
 import useAuth from '@modules/auth/useAuth';
-import { Avatar, Button, H1, Input, SizableText, XStack, YStack } from 'tamagui';
+import { Avatar, Button, H1, Input, SizableText, TextArea, XStack, YStack } from 'tamagui';
 import { Feather } from '@expo/vector-icons';
 import { router } from 'expo-router';
 import { Formik } from 'formik';
@@ -54,8 +54,8 @@ const EditProfilePage = () => {
                 <SizableText color="$textWashedOut">Bio</SizableText>
                 <SizableText color="$textWashedOut">0/100</SizableText>
               </XStack>
-              <Input
-                multiline
+              <TextArea
+                maxHeight="$8"
                 placeholderTextColor="$textWashedOut"
                 placeholder="bio"
                 onChangeText={props.handleChange('bio')}
