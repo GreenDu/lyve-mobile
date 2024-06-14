@@ -14,7 +14,7 @@ const GenreBadge: React.FC<Props> = ({ genre, percent, avgViewer, days }) => {
     <YStack padding="$2" backgroundColor="$primaryLight" borderRadius={15}>
       <YStack gap="$2" paddingLeft="$2" paddingRight="$2">
         <SizableText fontSize={14}>
-          {percent}% {genre}
+          {percent.toPrecision(3)}% {genre}
         </SizableText>
         <XStack justifyContent='space-between'>
           <SizableText fontSize={13} color="$color.textWashedOut">Avg. Viewers: {formatNumber(avgViewer)}</SizableText>
