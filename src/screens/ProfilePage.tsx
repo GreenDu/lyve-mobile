@@ -66,12 +66,12 @@ const ProfilePage: React.FC<{ userid: string }> = ({ userid }) => {
         <ScrollView bounces>
           <YStack marginBottom="$8" padding="$4">
             <YStack flex={1} gap="$3">
-              <GenreBadge genre="Education 👨‍🏫" percent={30} />
-              <GenreBadge genre="Music 🎶" percent={20} />
-              <GenreBadge genre="Football ⚽️" percent={13} />
-              <GenreBadge genre="IRL 😄" percent={9} />
-              <GenreBadge genre="Art 🎨" percent={5} />
-              <GenreBadge genre="Sport 🏈" percent={2} />
+              <GenreBadge genre="Education 👨‍🏫" percent={30} avgViewer={10234} />
+              <GenreBadge genre="Music 🎶" percent={20} avgViewer={1200} />
+              <GenreBadge genre="Football ⚽️" percent={13} avgViewer={1200} />
+              <GenreBadge genre="IRL 😄" percent={9} avgViewer={1200} />
+              <GenreBadge genre="Art 🎨" percent={5} avgViewer={1200} />
+              <GenreBadge genre="Sport 🏈" percent={2} avgViewer={1200} />
             </YStack>
           </YStack>
         </ScrollView>
