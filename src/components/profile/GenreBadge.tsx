@@ -23,7 +23,7 @@ interface Props {
   percent?: number;
 }
 
-const ProfileHeader: React.FC<Props> = ({ genre = "Camping  ⛺️", percent = 0 }) => {
+const GenreBadge: React.FC<Props> = ({ genre = "Camping  ⛺️", percent = 0 }) => {
   const genreIcon = genreLookup[genre] || '❓';
 
   return (
@@ -45,4 +45,4 @@ const ProfileHeader: React.FC<Props> = ({ genre = "Camping  ⛺️", percent = 0
   );
 };
 
-export default ProfileHeader;
+export default GenreBadge;
