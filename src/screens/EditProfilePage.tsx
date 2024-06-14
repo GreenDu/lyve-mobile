@@ -48,10 +48,8 @@ const EditProfilePage = () => {
                   placeholder="displayname"
                   onChangeText={(text) => {
                     props.handleChange('displayname')(text.substring(0,20)); 
-                    console.log(`Character count: ${text}`); 
                   }}
                   value={props.values.displayname}
-                  
                 />
               </YStack>
 
@@ -65,7 +63,6 @@ const EditProfilePage = () => {
                   placeholder="bio"
                   onChangeText={(text) => {
                     props.handleChange('bio')(text.substring(0,100)); 
-                    console.log(`Character count: ${text}`); 
                   }}
                   value={props.values.bio}
                 />
