@@ -119,12 +119,11 @@ export type GetUserFollowedByResponse = TypedResponse<{
 }>;
 
 export type GetFeedResponse = TypedResponse<{
-  feed: Stream &
-    {
-      streamer: Streamer & {
-        subscribed: boolean;
-      };
-    }[];
+  feed: (Stream & {
+    streamer: Streamer & {
+      subscribed: boolean;
+    };
+  })[];
   nextCursor: string | null;
   hasNext: boolean;
 }>;
