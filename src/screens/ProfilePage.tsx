@@ -1,7 +1,7 @@
 import { GetUserResponse } from '@api/responses';
 import { useGetUser } from '@api/user/query/useGetUser';
 import SwitchButton from '@components/SwitchButton';
-import GenreBadge from '@components/profile/GenreBadge';
+import GenreStatisticBadge from '@components/profile/GenreStatisticBadge';
 import ProfileHeader from '@components/profile/ProfileHeader';
 import useAuth from '@modules/auth/useAuth';
 import React, { useEffect, useState } from 'react';
@@ -66,15 +66,15 @@ const ProfilePage: React.FC<{ userid: string }> = ({ userid }) => {
         <ScrollView bounces>
           <YStack gap="$-8" marginBottom="$8">
             <XStack flex={1} justifyContent="center" gap="$6" padding="$7">
-              <GenreBadge genre="Education 👨‍🏫" percent={30} />
-              <GenreBadge genre="Music 🎶" percent={20} />
-              <GenreBadge genre="Football ⚽️" percent={13} />
+              <GenreStatisticBadge genre="Education 👨‍🏫" percent={30} />
+              <GenreStatisticBadge genre="Music 🎶" percent={20} />
+              <GenreStatisticBadge genre="Football ⚽️" percent={13} />
             </XStack>
 
             <XStack flex={1} justifyContent="center" gap="$6" padding="$7">
-              <GenreBadge genre="IRL 😄" percent={9} />
-              <GenreBadge genre="Art 🎨" percent={5} />
-              <GenreBadge genre="Sport 🏈" percent={2} />
+              <GenreStatisticBadge genre="IRL 😄" percent={9} />
+              <GenreStatisticBadge genre="Art 🎨" percent={5} />
+              <GenreStatisticBadge genre="Sport 🏈" percent={2} />
             </XStack>
           </YStack>
         </ScrollView>
