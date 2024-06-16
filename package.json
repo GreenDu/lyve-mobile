@@ -13,7 +13,8 @@
     "ios:native": "expo run:ios -d --no-build-cache",
     "test": "jest --watch --coverage=false --changedSince=origin/main",
     "testDebug": "jest -o --watch --coverage=false",
-    "testFinal": "jest"
+    "testFinal": "jest",
+    "coverage": "jest -i --coverage --passWithNoTests"
   },
   "dependencies": {
     "@config-plugins/react-native-webrtc": "^9.0.0",
@@ -22,6 +23,7 @@
     "@giphy/react-native-sdk": "^3.2.6",
     "@react-native-async-storage/async-storage": "1.21.0",
     "@react-navigation/native": "^6.1.7",
+    "@shopify/flash-list": "1.6.3",
     "@tamagui/font-inter": "1.74.8",
     "@tamagui/react-native-media-driver": "1.74.8",
     "@tamagui/shorthands": "1.74.8",
@@ -70,6 +72,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
+    "@faker-js/faker": "^8.4.1",
     "@tamagui/babel-plugin": "1.74.8",
     "@types/base-64": "^1.0.2",
     "@types/react": "~18.2.14",
