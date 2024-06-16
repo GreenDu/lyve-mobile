@@ -9,7 +9,9 @@ const FollowButton: React.FC<{
   size: 'small' | 'medium' | 'large';
   userId: string;
   subscribed: boolean;
-}> = ({ size, userId, subscribed }) => {
+  followColor?: string;
+  unfollowColor?: string;
+}> = ({ size, userId, subscribed, followColor, unfollowColor }) => {
   const { user: me } = useAuth();
 
   const [followed, setFollowed] = useState<boolean>(subscribed);
@@ -35,7 +37,7 @@ const FollowButton: React.FC<{
 
   return (
     <Button
-      backgroundColor={followed ? '$primaryLight' : '$accentMain'}
+      backgroundColor={followed ? unfollowColor ?? '$primaryLight' : followColor ?? '$accentMain'}
       paddingHorizontal="$4"
       size={size === 'small' ? '$2' : size === 'medium' ? '$3' : '$4'}
       borderRadius={25}
