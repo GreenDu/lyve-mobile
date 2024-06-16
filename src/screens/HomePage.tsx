@@ -1,40 +1,91 @@
 import { usePaginatedFeed } from '@api/feed/query/usePaginatedFeed';
-import { Stream, Streamer, User } from '@api/responses';
+import { GetFeedResponse, Stream, Streamer } from '@api/responses';
+import StreamCard from '@components/stream/StreamCard';
 import useAuth from '@modules/auth/useAuth';
+import EmptyFeedPlaceholder from '@modules/home/EmptyFeedPlaceholder';
+import ErrorFeedPlaceholder from '@modules/home/ErrorFeedPlaceholder';
 import HomeHeader from '@modules/home/HomeHeader';
-import MyFeed from '@modules/home/MyFeed';
-import RecommendedFeed from '@modules/home/RecommendedFeed';
-import React, { useEffect, useState } from 'react';
+import { MasonryFlashList } from '@shopify/flash-list';
+import { generateFeed } from '@utils/generateFeed';
+import React, { useCallback, useEffect, useState } from 'react';
+import { ActivityIndicator } from 'react-native';
 import { YStack } from 'tamagui';
+
+type FeedItem = Stream & {
+  streamer: Streamer & {
+    subscribed: boolean;
+  };
+};
 
 const HomePage = () => {
   const { user } = useAuth();
 
-  // const {  fetchNextPage, data, isSuccess: isFeedSuccess } = usePaginatedFeed({
-  //   id: user.id,
-  //   limit: '20',
-  // });
+  const { fetchNextPage, refetch, isRefetching, data, isSuccess, isLoading, isFetching, isError } =
+    usePaginatedFeed({
+      id: user.id,
+      limit: '20',
+    });
 
-  const [myStreamsFeed, setMyStreamsFeed] = useState<
-    (Stream & {
-      streamer: Pick<
-        User,
-        'id' | 'username' | 'dispname' | 'avatar_url' | 'promotionPoints' | 'level'
-      >;
-    })[]
-  >([]);
-  const [recommendedStreamsFeed, setRecommendedStreamsFeed] = useState<
-    (Stream & {
-      streamer: Streamer;
-    })[]
-  >([]);
+  const [feed, setFeed] = useState<NonNullable<GetFeedResponse['data']>>({
+    feed: generateFeed(50),
+    // feed: [],
+    hasNext: false,
+    nextCursor: '',
+  });
+
+  useEffect(() => {
+    if (data && isSuccess) {
+      const newFeed = data.pages[0]?.data?.feed ?? [];
+      const lastPage = data.pages[data.pages.length - 1]!.data;
+      setFeed((prevFeed) => ({
+        feed: [...prevFeed.feed, ...newFeed],
+        hasNext: lastPage?.hasNext || false,
+        nextCursor: lastPage?.nextCursor || '',
+      }));
+    }
+  }, [data, isSuccess]);
+
+  const handleRefresh = () => {
+    refetch();
+  };
+
+  const renderItem = useCallback(
+    ({ item }: { item: FeedItem }) => <StreamCard data={item} />,
+    [data]
+  );
+
+  const keyExtractor = useCallback((item: FeedItem) => item.id, [data]);
 
   return (
     <YStack height="100%" backgroundColor="$color.background" padding="$4">
       <HomeHeader />
-      <MyFeed feed={myStreamsFeed} />
-
-      <RecommendedFeed feed={recommendedStreamsFeed} />
+      {isLoading ? (
+        <YStack
+          padding="$4"
+          justifyContent="center"
+          alignItems="center"
+          backgroundColor="$primaryDark"
+          space="$2">
+          <ActivityIndicator size="small" />
+        </YStack>
+      ) : isError ? (
+        <ErrorFeedPlaceholder onRetry={handleRefresh} />
+      ) : (
+        <MasonryFlashList
+          bounces
+          showsVerticalScrollIndicator={false}
+          ListEmptyComponent={<EmptyFeedPlaceholder onRefresh={handleRefresh} />}
+          data={feed.feed}
+          numColumns={2}
+          renderItem={renderItem}
+          keyExtractor={keyExtractor}
+          estimatedItemSize={273}
+          onEndReached={() => !isFetching && fetchNextPage()}
+          onEndReachedThreshold={0.3}
+          onRefresh={handleRefresh}
+          refreshing={isRefetching}
+        />
+      )}
     </YStack>
   );
 };
