@@ -39,14 +39,13 @@ const StreamChatList = () => {
   }, [messages]);
 
   return (
-    <YStack backgroundColor="$colorTransparent" flex={1}>
+    <YStack backgroundColor="$colorTransparent" flex={1} paddingBottom="$4">
       <FlatList
         ref={flatListRef}
         data={sortedMessages}
         renderItem={({ item, index }) => renderMessage(item, index)}
         keyExtractor={keyExtractor}
         contentContainerStyle={{ flexDirection: 'column-reverse' }}
-        scrollEnabled
         inverted
       />
     </YStack>
