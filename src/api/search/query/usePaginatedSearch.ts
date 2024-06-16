@@ -2,36 +2,34 @@ import { axiosClient } from '@api/axiosClient';
 import { SearchResponse } from '@api/responses';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
-  InfiniteQueryObserverResult,
-  UseInfiniteQueryOptions,
+  InfiniteData,
+  QueryKey,
+  UndefinedInitialDataInfiniteOptions,
+  UseInfiniteQueryResult,
   useInfiniteQuery,
 } from '@tanstack/react-query';
-import { useEffect, useState } from 'react';
+import { useMemo } from 'react';
 
 type Variables = { query: string; limit: string };
 
 export const usePaginatedSearch = (
   variables: Variables,
-  opts?: UseInfiniteQueryOptions<SearchResponse>
-): InfiniteQueryObserverResult<SearchResponse, Error> => {
-  const [accessToken, setAccessToken] = useState<string | null>(null);
-
-  useEffect(() => {
-    const fetchAccessToken = async () => {
-      const token = await AsyncStorage.getItem('accessToken');
-      setAccessToken(token);
-    };
-
-    fetchAccessToken();
+  opts?: UndefinedInitialDataInfiniteOptions<
+    SearchResponse,
+    Error,
+    InfiniteData<SearchResponse, string>,
+    QueryKey,
+    unknown
+  >
+): UseInfiniteQueryResult<InfiniteData<SearchResponse, unknown>, Error> => {
+  const accessToken = useMemo(async () => {
+    return await AsyncStorage.getItem('accessToken');
   }, []);
 
-  return useInfiniteQuery<SearchResponse, Error, SearchResponse>({
+  return useInfiniteQuery<SearchResponse, Error>({
     ...opts,
     queryKey: ['search', variables.query, variables.limit],
     queryFn: async ({ pageParam = '' }) => {
-      if (!accessToken) {
-        throw new Error('Access token is not available');
-      }
       return axiosClient
         .get<SearchResponse>(`api/search`, {
           params: {
