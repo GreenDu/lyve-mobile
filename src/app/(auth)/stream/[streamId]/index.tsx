@@ -1,7 +1,8 @@
 import useSocket from '@modules/ws/useSocket';
 import StreamPage from '@screens/StreamPage';
-import { useLocalSearchParams } from 'expo-router';
+import { router, useLocalSearchParams } from 'expo-router';
 import React, { useEffect, useRef } from 'react';
+import Toast from 'react-native-toast-message';
 
 const Stream = () => {
   const { streamId } = useLocalSearchParams();
@@ -15,6 +16,20 @@ const Stream = () => {
       console.log('send join stream');
       socket.emit('join_stream', { streamId: streamId as string }, (data) => {
         console.log(`Send join stream success: ${data?.success}`);
+
+        if (data && !data.success) {
+          Toast.show({
+            type: 'error',
+            text1: data.error[0]!.name,
+            text2: data.error[0]!.msg,
+          });
+
+          if (router.canGoBack()) {
+            router.back();
+          } else {
+            router.replace('/(auth)/(tabs)/');
+          }
+        }
       });
     }
 
