@@ -30,7 +30,9 @@ const CreateStreamPage = () => {
     },
   });
 
-  const { show, assets } = useCameraActionSheet();
+  const { show, assets } = useCameraActionSheet({
+    aspect: [9, 16],
+  });
 
   const [selectedGenre, setSelectedGenre] = useState(
     genres.map((g) => ({ ...g, selected: false }))

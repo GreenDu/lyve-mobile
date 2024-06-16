@@ -1,30 +1,40 @@
 import { axiosClient } from '@api/axiosClient';
 import { SearchResponse } from '@api/responses';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { UseInfiniteQueryOptions, UseQueryOptions, useInfiniteQuery } from '@tanstack/react-query';
-import { AxiosError } from 'axios';
+import {
+  InfiniteData,
+  QueryKey,
+  UndefinedInitialDataInfiniteOptions,
+  UseInfiniteQueryResult,
+  useInfiniteQuery,
+} from '@tanstack/react-query';
 import { useMemo } from 'react';
-import { createInfiniteQuery } from 'react-query-kit';
 
 type Variables = { query: string; limit: string };
 
 export const usePaginatedSearch = (
   variables: Variables,
-  opts?: UseInfiniteQueryOptions<SearchResponse>
-) => {
+  opts?: UndefinedInitialDataInfiniteOptions<
+    SearchResponse,
+    Error,
+    InfiniteData<SearchResponse, string>,
+    QueryKey,
+    unknown
+  >
+): UseInfiniteQueryResult<InfiniteData<SearchResponse, unknown>, Error> => {
   const accessToken = useMemo(async () => {
     return await AsyncStorage.getItem('accessToken');
   }, []);
 
-  return useInfiniteQuery<SearchResponse, Error, SearchResponse>({
+  return useInfiniteQuery<SearchResponse, Error>({
     ...opts,
-    queryKey: ['search'],
-    queryFn: async ({ pageParam }) => {
+    queryKey: ['search', variables.query, variables.limit],
+    queryFn: async ({ pageParam = '' }) => {
       return axiosClient
-        .get(`api/search`, {
+        .get<SearchResponse>(`api/search`, {
           params: {
             query: variables.query,
-            courser: pageParam,
+            curser: pageParam,
             limit: variables.limit,
           },
           headers: { Authorization: `Bearer ${accessToken}` },
@@ -32,6 +42,6 @@ export const usePaginatedSearch = (
         .then((response) => response.data);
     },
     initialPageParam: '',
-    getNextPageParam: (lastPage) => lastPage.data?.nextCursor,
+    getNextPageParam: (lastPage) => lastPage.data?.nextCursor ?? undefined,
   });
 };

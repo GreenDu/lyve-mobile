@@ -6,7 +6,7 @@ interface Props {
   percent: number;
 }
 
-const GenreBadge: React.FC<Props> = ({ genre, percent = 0 }) => {
+const GenreStatisticBadge: React.FC<Props> = ({ genre, percent = 0 }) => {
   return (
     <YStack
       padding="$2"
@@ -33,4 +33,4 @@ const GenreBadge: React.FC<Props> = ({ genre, percent = 0 }) => {
   );
 };
 
-export default GenreBadge;
+export default GenreStatisticBadge;

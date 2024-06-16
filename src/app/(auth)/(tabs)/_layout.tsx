@@ -9,7 +9,7 @@ export default function TabLayout() {
   const { user } = useAuth();
 
   return (
-<Tabs
+    <Tabs
       screenOptions={{
         tabBarActiveTintColor: 'white',
         tabBarInactiveTintColor: '#676D75',
@@ -21,7 +21,8 @@ export default function TabLayout() {
           borderWidth: 0,
           height: Platform.OS === 'ios' ? '11%' : '8%',
           borderColor: '#151718',
-          borderTopColor: '#151718',
+          borderTopWidth: 1,
+          borderTopColor: '#242526',
           backgroundColor: '#151718',
           paddingHorizontal: 16,
         },

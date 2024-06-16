@@ -120,11 +120,12 @@ export type GetUserFollowedByResponse = TypedResponse<{
 
 export type GetFeedResponse = TypedResponse<{
   feed: (Stream & {
-    streamer: Pick<
-      User,
-      'id' | 'username' | 'dispname' | 'avatar_url' | 'promotionPoints' | 'level'
-    >;
+    streamer: Streamer & {
+      subscribed: boolean;
+    };
   })[];
+  nextCursor: string | null;
+  hasNext: boolean;
 }>;
 
 export type GetMostStreamedGenresResponse = TypedResponse<{
@@ -161,12 +162,6 @@ export type CreateStreamResponse = TypedResponse<{
   stream: Stream & {
     streamer: Streamer;
   };
-}>;
-
-export type GetRecommendedStreamsResponse = TypedResponse<{
-  streams: (Stream & {
-    streamer: Streamer;
-  })[];
 }>;
 
 export type DeleteStreamResponse = TypedResponse<{
