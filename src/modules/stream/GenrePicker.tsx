@@ -1,7 +1,6 @@
-import { View, Text } from 'react-native';
+import GenreBadge from '@components/genre/GenreBadge';
 import React from 'react';
 import { XStack } from 'tamagui';
-import GenreBadge from '@components/GenreBadge';
 
 interface GenrePickerProps {
   genres: {
@@ -18,6 +17,7 @@ const GenrePicker: React.FC<GenrePickerProps> = ({ genres, handlePress }) => {
       {genres.map((g, idx) => {
         return (
           <GenreBadge
+            size="medium"
             key={`genre:${idx}:${g.text}`}
             text={g.text}
             color={g.color}
