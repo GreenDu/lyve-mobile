@@ -1,14 +1,13 @@
-import { View, Text } from 'react-native';
+import { Feather } from '@expo/vector-icons';
+import useAuth from '@modules/auth/useAuth';
+import { router } from 'expo-router';
 import React from 'react';
 import { XStack, Avatar, Button } from 'tamagui';
-import useAuth from '@modules/auth/useAuth';
-import { Feather } from '@expo/vector-icons';
-import { router } from 'expo-router';
 
 const HomeHeader = () => {
   const { user } = useAuth();
   return (
-    <XStack justifyContent="space-between" alignItems="center">
+    <XStack justifyContent="space-between" alignItems="center" paddingBottom="$6">
       <Avatar circular size="$5">
         <Avatar.Image
           accessibilityLabel="Nate Wienert"
