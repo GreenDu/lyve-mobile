@@ -11,6 +11,7 @@ const HomeHeader = () => {
       <Avatar circular size="$5">
         <Avatar.Image
           accessibilityLabel="Nate Wienert"
+          testID="avatar"
           src={
             user.avatar_url ||
             'https://lyveblobstorage.blob.core.windows.net/images/avatar_placeholder.png'
@@ -23,12 +24,14 @@ const HomeHeader = () => {
           onPress={() => router.navigate('/notification')}
           backgroundColor="$primaryDark"
           borderColor="$primaryLight"
+          testID="notification-button"
           icon={<Feather name="bell" size={24} color="white" />}
           circular
           size="$5"
         />
         <Button
           onPress={() => router.navigate('/search')}
+          testID="search-button"
           backgroundColor="$primaryDark"
           borderColor="$primaryLight"
           icon={<Feather name="search" size={24} color="white" />}

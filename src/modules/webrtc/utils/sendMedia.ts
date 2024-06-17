@@ -1,5 +1,3 @@
-import { AppData, Producer } from 'mediasoup-client/lib/types';
-
 import { useProducerStore } from '../stores/useProducerStore';
 import { useStreamStore } from '../stores/useStreamStore';
 

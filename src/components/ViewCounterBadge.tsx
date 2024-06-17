@@ -27,7 +27,8 @@ const ViewCounterBadge: React.FC<ViewCounterBadgeProps> = ({ count, size = 'smal
       alignItems="center"
       justifyContent="center"
       borderRadius={25}
-      gap="$2">
+      gap="$2"
+      testID="viewerCounterBadge">
       {size === 'normal' && <Feather name="eye" size={20} color="white" />}
       <SizableText>{formatNumber(count) ?? 0}</SizableText>
     </XStack>

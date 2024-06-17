@@ -9,8 +9,9 @@ interface GenreBadgeGroupProps {
 const GenreBadgeGroup: React.FC<GenreBadgeGroupProps> = ({ children }) => {
   return (
     <XStack flex={1} justifyContent="flex-end" position="relative">
-      {children.map((child) => {
+      {children.map((child, index) => {
         return React.cloneElement(child, {
+          key: index,
           size: 'small',
           marginLeft: -16, // Adjust margin to negative marginRight
           elevation: 6,

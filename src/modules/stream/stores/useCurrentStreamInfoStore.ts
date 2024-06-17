@@ -20,7 +20,7 @@ export const useCurrentStreamInfoStore = create(
       setEnded: (e: boolean) => set(() => ({ ended: e })),
       reset: () =>
         set(() => ({
-          streamId: '',
+          id: '',
           streamer: null,
           viewerCount: 0,
           active: false,
