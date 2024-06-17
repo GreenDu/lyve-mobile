@@ -8,10 +8,16 @@ Lyve is a livestreaming platform where users can create and watch livestreams. V
 
 ### Techstack
 
-- TypeScript
-- React-Native
-- Expo
-- Tamagui
+<span style="display:block">
+<a href="https://www.typescriptlang.org/">
+<img height="50px"  margin="auto"  src="https://cdn.worldvectorlogo.com/logos/typescript.svg" alt="Typescript"/></a>
+<a href="https://expo.dev/">
+<img height="50px"  margin="auto" src="https://cdn.icon-icons.com/icons2/2389/PNG/512/expo_logo_icon_145293.png"/></a>
+<a href="https://reactnative.dev/">
+<img margin="auto" height="50px" src="https://cdn.worldvectorlogo.com/logos/react-native-1.svg" alt="reactnative"/></a>
+<a href="https://tamagui.dev/">
+<img margin="auto" height="50px" src="https://avatars.githubusercontent.com/u/94025540?s=48&v=4" alt="Tamagui"></a>
+</span>
 
 ## Getting Started
 
