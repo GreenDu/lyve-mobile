@@ -1,0 +1,14 @@
+appId: ${APP_ID}
+---
+- clearState
+- launchApp
+
+- runFlow:
+    when:
+      visible: 'http://localhost:8081'
+    commands:
+      - tapOn: 'http://localhost:8081'
+      - assertVisible: 'Continue'
+      - tapOn: 'Continue'
+      - tapOn:
+          point: 50%,14%

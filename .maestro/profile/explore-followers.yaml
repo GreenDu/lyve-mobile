@@ -1,0 +1,15 @@
+appId: ${APP_ID}
+---
+- tapOn:
+    id: 'followers-pressable'
+
+- assertVisible:
+    id: 'followers-list'
+
+- assertVisible: 'Followers'
+
+- assertVisible:
+    id: 'back-pressable'
+
+- tapOn:
+    id: 'back-pressable'

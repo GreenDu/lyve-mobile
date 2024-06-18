@@ -1,0 +1,27 @@
+appId: ${APP_ID}
+env:
+  USERNAME: 'louis'
+  PASSWORD: 'louis'
+---
+- assertVisible: 'Welcome to'
+- tapOn:
+    id: 'login-button'
+
+- extendedWaitUntil:
+    visible: 'Fortfahren' # or any other selector
+    timeout: 15000
+
+- tapOn: 'Fortfahren'
+
+- runFlow:
+    when:
+      visible: 'Restart login'
+    commands:
+      - tapOn: 'Restart login'
+
+- assertVisible: 'Username or email'
+- tapOn: 'Username or email'
+- inputText: ${USERNAME}
+- tapOn: 'Password'
+- inputText: ${PASSWORD}
+- tapOn: 'Sign In'
