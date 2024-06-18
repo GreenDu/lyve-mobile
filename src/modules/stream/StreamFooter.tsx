@@ -80,6 +80,7 @@ const StreamFooter: React.FC = () => {
       <YStack space="$3">
         {!isStreamer && (
           <Button
+            testID="reward-button"
             size="$5"
             onPress={toggleRewardModal}
             backgroundColor="$accentMain"
@@ -88,6 +89,7 @@ const StreamFooter: React.FC = () => {
           />
         )}
         <Button
+          testID="gif-button"
           size="$5"
           onPress={() => GiphyDialog.show()}
           backgroundColor="$accentMain"

@@ -1,9 +1,10 @@
-import { Button, ButtonProps } from "tamagui";
-import { Feather } from "@expo/vector-icons";
+import { Button, ButtonProps } from 'tamagui';
+import { Feather } from '@expo/vector-icons';
 
 const FloatingButton = (props: ButtonProps) => {
   return (
     <Button
+      testID="floating-button"
       backgroundColor="$color.accentMain"
       icon={<Feather size={28} name="video" color="#fff" />}
       circular

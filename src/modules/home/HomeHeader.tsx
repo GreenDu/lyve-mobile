@@ -7,7 +7,11 @@ import { XStack, Avatar, Button } from 'tamagui';
 const HomeHeader = () => {
   const { user } = useAuth();
   return (
-    <XStack justifyContent="space-between" alignItems="center" paddingBottom="$6">
+    <XStack
+      justifyContent="space-between"
+      alignItems="center"
+      paddingBottom="$6"
+      testID="home-header">
       <Avatar circular size="$5">
         <Avatar.Image
           accessibilityLabel="Nate Wienert"

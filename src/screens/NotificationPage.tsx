@@ -29,7 +29,7 @@ const NotificationPage = () => {
         Notifications
       </H1>
 
-      <ScrollView bounces>
+      <ScrollView bounces testID="notification-list">
         <YStack space="$3">
           {data?.data?.notifications.map((n) => {
             return <NotificationCard key={n.id} notification={n} />;

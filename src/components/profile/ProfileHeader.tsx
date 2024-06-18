@@ -28,7 +28,7 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({ user, isSelf, subscribed 
           flexDirection: 'column',
         }}>
         <XStack alignItems="center">
-          <Avatar circular size="$7">
+          <Avatar circular size="$7" testID="profile-avatar">
             <Avatar.Image
               accessibilityLabel="Nate Wienert"
               src={
@@ -47,11 +47,15 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({ user, isSelf, subscribed 
         </XStack>
         <YStack justifyContent="flex-start" gap="$1" maxWidth="90%" paddingVertical="$3">
           <YStack>
-            <H3 fontWeight="700">{user?.dispname}</H3>
-            <SizableText opacity={0.8}>@{user?.username}</SizableText>
+            <H3 testID="user-dispname" fontWeight="700">
+              {user?.dispname}
+            </H3>
+            <SizableText testID="user-username" opacity={0.8}>
+              @{user?.username}
+            </SizableText>
           </YStack>
           <YStack minHeight="$4.5">
-            <SizableText>{user?.bio.substring(0, 100)}</SizableText>
+            <SizableText testID="user-bio">{user?.bio.substring(0, 100)}</SizableText>
           </YStack>
         </YStack>
 
@@ -60,6 +64,7 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({ user, isSelf, subscribed 
           {isSelf ? (
             <>
               <Button
+                testID="edit-profile-button"
                 onPress={() => console.log('Edit Profile View')}
                 backgroundColor="$textWashedOut"
                 size="$4"
@@ -68,6 +73,7 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({ user, isSelf, subscribed 
                 Edit Profile
               </Button>
               <Button
+                testID="settings-button"
                 onPress={() => router.push(`/profile/${user?.id}/settings`)}
                 backgroundColor="$textWashedOut"
                 size="$4"

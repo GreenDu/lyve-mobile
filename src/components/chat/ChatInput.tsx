@@ -17,6 +17,7 @@ const ChatInput: React.FC<{ onPress: () => void }> = ({ onPress }) => {
       flex={1}>
       <XStack flex={1}>
         <Input
+          testID="chat-input"
           value={message}
           onChangeText={(m) => setMessage(m)}
           borderColor="$colorTransparent"
@@ -40,6 +41,7 @@ const ChatInput: React.FC<{ onPress: () => void }> = ({ onPress }) => {
         />
       </XStack>
       <Button
+        testID="send-button"
         onPress={onPress}
         icon={<Feather name="send" size={21} color="white" />}
         circular

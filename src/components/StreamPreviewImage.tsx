@@ -29,7 +29,11 @@ const StreamPreviewImage: React.FC<StreamPreviewImageProps> = ({
       {!imageUri ? (
         <YStack width="100%" height="100%" alignItems="center" justifyContent="center">
           <Pressable onPress={handleAddImage}>
-            <YStack backgroundColor="#000000" borderRadius={100} padding="$4">
+            <YStack
+              backgroundColor="#000000"
+              borderRadius={100}
+              padding="$4"
+              testID="add-image-button">
               <Feather size={28} name="plus" color="#fff" />
             </YStack>
           </Pressable>
@@ -47,7 +51,8 @@ const StreamPreviewImage: React.FC<StreamPreviewImageProps> = ({
                 backgroundColor="#00000099"
                 borderRadius={100}
                 padding="$4"
-                alignSelf="center">
+                alignSelf="center"
+                testID="clear-image-button">
                 <Feather size={28} name="x" color="#fff" />
               </YStack>
             </Pressable>
