@@ -14,7 +14,9 @@
     "test": "jest --watch --coverage=false --changedSince=origin/main",
     "testDebug": "jest -o --watch --coverage=false",
     "testFinal": "jest",
-    "coverage": "jest -i --coverage --passWithNoTests"
+    "coverage": "jest -i --coverage --passWithNoTests",
+    "install-maestro": "curl -Ls 'https://get.maestro.mobile.dev' | bash",
+    "test:e2e": "maestro test .maestro/ -e APP_ID=com.anonymous.lyve-mobile"
   },
   "dependencies": {
     "@config-plugins/react-native-webrtc": "^9.0.0",
