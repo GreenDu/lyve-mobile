@@ -55,8 +55,22 @@ To run the App locally please refer first to [Introduction to development builds
 
 ### Run Tests
 
+Run Unit and Integration Tests
+
 ```bash
   yarn test
+```
+
+Run e2e Tests
+
+```bash
+  yarn test:e2e
+```
+
+Get Test coverage
+
+```bash
+  yarn coverage
 ```
 
 ## Environment Variables
