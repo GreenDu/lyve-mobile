@@ -13,6 +13,7 @@ web-build/
 expo-env.d.ts
 # tamagui
 .tamagui/
+coverage
 
 
 ios
