@@ -12,6 +12,16 @@ appId: ${APP_ID}
 - tapOn:
     id: 'settings-button'
 
+- assertVisible: 'Settings'
+
+- repeat:
+    times: 3
+    commands:
+      - swipe:
+          start: 50%,50%
+          end: 50%,20%
+          duration: 300
+
 - assertVisible:
     id: 'logout-button'
 

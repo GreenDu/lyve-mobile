@@ -1,0 +1,33 @@
+export type SectionTitle =
+  | 'Account'
+  | 'Livestream Settings'
+  | 'Privacy and Safety'
+  | 'Notifications'
+  | 'Support and Feedback'
+  | 'Legal'
+  | 'About'
+  | 'Logout';
+
+export type SettingTitle =
+  | 'Profile'
+  | 'Security'
+  | 'Shares'
+  | 'Permissions'
+  | 'Preferences'
+  | 'Chat Options'
+  | 'Privacy'
+  | 'Content Moderation'
+  | 'Blocked Users'
+  | 'General'
+  | 'Livestream'
+  | 'Help Center'
+  | 'Report a Problem'
+  | 'Rate Us'
+  | 'Terms of Service'
+  | 'Privacy Policy'
+  | 'Community Guidelines'
+  | 'Version'
+  | 'Developer Info'
+  | 'Release Notes'
+  | 'Join Beta Program'
+  | 'Logout';
