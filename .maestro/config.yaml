@@ -1,0 +1,21 @@
+flows:
+  - setup/*
+  - auth/*
+  - home/*
+  - stream/*
+  - notification/*
+  - profile/*
+
+excludeTags:
+
+executionOrder:
+  continueOnFailure: false # default is true
+  flowsOrder:
+    - setup
+    - login
+    - home
+    - createStream
+    - handleStream
+    - check-notifications
+    - check-profile
+    - logout

@@ -12,6 +12,7 @@ const FollowStats: React.FC<{ userId: string; followerCount: number; followingCo
   return (
     <XStack flex={1} paddingHorizontal="$8" height="$5" justifyContent="space-evenly">
       <Pressable
+        testID="followers-pressable"
         onPress={() => {
           router.push(`/profile/${userId}/followers`);
         }}>
@@ -33,6 +34,7 @@ const FollowStats: React.FC<{ userId: string; followerCount: number; followingCo
       />
       <YStack paddingLeft="$3">
         <Pressable
+          testID="followings-pressable"
           onPress={() => {
             router.push(`/profile/${userId}/following`);
           }}>

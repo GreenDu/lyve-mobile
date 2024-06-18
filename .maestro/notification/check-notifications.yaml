@@ -1,0 +1,14 @@
+appId: ${APP_ID}
+---
+- assertVisible:
+    id: 'notification-tab'
+
+- tapOn:
+    id: 'notification-tab'
+
+- assertVisible: 'Notifications'
+
+- swipe:
+    start: 50%,50%
+    end: 50%,20%
+    duration: 500

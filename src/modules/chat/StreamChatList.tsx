@@ -41,6 +41,7 @@ const StreamChatList = () => {
   return (
     <YStack backgroundColor="$colorTransparent" flex={1} paddingBottom="$4">
       <FlatList
+        testID="chat-list"
         ref={flatListRef}
         data={sortedMessages}
         renderItem={({ item, index }) => renderMessage(item, index)}

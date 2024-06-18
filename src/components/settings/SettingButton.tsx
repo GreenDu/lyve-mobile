@@ -9,7 +9,10 @@ interface ButtonProps {
 
 const SettingButton: React.FC<ButtonProps> = ({ name, onPress }) => {
   return (
-    <Button justifyContent='space-between' onPress={onPress}>
+    <Button
+      testID={`${name.toLowerCase()}-button`}
+      justifyContent="space-between"
+      onPress={onPress}>
       {name}
       {<Feather name="chevron-right" size={24} color="white" />}
     </Button>

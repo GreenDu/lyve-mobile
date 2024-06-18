@@ -1,0 +1,18 @@
+appId: ${APP_ID}
+---
+- assertVisible:
+    id: gif-button
+
+- tapOn:
+    id: gif-button
+- assertVisible: Search GIPHY
+- tapOn: Search GIPHY
+- inputText: Hello
+- tapOn:
+    point: 25%,32%
+- assertVisible: BACK
+- tapOn: BACK
+- tapOn:
+    point: 25%,73%
+- assertVisible: Select GIF
+- tapOn: Select GIF

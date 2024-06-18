@@ -1,0 +1,24 @@
+appId: ${APP_ID}
+---
+- assertVisible: 'Start Stream'
+
+- tapOn: 'Start Stream'
+
+- runFlow:
+    when:
+      visible:
+        id: 'chat-input'
+    file: 'sendMessage.yaml'
+
+- runFlow:
+    when:
+      visible:
+        id: 'gif-button'
+    file: 'sendGif.yaml'
+
+# leave stream
+- assertVisible:
+    id: 'leave-stream-button'
+
+- tapOn:
+    id: 'leave-stream-button'

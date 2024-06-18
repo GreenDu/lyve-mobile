@@ -108,7 +108,7 @@ const CreateStreamPage = () => {
       <YStack height="100%" backgroundColor="#151718" padding="$4" justifyContent="space-between">
         <XStack>
           <Link asChild href={{ pathname: '/' }}>
-            <Feather size={28} name="x" color="#fff" />
+            <Feather size={28} name="x" color="#fff" testID="x-icon" />
           </Link>
         </XStack>
 

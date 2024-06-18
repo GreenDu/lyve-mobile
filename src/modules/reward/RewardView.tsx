@@ -45,7 +45,12 @@ const RewardView = () => {
   }, [rewardQueue, handleIncomingReward]);
 
   return (
-    <YStack flex={1} alignItems="center" justifyContent="flex-end" padding="$4">
+    <YStack
+      testID="reward-view"
+      flex={1}
+      alignItems="center"
+      justifyContent="flex-end"
+      padding="$4">
       {visible && currentDisplayedReward && <Reward data={currentDisplayedReward} color={color} />}
     </YStack>
   );

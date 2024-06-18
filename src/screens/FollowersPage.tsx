@@ -22,7 +22,7 @@ const FollowersPage: React.FC<{ id: string }> = ({ id }) => {
         justifyContent="flex-start"
         marginTop="$2"
         paddingBottom="$4">
-        <Pressable onPress={() => router.back()}>
+        <Pressable onPress={() => router.back()} testID="back-pressable">
           <Feather name="chevron-left" size={28} color="white" />
         </Pressable>
         <H1 fontSize={28} fontWeight="800">
@@ -30,7 +30,7 @@ const FollowersPage: React.FC<{ id: string }> = ({ id }) => {
         </H1>
       </XStack>
       {isSuccess && (
-        <ScrollView>
+        <ScrollView testID="followers-list">
           <YStack space="$3">
             {data?.data?.user.followedBy.map((u) => {
               return (

@@ -233,7 +233,6 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children, config }) => {
         if (res) {
           storeTokensAndSetUser(res, true);
         } else {
-          console.error('handleTokenExchange returned null');
           setIsAuthenticated(false);
         }
       });

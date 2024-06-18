@@ -1,0 +1,62 @@
+appId: ${APP_ID}
+---
+- assertVisible:
+    id: 'floating-button'
+- tapOn:
+    id: 'floating-button'
+
+# Go back to homepage
+
+- assertVisible:
+    id: 'x-icon'
+- tapOn:
+    id: 'x-icon'
+
+- assertVisible:
+    id: 'floating-button'
+- tapOn:
+    id: 'floating-button'
+
+# add image
+- tapOn:
+    id: 'add-image-button'
+
+- assertVisible: 'Choose From Gallery'
+- tapOn: 'Choose From Gallery'
+
+- assertVisible: 'Photos'
+
+- assertVisible: 'Foto, 30. März 2018, 21:14'
+
+# choose image
+- tapOn: 'Foto, 30. März 2018, 21:14'
+
+- assertVisible: 'Choose'
+
+- tapOn: 'Choose'
+
+- assertVisible:
+    id: 'clear-image-button'
+
+# pick 3 genres
+- assertVisible: 'Chatting 💬'
+- tapOn: 'Chatting 💬'
+
+- assertVisible: 'Gaming 🎮'
+- tapOn: 'Gaming 🎮'
+
+- assertVisible: 'Music 🎶'
+- tapOn: 'Music 🎶'
+
+# remove gaming genre
+- tapOn: 'Gaming 🎮'
+
+- assertVisible:
+    id: 'clear-image-button'
+
+- tapOn:
+    id: 'clear-image-button'
+
+# Create Stream
+- assertVisible: 'Create Stream'
+- tapOn: 'Create Stream'
