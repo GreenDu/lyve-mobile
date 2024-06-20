@@ -12,3 +12,13 @@ export type Days =
   | 'Friday'
   | 'Saturday'
   | 'Sunday';
+
+
+  export type DisplayedAchievement = {
+    level: number;
+    type: string;
+    progress: number;
+    condition: number;
+    id: string;
+    name: string;
+  };
