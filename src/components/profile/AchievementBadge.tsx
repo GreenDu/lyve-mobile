@@ -2,7 +2,7 @@ import { AchievementType } from '@api/responses';
 import { LevelType } from '../../types/types';
 import React, { useState } from 'react';
 import { YStack, SizableText, XStack, Progress, Accordion } from 'tamagui';
-import { achievementLookupTable } from '@utils/achievementLookup';
+import { achievementLookupTable, getAchievementDescription } from '@utils/achievementLookup';
 import { Pressable } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 
@@ -54,7 +54,7 @@ const AchievementBadge: React.FC<Props> = ({ name, condition, progress, type, le
           <Feather name="corner-down-right" size={24} color="white" />
           <YStack flex={1} padding="$2" backgroundColor="$primaryLight" borderRadius={15}>
             <SizableText>
-              
+              {getAchievementDescription(type, condition)}
             </SizableText>
           </YStack>
         </XStack>
