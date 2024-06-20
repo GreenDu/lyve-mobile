@@ -1,14 +1,43 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import useAuth from '@modules/auth/useAuth';
 import { Avatar, Button, H1, Input, SizableText, TextArea, XStack, YStack } from 'tamagui';
 import { Feather } from '@expo/vector-icons';
 import { router } from 'expo-router';
 import { Formik } from 'formik';
-import { Pressable, TextInput, View } from 'react-native';
+import { KeyboardAvoidingView, Platform, Pressable } from 'react-native';
 import { useUpdateUser } from '@api/user/mutation/useUpdateUser';
 import { useGetUser } from '@api/user/query/useGetUser';
+import useCameraActionSheet from '@hooks/useCameraActionSheet';
 
 const EditProfilePage = () => {
+
+
+  const { show, assets } = useCameraActionSheet();
+
+
+  const [imageUri, setImageUri] = useState<{
+    image: {
+      uri: string;
+      name: string;
+      type: string;
+    };
+  } | null>(null);
+
+  useEffect(() => {
+    if (assets && assets[0]) {
+      const { uri, mimeType, fileName, assetId } = assets[0];
+      setImageUri({
+        image: { uri, type: mimeType ?? 'image/jpeg', name: fileName ?? assetId ?? 'image' },
+      });
+    }
+  }, [assets]);
+
+  const openActionSheet = async () => {
+    console.log("fnjkgjrngjrj");
+    await show();
+  };
+
+
   const { user } = useAuth();
 
   const { data } = useGetUser({
@@ -21,6 +50,13 @@ const EditProfilePage = () => {
 
   const updateUser = async (displayname: string, bio: string) => {
     const formData = new FormData();
+
+
+    if (imageUri) {  
+      // @ts-ignore
+      formData.append('image', { ...imageUri.image });     
+    }
+
     formData.append('dispname', displayname);
     formData.append('bio', bio);
     mutate({
@@ -35,12 +71,12 @@ const EditProfilePage = () => {
   };
 
   return (
+ 
     <Formik
       initialValues={{ displayname: user.dispname || '', bio: data?.data?.user.bio || '' }}
-      onSubmit={(values) => updateUser(values.displayname, values.bio)}
-    >
+      onSubmit={(values) => updateUser(values.displayname, values.bio)}>
       {(props) => (
-          <YStack padding="$4" backgroundColor="$background" gap="$5" height="100%">
+          <YStack padding="$4" backgroundColor="$background" gap="$5" flexGrow={1}>
             <XStack alignItems="center" justifyContent="space-between">
               <XStack alignItems="center">
                 <Pressable onPress={() => router.back()}>
@@ -66,7 +102,9 @@ const EditProfilePage = () => {
                 />
                 <Avatar.Fallback delayMs={600} backgroundColor="$blue10" />
               </Avatar>
+              <Pressable onPress={openActionSheet}>
               <SizableText color="$textWashedOut">Edit Avatar</SizableText>
+              </Pressable>
             </YStack>
 
             <YStack gap="$2">
@@ -75,8 +113,7 @@ const EditProfilePage = () => {
                   <XStack justifyContent="space-between">
                     <SizableText color="$textWashedOut">Displayname</SizableText>
                     <SizableText
-                      color={props.values.displayname.length >= 20 ? 'red' : '$textWashedOut'}
-                    >
+                      color={props.values.displayname.length >= 20 ? 'red' : '$textWashedOut'}>
                       {props.values.displayname.length}/20
                     </SizableText>
                   </XStack>
