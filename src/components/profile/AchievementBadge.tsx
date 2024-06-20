@@ -22,7 +22,7 @@ const AchievementBadge: React.FC<Props> = ({ name, condition, progress }) => {
         </XStack>
 
         <Progress value={Math.round((progress/condition) * 100)}>
-        <Progress.Indicator />
+        <Progress.Indicator backgroundColor="$textWashedOut" />
         </Progress>
         </YStack>
       </XStack>
