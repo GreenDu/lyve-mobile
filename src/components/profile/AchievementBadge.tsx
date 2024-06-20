@@ -22,7 +22,7 @@ const AchievementBadge: React.FC<Props> = ({ name, condition, progress, type, le
         <YStack borderRadius={15} backgroundColor={"black"} height="$4" width="$4" alignItems='center' justifyContent='center'>
             <SizableText>{achievementLookupTable[type][level as LevelType]}</SizableText>
         </YStack>
-        <YStack flex={1} gap="$2">
+        <YStack flex={1} gap="$2" paddingRight="$2">
         <XStack justifyContent='space-between'>
             <SizableText>{name}</SizableText>
             <SizableText>{progress} / {condition}</SizableText>
