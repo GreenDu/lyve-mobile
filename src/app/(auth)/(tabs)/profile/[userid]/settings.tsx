@@ -7,7 +7,7 @@ const Settings = () => {
   const { userid } = useLocalSearchParams();
 
   return (
-    <SafeAreaView style={{backgroundColor: "$background"}}>
+    <SafeAreaView style={{ backgroundColor: '#151718' }}>
       <SettingsPage userid={userid as string} />
     </SafeAreaView>
   );

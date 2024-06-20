@@ -1,0 +1,12 @@
+appId: com.example.app
+---
+- startRecording: e2e_recording
+- runFlow: setup/setup.yaml
+- runFlow: auth/login.yaml
+- runFlow: home/home.yaml
+- runFlow: stream/createStream.yaml
+- runFlow: stream/handleStream.yaml
+- runFlow: notification/check-notifications.yaml
+- runFlow: profile/check-profile.yaml
+- runFlow: auth/logout.yaml
+- stopRecording

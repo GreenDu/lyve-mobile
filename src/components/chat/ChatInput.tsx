@@ -13,30 +13,35 @@ const ChatInput: React.FC<{ onPress: () => void }> = ({ onPress }) => {
       justifyContent="space-between"
       borderRadius={50}
       backgroundColor="#24252677"
+      // bg="red"
       flex={1}>
-      <Input
-        value={message}
-        onChangeText={(m) => setMessage(m)}
-        borderColor="$colorTransparent"
-        backgroundColor="$colorTransparent"
-        placeholder="Say something..."
-        placeholderTextColor="#fff"
-        overflow="hidden"
-        textOverflow="hidden"
-        size="$5"
-        minWidth="$17"
-        borderRadius={50}
-        showSoftInputOnFocus
-        pressStyle={{
-          backgroundColor: '$colorTransparent',
-          borderColor: '$colorTransparent',
-        }}
-        focusStyle={{
-          backgroundColor: '$colorTransparent',
-          borderColor: '$colorTransparent',
-        }}
-      />
+      <XStack flex={1}>
+        <Input
+          testID="chat-input"
+          value={message}
+          onChangeText={(m) => setMessage(m)}
+          borderColor="$colorTransparent"
+          backgroundColor="$colorTransparent"
+          placeholder="Say something..."
+          placeholderTextColor="#fff"
+          overflow="hidden"
+          textOverflow="hidden"
+          size="$5"
+          flex={1}
+          borderRadius={50}
+          showSoftInputOnFocus
+          pressStyle={{
+            backgroundColor: '$colorTransparent',
+            borderColor: '$colorTransparent',
+          }}
+          focusStyle={{
+            backgroundColor: '$colorTransparent',
+            borderColor: '$colorTransparent',
+          }}
+        />
+      </XStack>
       <Button
+        testID="send-button"
         onPress={onPress}
         icon={<Feather name="send" size={21} color="white" />}
         circular

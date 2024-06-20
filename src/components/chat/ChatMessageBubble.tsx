@@ -17,7 +17,11 @@ const ChatMessageBubble: React.FC<ChatMessageBubbleProps> = ({ message, opacity 
       <XStack
         opacity={opacity}
         justifyContent="flex-start"
-        alignItems={chatMessage.gif === undefined ? 'center' : 'flex-start'}
+        alignItems={
+          chatMessage.gif === undefined && chatMessage.msg && chatMessage.msg.length < 29
+            ? 'center'
+            : 'flex-start'
+        }
         space="$2"
         width="80%"
         paddingVertical="$1.5"
@@ -36,7 +40,7 @@ const ChatMessageBubble: React.FC<ChatMessageBubbleProps> = ({ message, opacity 
 
         <YStack justifyContent="center" flex={1} alignItems="flex-start">
           <SizableText size="$4">{sender.dispname}</SizableText>
-          {chatMessage.gif === undefined ? (
+          {!chatMessage.gif ? (
             <SizableText size="$4">{chatMessage.msg ?? ''}</SizableText>
           ) : (
             <Image

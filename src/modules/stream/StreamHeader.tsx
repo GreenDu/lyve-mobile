@@ -14,6 +14,7 @@ const StreamHeader: React.FC<StreamHeaderProps> = ({ onLeave }) => {
     <XStack justifyContent="space-between" alignItems="center" space="$3">
       <StreamerInfoBadge />
       <Button
+        testID="leave-stream-button"
         onPress={onLeave}
         size="$4.5"
         backgroundColor="#242526CC"

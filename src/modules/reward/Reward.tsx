@@ -15,6 +15,7 @@ const Reward: React.FC<{ data: IncomingReward; color: string }> = ({ data, color
       alignItems="center"
       justifyContent="flex-end">
       <Image
+        testID="reward-image"
         source={rewardMap[data.reward.type].asset}
         style={{ position: 'absolute', top: '-90%', width: 200, height: 200 }}
       />

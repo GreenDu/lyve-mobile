@@ -9,8 +9,9 @@ export default function TabLayout() {
   const { user } = useAuth();
 
   return (
-<Tabs
+    <Tabs
       screenOptions={{
+        tabBarTestID: 'tabbar',
         tabBarActiveTintColor: 'white',
         tabBarInactiveTintColor: '#676D75',
         headerShown: false,
@@ -21,7 +22,8 @@ export default function TabLayout() {
           borderWidth: 0,
           height: Platform.OS === 'ios' ? '11%' : '8%',
           borderColor: '#151718',
-          borderTopColor: '#151718',
+          borderTopWidth: 1,
+          borderTopColor: '#242526',
           backgroundColor: '#151718',
           paddingHorizontal: 16,
         },
@@ -39,6 +41,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="index"
         options={{
+          tabBarTestID: 'home-tab',
           title: 'Home',
           tabBarIcon: ({ color, size }) => <Feather size={size} name="home" color={color} />,
         }}
@@ -46,6 +49,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="search"
         options={{
+          tabBarTestID: 'search-tab',
           title: 'Search',
           tabBarIcon: ({ color, size }) => <Feather size={size} name="search" color={color} />,
         }}
@@ -53,12 +57,14 @@ export default function TabLayout() {
       <Tabs.Screen
         name="start-stream"
         options={{
+          tabBarTestID: 'start-stream-tab',
           tabBarButton: ({ onPress }) => <FloatingButton onPress={onPress} />,
         }}
       />
       <Tabs.Screen
         name="notification"
         options={{
+          tabBarTestID: 'notification-tab',
           title: 'Notification',
           tabBarIcon: ({ color, size }) => <Feather size={size} name="bell" color={color} />,
         }}
@@ -66,6 +72,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="profile"
         options={{
+          tabBarTestID: 'profile-tab',
           title: 'Profile',
           href: {
             pathname: '/profile/[userid]',

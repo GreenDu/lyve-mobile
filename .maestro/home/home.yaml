@@ -1,0 +1,22 @@
+appId: ${APP_ID}
+---
+- assertVisible:
+    id: 'home-header'
+- assertVisible:
+    id: 'avatar'
+- assertVisible:
+    id: 'notification-button'
+- assertVisible:
+    id: 'search-button'
+
+- repeat:
+    times: 2
+    commands:
+      - swipe:
+          start: 50%,50%
+          end: 50%,27%
+          duration: 300
+- swipe:
+    start: 50%,21%
+    end: 50%,63%
+    duration: 300

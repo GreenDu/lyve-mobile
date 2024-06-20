@@ -42,13 +42,7 @@ const consumeStream = async (
         text1: 'Connection Problem',
         text2: 'Unable to receive the stream. Please try again later.',
       });
-    } else if (state === 'disconnected') {
-      Toast.show({
-        type: 'error',
-        text1: 'Connection Failed',
-        text2: 'Oops! Your connection has been lost. Please check your internet connection.',
-      });
-    } else if (state === 'closed') {
+    } else if (state === 'disconnected' || state === 'closed') {
     }
   });
 

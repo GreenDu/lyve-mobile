@@ -23,7 +23,7 @@ const UserFollowerCard: React.FC<{
         <XStack space="$3" alignItems="center">
           <Avatar circular size="$5">
             <Avatar.Image
-              accessibilityLabel="Nate Wienert"
+              accessibilityLabel={username}
               src={
                 avatar_url ??
                 'https://lyveblobstorage.blob.core.windows.net/images/avatar_placeholder.png'

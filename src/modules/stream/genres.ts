@@ -48,7 +48,7 @@ export const genres = [
     color: '#E6E890',
   },
   {
-    text: 'Camping  ⛺️',
+    text: 'Camping ⛺️',
     color: '#2AE3A1',
   },
 ];

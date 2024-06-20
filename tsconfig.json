@@ -48,7 +48,8 @@
   "include": [
     ".expo/types/**/*.ts",
     "expo-env.d.ts",
-    "./src/**/*"
+    "./src/**/*",
+    "tamagui.config.ts",
   ],
   "exclude": [
     "node_modules",

@@ -60,6 +60,7 @@ const WebRtcController = () => {
       });
       socket.on('you-joined-as-streamer', async (data) => {
         console.log('you-joined-as-streamer called');
+        clearChat();
         closeConnections(null);
         useStreamStore.getState().set({ streamId: data.streamId });
 
@@ -101,6 +102,7 @@ const WebRtcController = () => {
       });
 
       socket.on('you-joined-as-viewer', async (data) => {
+        clearChat();
         closeConnections(null);
         useStreamStore.getState().set({ streamId: data.streamId });
         // load device

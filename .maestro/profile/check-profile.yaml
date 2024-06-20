@@ -1,0 +1,37 @@
+appId: ${APP_ID}
+---
+- assertVisible:
+    id: 'profile-tab'
+
+- tapOn:
+    id: 'profile-tab'
+
+- assertVisible:
+    id: 'edit-profile-button'
+
+- assertVisible:
+    id: 'settings-button'
+
+- assertVisible:
+    id: 'profile-avatar'
+
+- assertVisible:
+    id: 'user-dispname'
+
+- assertVisible:
+    id: 'user-username'
+
+- assertVisible:
+    id: 'user-bio'
+
+- runFlow:
+    when:
+      visible:
+        id: 'followers-pressable'
+    file: 'explore-followers.yaml'
+
+- runFlow:
+    when:
+      visible:
+        id: 'followings-pressable'
+    file: 'explore-followings.yaml'

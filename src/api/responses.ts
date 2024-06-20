@@ -1,7 +1,7 @@
 import { TypedResponse } from '../types/response';
 import { Days } from '../types/types';
 
-export type AchievementType = 'NTH_STREAM' | 'NTH_VIEWERS';
+export type AchievementType = 'NTH_STREAM' | 'MINUTES_STREAMED' | 'NTH_VIEWERS';
 
 export type NotificationType =
   | 'STREAM_STARTED'
@@ -52,10 +52,15 @@ export type Achievement = {
   type: AchievementType;
   name: string;
   level: number;
-  bannerUrl: string;
   condition: number;
-  progress: number;
   promotionPoints: number;
+};
+
+export type UserToAchievement = {
+  progress: number;
+  created_at: Date;
+  updated_at: Date;
+  achievemnt: Achievement;
 };
 
 export type Follows = {
@@ -87,9 +92,7 @@ export type Genre = {
 export type GetUserResponse = TypedResponse<{
   user: User & {
     subscribed: boolean;
-    userToAchievement: {
-      achievement: Achievement;
-    }[];
+    userToAchievement: UserToAchievement[];
     streams: Stream[];
   };
 }>;
@@ -127,11 +130,12 @@ export type GetUserFollowedByResponse = TypedResponse<{
 
 export type GetFeedResponse = TypedResponse<{
   feed: (Stream & {
-    streamer: Pick<
-      User,
-      'id' | 'username' | 'dispname' | 'avatar_url' | 'promotionPoints' | 'level'
-    >;
+    streamer: Streamer & {
+      subscribed: boolean;
+    };
   })[];
+  nextCursor: string | null;
+  hasNext: boolean;
 }>;
 
 export type GetMostStreamedGenresResponse = TypedResponse<{
@@ -168,12 +172,6 @@ export type CreateStreamResponse = TypedResponse<{
   stream: Stream & {
     streamer: Streamer;
   };
-}>;
-
-export type GetRecommendedStreamsResponse = TypedResponse<{
-  streams: (Stream & {
-    streamer: Streamer;
-  })[];
 }>;
 
 export type DeleteStreamResponse = TypedResponse<{

@@ -1,0 +1,22 @@
+appId: ${APP_ID}
+---
+- assertVisible:
+    id: 'chat-input'
+
+- tapOn:
+    id: 'chat-input'
+
+- inputText: 'Hey!'
+
+- assertVisible:
+    id: 'send-button'
+
+- tapOn:
+    id: 'send-button'
+
+# send second message
+- tapOn:
+    id: 'chat-input'
+- inputText: 'How is your day ?'
+- tapOn:
+    id: 'send-button'

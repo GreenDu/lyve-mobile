@@ -139,7 +139,7 @@ const StreamPage: React.FC<{ id: string }> = ({ id }) => {
       )}
       {!ended ? (
         <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
-          <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+          <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
             <SafeAreaView style={{ backgroundColor: 'transparent', height: '100%' }}>
               {isStreamer ? (
                 <StreamerView onLeave={leaveStream} />

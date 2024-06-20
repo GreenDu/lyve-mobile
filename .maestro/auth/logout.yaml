@@ -1,0 +1,29 @@
+appId: ${APP_ID}
+---
+- assertVisible:
+    id: 'profile-tab'
+
+- tapOn:
+    id: 'profile-tab'
+
+- assertVisible:
+    id: 'settings-button'
+
+- tapOn:
+    id: 'settings-button'
+
+- assertVisible: 'Settings'
+
+- repeat:
+    times: 3
+    commands:
+      - swipe:
+          start: 50%,50%
+          end: 50%,20%
+          duration: 300
+
+- assertVisible:
+    id: 'logout-button'
+
+- tapOn:
+    point: 31%,88%

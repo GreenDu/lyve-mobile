@@ -30,7 +30,9 @@ const CreateStreamPage = () => {
     },
   });
 
-  const { show, assets } = useCameraActionSheet();
+  const { show, assets } = useCameraActionSheet({
+    aspect: [9, 16],
+  });
 
   const [selectedGenre, setSelectedGenre] = useState(
     genres.map((g) => ({ ...g, selected: false }))
@@ -106,7 +108,7 @@ const CreateStreamPage = () => {
       <YStack height="100%" backgroundColor="#151718" padding="$4" justifyContent="space-between">
         <XStack>
           <Link asChild href={{ pathname: '/' }}>
-            <Feather size={28} name="x" color="#fff" />
+            <Feather size={28} name="x" color="#fff" testID="x-icon" />
           </Link>
         </XStack>
 

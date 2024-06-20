@@ -8,13 +8,13 @@ import { FontAwesome6, Feather, Ionicons } from '@expo/vector-icons';
 const NotificationCard: React.FC<{ notification: Notification }> = ({ notification }) => {
   const icon: React.JSX.Element | null =
     notification.type === 'NEW_FOLLOWER' ? (
-      <FontAwesome6 name="user-group" size={24} color="white" />
+      <FontAwesome6 testId="user-group-icon" name="user-group" size={24} color="white" />
     ) : notification.type === 'STREAM_STARTED' ? (
-      <Feather name="video" size={24} color="black" />
+      <Feather testId="video-icon" name="video" size={24} color="black" />
     ) : notification.type === 'REWARD_RECEIVED' ? (
-      <Feather name="gift" size={24} color="white" />
+      <Feather testId="gift-icon" name="gift" size={24} color="white" />
     ) : notification.type === 'ACHIEVEMENT_RECEIVED' ? (
-      <Ionicons name="ribbon-outline" size={24} color="white" />
+      <Ionicons testId="ribbon-outline-icon" name="ribbon-outline" size={24} color="white" />
     ) : null;
 
   return (

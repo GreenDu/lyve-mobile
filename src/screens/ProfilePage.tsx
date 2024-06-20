@@ -2,7 +2,7 @@ import { Genre, GetMostStreamedGenresResponse, GetUserResponse } from '@api/resp
 import { useGetGenreStatistic } from '@api/user/query/useGetGenreStatistic';
 import { useGetUser } from '@api/user/query/useGetUser';
 import SwitchButton from '@components/SwitchButton';
-import GenreBadge from '@components/profile/GenreBadge';
+import GenreStatisticBadge from '@components/profile/GenreStatisticBadge';
 import ProfileHeader from '@components/profile/ProfileHeader';
 import useAuth from '@modules/auth/useAuth';
 import React, { useEffect, useState } from 'react';
