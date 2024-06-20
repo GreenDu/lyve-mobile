@@ -1,13 +1,12 @@
 import { Feather } from '@expo/vector-icons';
-import React from 'react';
+import React, { useState } from 'react';
 import { Button, XStack, Input } from 'tamagui';
 
 interface SearchBarProps {
-  query: string;
-  setQuery: (v: string) => void;
-  onSearch: () => void;
+  onSearch: (query: string) => void;
 }
-const SearchBar: React.FC<SearchBarProps> = ({ query, setQuery, onSearch }) => {
+const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
+  const [query, setQuery] = useState<string>('');
   return (
     <XStack
       alignItems="center"
@@ -18,13 +17,13 @@ const SearchBar: React.FC<SearchBarProps> = ({ query, setQuery, onSearch }) => {
       flex={1}>
       <XStack flex={1}>
         <Input
-          testID="search-input"
           value={query}
-          onChangeText={(v) => setQuery(v)}
+          onChangeText={(e) => setQuery(e)}
+          testID="search-input"
           borderColor="$colorTransparent"
           backgroundColor="$colorTransparent"
           placeholder="Search"
-          placeholderTextColor="$textMain"
+          placeholderTextColor="$textWashedOut"
           overflow="hidden"
           textOverflow="hidden"
           size="$5"
@@ -43,7 +42,11 @@ const SearchBar: React.FC<SearchBarProps> = ({ query, setQuery, onSearch }) => {
       </XStack>
       <Button
         testID="send-button"
-        onPress={onSearch}
+        onPress={() => {
+          if (query.length) {
+            onSearch(query);
+          }
+        }}
         icon={<Feather name="search" size={21} color="white" />}
         circular
         backgroundColor="#24252600"

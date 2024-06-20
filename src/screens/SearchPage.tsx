@@ -15,6 +15,8 @@ import { SearchResponse, User } from '@api/responses';
 import UserSearchResultCard from '@components/search/UserSearchResultCard';
 import { usePaginatedSearch } from '@api/search/query/usePaginatedSearch';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import SearchHistory from '@modules/search/SearchHistory';
+import { useSearchHistoryStore } from '@modules/search/stores/useSearchHistoryStore';
 
 const SearchPage = () => {
   const [query, setQuery] = useState<string>('');
@@ -35,6 +37,11 @@ const SearchPage = () => {
     hasNext: false,
     nextCursor: '',
   });
+
+  const handleSearch = async (query: string) => {
+    setQuery(query);
+    await useSearchHistoryStore.getState().addItem(query);
+  };
 
   useEffect(() => {
     if (data && isSuccess) {
@@ -75,13 +82,15 @@ const SearchPage = () => {
     ) => item.id,
     [searchResults, data]
   );
+
   return (
     <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
         <YStack height="100%" backgroundColor="$color.background" p="$4">
           <XStack paddingBottom="$6">
-            <SearchBar query={query} setQuery={setQuery} onSearch={refetch} />
+            <SearchBar onSearch={handleSearch} />
           </XStack>
+          <SearchHistory />
           <FlashList
             bounces
             showsVerticalScrollIndicator={false}
