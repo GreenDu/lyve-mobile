@@ -17,7 +17,7 @@ const EditProfile = () => {
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       style={{ flex: 1 }}>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-        <SafeAreaView style={{ flex: 1 }}>
+        <SafeAreaView style={{ flex: 1, backgroundColor: '#151718' }}>
           <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
             <EditProfilePage />
           </ScrollView>

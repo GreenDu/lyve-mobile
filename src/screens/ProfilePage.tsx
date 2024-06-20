@@ -47,7 +47,6 @@ const ProfilePage: React.FC<{ userid: string }> = ({ userid }) => {
     }
   }, [mostStreamedGenres]);
 
-
   if (isFetching && !userData) {
     return (
       <YStack
@@ -78,33 +77,39 @@ const ProfilePage: React.FC<{ userid: string }> = ({ userid }) => {
             onStateChange={handleStateChange}
           />
         </XStack>
-
-        { genreData.length === 0 ? <>
-
-        <YStack flex={1} paddingTop="$8" alignItems='center'>
-            <SizableText fontSize={24} textAlign='center'>
-              There are currently no statistics available!
-            </SizableText>
-        </YStack>
-
-        </> : <>
-        <ScrollView bounces>
-          <YStack marginBottom="$8" padding="$4">
-            <YStack flex={1} gap="$3">
-              {genreData.map((genre, index) => (
-                <GenreStatisticBadge
-                  key={index} 
-                  genre={genre.name} 
-                  percent={genre.percent}
-                  avgViewer={genre.avgViewers}
-                  days={genre.days}
-                />
-              ))}
-            </YStack>
-          </YStack>
-        </ScrollView>
-        </> }
-
+        {activeState === 'Statistics' ? (
+          genreData.length === 0 ? (
+            <>
+              <YStack flex={1} paddingTop="$8" paddingHorizontal="$4" alignItems="center">
+                <SizableText size="$6" textAlign="center" color="$textWashedOut">
+                  {me.id === userData?.user.id
+                    ? "You haven't streamed yet. Start your first stream to see your stats here!"
+                    : "This user hasn't started streaming yet. Check back later for their stats!"}
+                </SizableText>
+              </YStack>
+            </>
+          ) : (
+            <>
+              <ScrollView bounces>
+                <YStack marginBottom="$8" padding="$4">
+                  <YStack flex={1} gap="$3">
+                    {genreData.map((genre, index) => (
+                      <GenreStatisticBadge
+                        key={index}
+                        genre={genre.name}
+                        percent={genre.percent}
+                        avgViewer={genre.avgViewers}
+                        days={genre.days}
+                      />
+                    ))}
+                  </YStack>
+                </YStack>
+              </ScrollView>
+            </>
+          )
+        ) : (
+          <></>
+        )}
       </YStack>
     </YStack>
   );

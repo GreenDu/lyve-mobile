@@ -25,7 +25,9 @@ const SwitchButton: React.FC<SwitchButtonProps> = ({ states, onStateChange }) =>
       easing: Easing.inOut(Easing.exp),
     });
     // Call onStateChange whenever active state changes
-    onStateChange(active);
+    setTimeout(() => {
+      onStateChange(active);
+    }, 150);
   }, [active, states, sliderPosition]);
 
   const toggleSwitch = (newState: string) => {

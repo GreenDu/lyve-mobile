@@ -30,7 +30,7 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({ user, isSelf, subscribed 
         <XStack alignItems="center">
           <Avatar circular size="$7" testID="profile-avatar">
             <Avatar.Image
-              accessibilityLabel="Nate Wienert"
+              accessibilityLabel={user?.username ?? ''}
               src={
                 user?.avatar_url ??
                 'https://lyveblobstorage.blob.core.windows.net/images/avatar_placeholder.png'
@@ -54,8 +54,8 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({ user, isSelf, subscribed 
               @{user?.username}
             </SizableText>
           </YStack>
-          <YStack minHeight="$4.5">
-            <SizableText testID="user-bio">{user?.bio.substring(0, 100)}</SizableText>
+          <YStack minHeight="$2">
+            <SizableText testID="user-bio">{user?.bio.slice(0, 100)}</SizableText>
           </YStack>
         </YStack>
 
