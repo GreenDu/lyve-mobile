@@ -15,7 +15,6 @@ interface Props {
 
 const AchievementBadge: React.FC<Props> = ({ name, condition, progress, type, level }) => {
 
-    console.log(achievementLookupTable[type][level as LevelType])
   return (
     <YStack padding="$2" backgroundColor="$primaryLight" borderRadius={15}>
       <XStack gap="$2">
