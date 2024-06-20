@@ -13,14 +13,11 @@ export type Days =
   | 'Saturday'
   | 'Sunday';
 
-
-  export type DisplayedAchievement = {
-    level: number;
-    type: string;
-    progress: number;
-    condition: number;
-    id: string;
-    name: string;
-  };
-
-  export  type LevelType = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8;
+export type DisplayedAchievement = {
+  level: number;
+  type: string;
+  progress: number;
+  condition: number;
+  id: string;
+  name: string;
+};
