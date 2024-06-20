@@ -10,7 +10,8 @@ export const useStreamChatStore = create(
     },
     (set) => ({
       setMessages: (m: Message[]) => set(() => ({ messages: m })),
-      addMessage: (m: Message) => set((s) => ({ messages: [...s.messages, m] })),
+      addMessage: (m: Message) =>
+        set((s) => ({ messages: [...s.messages.filter((message) => message.id !== m.id), m] })),
       clearChat: () =>
         set(() => ({
           messages: [],

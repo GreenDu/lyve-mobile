@@ -72,13 +72,7 @@ const createTransport = async (
   transport.on('connectionstatechange', (state) => {
     console.log(`${direction} transport ${transport.id} connectionstatechange ${state}`);
 
-    if (state === 'failed') {
-      Toast.show({
-        type: 'error',
-        text1: 'Connection Problem',
-        text2: 'Unable to connect to the stream. Please try again later.',
-      });
-    } else if (state === 'disconnected' || state === 'closed') {
+    if (state === 'failed' || state === 'disconnected' || state === 'closed') {
     }
   });
 

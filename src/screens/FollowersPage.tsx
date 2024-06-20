@@ -7,12 +7,7 @@ import { Pressable, ScrollView } from 'react-native';
 import { H1, XStack, YStack } from 'tamagui';
 
 const FollowersPage: React.FC<{ id: string }> = ({ id }) => {
-  console.log(id);
   const { data, isSuccess } = useGetFollowedBy({ variables: { id } });
-
-  useEffect(() => {
-    console.log(data);
-  }, [data]);
 
   return (
     <YStack padding="$4" height="100%">

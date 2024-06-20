@@ -13,6 +13,7 @@ import { YStack, XStack, Button, H3, Spinner } from 'tamagui';
 const CreateStreamPage = () => {
   const { mutate, isPending } = useCreateStream({
     onSettled(data, error) {
+      console.log(data);
       if (error) {
         console.error(error);
       }

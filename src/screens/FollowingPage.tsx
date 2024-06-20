@@ -7,16 +7,11 @@ import { Feather } from '@expo/vector-icons';
 import { router } from 'expo-router';
 
 const FollowingPage: React.FC<{ id: string }> = ({ id }) => {
-  console.log(id);
   const { data, isSuccess } = useGetFollowing({
     variables: { id },
     refetchOnMount: true,
     refetchOnWindowFocus: true,
   });
-
-  useEffect(() => {
-    console.log(data);
-  }, [data]);
 
   return (
     <YStack padding="$4" height="100%">

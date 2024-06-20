@@ -36,13 +36,7 @@ const consumeStream = async (
       socket.emit('resume-consumers');
     }
 
-    if (state === 'failed') {
-      Toast.show({
-        type: 'error',
-        text1: 'Connection Problem',
-        text2: 'Unable to receive the stream. Please try again later.',
-      });
-    } else if (state === 'disconnected' || state === 'closed') {
+    if (state === 'failed' || state === 'disconnected' || state === 'closed') {
     }
   });
 

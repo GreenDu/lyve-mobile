@@ -22,10 +22,6 @@ export const usePaginatedFeed = (
     unknown
   >
 ): UseInfiniteQueryResult<InfiniteData<GetFeedResponse, unknown>, Error> => {
-  const accessToken = useMemo(async () => {
-    return await AsyncStorage.getItem('accessToken');
-  }, []);
-
   return useInfiniteQuery<GetFeedResponse, Error>({
     ...opts,
     queryKey: ['feed', variables.id, variables.limit],
@@ -38,7 +34,7 @@ export const usePaginatedFeed = (
               curser: pageParam,
               limit: variables.limit,
             },
-            headers: { Authorization: `Bearer ${accessToken}` },
+            headers: { Authorization: 'Bearer ' + (await AsyncStorage.getItem('accessToken')) },
           }
         )
         .then((response) => response.data);

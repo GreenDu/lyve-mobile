@@ -75,7 +75,7 @@ const StreamPage: React.FC<{ id: string }> = ({ id }) => {
         addMessage({
           id: Crypto.randomUUID(),
           type: 'leaved',
-          msg: `${data.user.dispname} joined the stream`,
+          msg: `${data.user.dispname} left the stream`,
           created_at: Date.now().toString(),
         });
       });

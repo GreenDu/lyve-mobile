@@ -20,6 +20,8 @@ type FeedItem = Stream & {
 const HomePage = () => {
   const { user } = useAuth();
 
+  const [renewFeed, setRenewFeed] = useState(false);
+
   const { fetchNextPage, refetch, isRefetching, data, isSuccess, isLoading, isFetching, isError } =
     usePaginatedFeed({
       id: user.id,
@@ -27,8 +29,8 @@ const HomePage = () => {
     });
 
   const [feed, setFeed] = useState<NonNullable<GetFeedResponse['data']>>({
-    feed: generateFeed(50),
-    // feed: [],
+    // feed: generateFeed(50),
+    feed: [],
     hasNext: false,
     nextCursor: '',
   });
@@ -37,16 +39,26 @@ const HomePage = () => {
     if (data && isSuccess) {
       const newFeed = data.pages[0]?.data?.feed ?? [];
       const lastPage = data.pages[data.pages.length - 1]!.data;
-      setFeed((prevFeed) => ({
-        feed: [...prevFeed.feed, ...newFeed],
-        hasNext: lastPage?.hasNext || false,
-        nextCursor: lastPage?.nextCursor || '',
-      }));
-    }
-  }, [data, isSuccess]);
+      setFeed((prevFeed) => {
+        const updatedFeed = renewFeed ? newFeed : [...prevFeed.feed, ...newFeed];
 
-  const handleRefresh = () => {
-    refetch();
+        return {
+          feed: updatedFeed,
+          hasNext: lastPage?.hasNext || false,
+          nextCursor: lastPage?.nextCursor || '',
+        };
+      });
+
+      // Reset the refreshing state
+      if (renewFeed) {
+        setRenewFeed(false);
+      }
+    }
+  }, [data, isSuccess, refetch, fetchNextPage]);
+
+  const handleRefresh = async () => {
+    setRenewFeed(true);
+    await refetch();
   };
 
   const renderItem = useCallback(

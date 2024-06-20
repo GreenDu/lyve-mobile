@@ -1,12 +1,9 @@
-import { Platform, Pressable, ScrollView, View } from 'react-native';
-import React from 'react';
-import { YStack, XStack, H1, Button, H2 } from 'tamagui';
 import { Feather } from '@expo/vector-icons';
-import SettingButton from '@components/settings/SettingButton';
-import SettingStack from '@components/settings/SettingStack';
-import useAuth from '@modules/auth/useAuth';
-import { router } from 'expo-router';
 import SettingsList from '@modules/settings/SettingsList';
+import { router } from 'expo-router';
+import React from 'react';
+import { Pressable } from 'react-native';
+import { YStack, XStack, H1 } from 'tamagui';
 
 const SettingsPage: React.FC<{ userid: string }> = ({ userid }) => {
   return (
