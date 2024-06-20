@@ -1,10 +1,11 @@
 import { Feather } from '@expo/vector-icons';
-import { ScrollView } from 'react-native';
-import React from 'react';
-import { settingSectionsMap } from './settings';
-import { H3, ListItem, Separator, YGroup, YStack } from 'tamagui';
-import { SettingTitle } from './types';
 import useAuth from '@modules/auth/useAuth';
+import React from 'react';
+import { ScrollView } from 'react-native';
+import { H3, ListItem, Separator, YGroup, YStack } from 'tamagui';
+
+import { settingSectionsMap } from './settings';
+import { SettingTitle } from './types';
 
 const SettingsList: React.FC = () => {
   const { signOut } = useAuth();
@@ -38,7 +39,7 @@ const SettingsList: React.FC = () => {
     <ScrollView showsVerticalScrollIndicator={false}>
       {Object.entries(settingSectionsMap).map(([key, val]) => {
         return (
-          <YStack key={key} paddingBottom="$5">
+          <YStack key={key} paddingBottom="$5" testID={`${key}-header`}>
             <H3 ml="$2" mb="$3">
               {key}
             </H3>
