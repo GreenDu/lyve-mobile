@@ -92,7 +92,7 @@ const ProfilePage: React.FC<{ userid: string }> = ({ userid }) => {
           <YStack marginBottom="$8" padding="$4">
             <YStack flex={1} gap="$3">
               {genreData.map((genre, index) => (
-                <GenreBadge
+                <GenreStatisticBadge
                   key={index} 
                   genre={genre.name} 
                   percent={genre.percent}
