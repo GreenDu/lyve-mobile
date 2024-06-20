@@ -1,5 +1,5 @@
 import React from 'react';
-import { YStack, SizableText, XStack } from 'tamagui';
+import { YStack, SizableText, XStack, Progress } from 'tamagui';
 
 interface Props {
   name: string;
@@ -10,15 +10,22 @@ interface Props {
 const AchievementBadge: React.FC<Props> = ({ name, condition, progress }) => {
   return (
     <YStack padding="$2" backgroundColor="$primaryLight" borderRadius={15}>
-      <YStack gap="$2" paddingLeft="$2" paddingRight="$2">
-        <SizableText fontSize={14}>
-          {name}
-        </SizableText>
+      <XStack gap="$2">
+
+        <YStack borderRadius={15} backgroundColor={"black"} height="$4" width="$4" alignItems='center' justifyContent='center'>
+            <SizableText>💯</SizableText>
+        </YStack>
+        <YStack flex={1} gap="$2">
         <XStack justifyContent='space-between'>
-          <SizableText fontSize={13}> {condition} </SizableText>
-          <SizableText fontSize={13}>{progress}</SizableText>
+            <SizableText>{name}</SizableText>
+            <SizableText>{progress} / {condition}</SizableText>
         </XStack>
-      </YStack>
+
+        <Progress value={Math.round((progress/condition) * 100)}>
+        <Progress.Indicator />
+        </Progress>
+        </YStack>
+      </XStack>
     </YStack>
   );
 };
