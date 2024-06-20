@@ -5,14 +5,9 @@ import React from 'react';
 import { Pressable } from 'react-native';
 import { YStack, XStack, H1 } from 'tamagui';
 
-const SettingsPage: React.FC<{ userid: string }> = ({ userid }) => {
+const SettingsPage: React.FC = () => {
   return (
-    <YStack
-      backgroundColor="$primaryDark"
-      padding="$4"
-      height="100%"
-      // style={Platform.OS === 'ios' ? { flexGrow: 1 } : { height: '100%' }}
-    >
+    <YStack backgroundColor="$primaryDark" padding="$4" height="100%">
       <XStack
         alignItems="center"
         space="$2"
