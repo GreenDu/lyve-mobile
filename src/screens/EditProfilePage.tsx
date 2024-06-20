@@ -9,14 +9,13 @@ import { Pressable, TextInput, View } from 'react-native';
 const EditProfilePage = () => {
   const { user } = useAuth();
 
-
   return (
     <YStack padding="$4" backgroundColor="$background" gap="$5" height="100%">
       <XStack alignItems="center" justifyContent="space-between">
         <XStack alignItems="center">
-        <Pressable onPress={() => router.back()}>
-          <Feather name="chevron-left" size={28} color="white" />
-        </Pressable>
+          <Pressable onPress={() => router.back()}>
+            <Feather name="chevron-left" size={28} color="white" />
+          </Pressable>
           <H1 fontSize={24}>Edit Profile</H1>
         </XStack>
         <SizableText fontSize={18} color="$accentWashedOut">
@@ -42,14 +41,17 @@ const EditProfilePage = () => {
               <YStack gap="$2">
                 <XStack justifyContent="space-between">
                   <SizableText color="$textWashedOut">Displayname</SizableText>
-                  <SizableText color="$textWashedOut">{props.values.displayname.length}/20</SizableText>
-                  </XStack>
+                  <SizableText
+                    color={props.values.displayname.length >= 20 ? 'red' : '$textWashedOut'}>
+                    {props.values.displayname.length}/20
+                  </SizableText>
+                </XStack>
                 <Input
                   maxLength={20}
                   placeholderTextColor="$textWashedOut"
                   placeholder="displayname"
                   onChangeText={(text) => {
-                    props.handleChange('displayname')(text); 
+                    props.handleChange('displayname')(text);
                   }}
                   value={props.values.displayname}
                 />
@@ -58,14 +60,16 @@ const EditProfilePage = () => {
               <YStack gap="$2">
                 <XStack justifyContent="space-between">
                   <SizableText color="$textWashedOut">Bio</SizableText>
-                  <SizableText color="$textWashedOut">{props.values.bio.length}/100</SizableText>
+                  <SizableText color={props.values.bio.length >= 100 ? 'red' : '$textWashedOut'}>
+                    {props.values.bio.length}/100
+                  </SizableText>
                 </XStack>
                 <TextArea
                   maxLength={100}
                   placeholderTextColor="$textWashedOut"
                   placeholder="bio"
                   onChangeText={(text) => {
-                    props.handleChange('bio')(text); 
+                    props.handleChange('bio')(text);
                   }}
                   value={props.values.bio}
                 />
