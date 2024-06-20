@@ -1,10 +1,9 @@
 import { AchievementType } from '@api/responses';
-import { LevelType } from '../../types/types';
-import React, { useState } from 'react';
-import { YStack, SizableText, XStack, Progress, Accordion } from 'tamagui';
+
 import { achievementLookupTable, getAchievementDescription } from '@utils/achievementLookup';
-import { Pressable } from 'react-native';
-import { Feather } from '@expo/vector-icons';
+import React, { useEffect, useRef, useState } from 'react';
+import { YStack, SizableText, XStack, Progress } from 'tamagui';
+import { Animated, Pressable } from 'react-native';
 
 interface Props {
   name: string;
@@ -16,10 +15,19 @@ interface Props {
 
 const AchievementBadge: React.FC<Props> = ({ name, condition, progress, type, level }) => {
   const [showDescription, setShowDescription] = useState(false);
+  const heightAnim = useRef(new Animated.Value(0)).current;
 
   const toggleDescription = () => {
     setShowDescription(!showDescription);
   };
+
+  useEffect(() => {
+    Animated.timing(heightAnim, {
+      toValue: showDescription ? 50 : 0,
+      duration: 300,
+      useNativeDriver: false,
+    }).start();
+  }, [showDescription]);
 
   return (
     <Pressable onPress={toggleDescription}>
@@ -32,11 +40,11 @@ const AchievementBadge: React.FC<Props> = ({ name, condition, progress, type, le
             backgroundColor="$primaryLight"
             alignItems="center"
             justifyContent="center">
-            <SizableText size="$8">{achievementLookupTable[type][level as LevelType]}</SizableText>
+            <SizableText size="$8">{achievementLookupTable[type][level]}</SizableText>
           </YStack>
           <YStack flex={1} gap="$2" paddingRight="$2">
             <XStack justifyContent="space-between">
-              <SizableText>{name}</SizableText>
+              <SizableText size="$5">{name}</SizableText>
               <SizableText>
                 {progress} / {condition}
               </SizableText>
@@ -51,11 +59,17 @@ const AchievementBadge: React.FC<Props> = ({ name, condition, progress, type, le
         </XStack>
       </YStack>
 
-      {showDescription && (
-        <YStack flex={1} padding="$4" borderRadius="$5">
-          <SizableText>{getAchievementDescription(type, condition)}</SizableText>
+      <Animated.View
+        style={{
+          height: heightAnim,
+          overflow: 'hidden',
+        }}>
+        <YStack flex={1} paddingHorizontal="$3" paddingVertical="$2" borderRadius="$5">
+          <SizableText size="$5" color="$textWashedOut">
+            {getAchievementDescription(type, condition)}
+          </SizableText>
         </YStack>
-      )}
+      </Animated.View>
     </Pressable>
   );
 };
