@@ -1,51 +1,27 @@
+import { AchievementType } from '@api/responses';
+import { LevelType } from '../../types/types';
 import React from 'react';
 import { YStack, SizableText, XStack, Progress } from 'tamagui';
+import { achievementLookupTable } from '@utils/achievementLookup';
 
-const achievementEmojis = {
-    'NTH_STREAM': {
-      1: '1️⃣',
-      2: '🔟',
-      3: '🔥',
-      4: '🎥',
-      5: '💯',
-      6: '🏆'
-    },
-    'NTH_VIEWER': {
-      1: '🔟',
-      2: '📈',
-      3: '💯',
-      4: '✨',
-      5: '💛',
-      6: '🌟',
-      7: '👑',
-      8: '🌏'
-    },
-    'MINUTES_STREAMED': {
-      1: '🔟',
-      2: '⌛️',
-      3: '🏃‍➡️',
-      4: '🔥',
-      5: '🌄',
-      6: '🤯',
-      7: '❤️‍🔥'
-    }
-  };
 
 interface Props {
   name: string;
   condition: number;
   progress: number;
-  type: string;
+  type: AchievementType;
   level: number;
 }
 
 const AchievementBadge: React.FC<Props> = ({ name, condition, progress, type, level }) => {
+
+    console.log(achievementLookupTable[type][level as LevelType])
   return (
     <YStack padding="$2" backgroundColor="$primaryLight" borderRadius={15}>
       <XStack gap="$2">
 
         <YStack borderRadius={15} backgroundColor={"black"} height="$4" width="$4" alignItems='center' justifyContent='center'>
-            <SizableText>💯</SizableText>
+            <SizableText>{achievementLookupTable[type][level as LevelType]}</SizableText>
         </YStack>
         <YStack flex={1} gap="$2">
         <XStack justifyContent='space-between'>
