@@ -1,4 +1,4 @@
-import { Genre, GetMostStreamedGenresResponse, GetUserResponse } from '@api/responses';
+import { AchievementType, Genre, GetMostStreamedGenresResponse, GetUserResponse } from '@api/responses';
 import { useGetGenreStatistic } from '@api/user/query/useGetGenreStatistic';
 import { useGetUser } from '@api/user/query/useGetUser';
 import SwitchButton from '@components/SwitchButton';
@@ -129,7 +129,7 @@ const ProfilePage: React.FC<{ userid: string }> = ({ userid }) => {
                         name={achievement.name}
                         progress={achievement.progress}
                         condition={achievement.condition}
-                        type={achievement.type}
+                        type={achievement.type as AchievementType}
                         level={achievement.level}
                       />
                     ))}
