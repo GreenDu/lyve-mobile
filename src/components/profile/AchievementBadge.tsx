@@ -23,16 +23,16 @@ const AchievementBadge: React.FC<Props> = ({ name, condition, progress, type, le
 
   return (
     <Pressable onPress={toggleDescription}>
-      <YStack padding="$2" backgroundColor="$primaryLight" borderRadius={15}>
-        <XStack gap="$2">
+      <YStack padding="$2" borderRadius={15}>
+        <XStack gap="$4" alignItems="center">
           <YStack
             borderRadius={15}
-            backgroundColor={'black'}
-            height="$4"
-            width="$4"
+            height="$6"
+            width="$6"
+            backgroundColor="$primaryLight"
             alignItems="center"
             justifyContent="center">
-            <SizableText>{achievementLookupTable[type][level as LevelType]}</SizableText>
+            <SizableText size="$8">{achievementLookupTable[type][level as LevelType]}</SizableText>
           </YStack>
           <YStack flex={1} gap="$2" paddingRight="$2">
             <XStack justifyContent="space-between">
@@ -42,7 +42,9 @@ const AchievementBadge: React.FC<Props> = ({ name, condition, progress, type, le
               </SizableText>
             </XStack>
 
-            <Progress value={Math.round((progress / condition) * 100)}>
+            <Progress
+              backgroundColor="$primaryLight"
+              value={Math.round((progress / condition) * 100)}>
               <Progress.Indicator backgroundColor="$textWashedOut" />
             </Progress>
           </YStack>
@@ -50,14 +52,9 @@ const AchievementBadge: React.FC<Props> = ({ name, condition, progress, type, le
       </YStack>
 
       {showDescription && (
-        <XStack alignItems='center'>
-          <Feather name="corner-down-right" size={24} color="white" />
-          <YStack flex={1} padding="$2" backgroundColor="$primaryLight" borderRadius={15}>
-            <SizableText>
-              {getAchievementDescription(type, condition)}
-            </SizableText>
-          </YStack>
-        </XStack>
+        <YStack flex={1} padding="$4" borderRadius="$5">
+          <SizableText>{getAchievementDescription(type, condition)}</SizableText>
+        </YStack>
       )}
     </Pressable>
   );
