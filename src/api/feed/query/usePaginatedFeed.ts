@@ -3,18 +3,18 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
   InfiniteData,
   QueryKey,
-  UndefinedInitialDataInfiniteOptions,
   UseInfiniteQueryResult,
   useInfiniteQuery,
 } from '@tanstack/react-query';
 import { useMemo } from 'react';
 
 import { axiosClient } from '../../axiosClient';
+import { InfiniteQueryHookOptions } from 'react-query-kit';
 
 type Variables = { id: string; limit: string };
 export const usePaginatedFeed = (
   variables: Variables,
-  opts?: UndefinedInitialDataInfiniteOptions<
+  opts?: InfiniteQueryHookOptions<
     GetFeedResponse,
     Error,
     InfiniteData<GetFeedResponse, unknown>,

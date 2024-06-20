@@ -6,6 +6,7 @@ appId: com.example.app
 - runFlow: home/home.yaml
 - runFlow: stream/createStream.yaml
 - runFlow: stream/handleStream.yaml
+- runFlow: search/search.yaml
 - runFlow: notification/check-notifications.yaml
 - runFlow: profile/check-profile.yaml
 - runFlow: auth/logout.yaml

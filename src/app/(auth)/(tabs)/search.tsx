@@ -1,8 +1,13 @@
+import SearchPage from '@screens/SearchPage';
 import React from 'react';
-import { Text } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
-const SearchPage = () => {
-  return <Text>SearchPage</Text>;
+const Search = () => {
+  return (
+    <SafeAreaView style={{ backgroundColor: '#151718' }}>
+      <SearchPage />
+    </SafeAreaView>
+  );
 };
 
-export default SearchPage;
+export default Search;

@@ -4,17 +4,17 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
   InfiniteData,
   QueryKey,
-  UndefinedInitialDataInfiniteOptions,
   UseInfiniteQueryResult,
   useInfiniteQuery,
 } from '@tanstack/react-query';
 import { useMemo } from 'react';
+import { InfiniteQueryHookOptions } from 'react-query-kit';
 
 type Variables = { query: string; limit: string };
 
 export const usePaginatedSearch = (
   variables: Variables,
-  opts?: UndefinedInitialDataInfiniteOptions<
+  opts?: InfiniteQueryHookOptions<
     SearchResponse,
     Error,
     InfiniteData<SearchResponse, string>,
@@ -22,10 +22,6 @@ export const usePaginatedSearch = (
     unknown
   >
 ): UseInfiniteQueryResult<InfiniteData<SearchResponse, unknown>, Error> => {
-  const accessToken = useMemo(async () => {
-    return await AsyncStorage.getItem('accessToken');
-  }, []);
-
   return useInfiniteQuery<SearchResponse, Error>({
     ...opts,
     queryKey: ['search', variables.query, variables.limit],
@@ -37,11 +33,12 @@ export const usePaginatedSearch = (
             curser: pageParam,
             limit: variables.limit,
           },
-          headers: { Authorization: `Bearer ${accessToken}` },
+          headers: { Authorization: 'Bearer ' + (await AsyncStorage.getItem('accessToken')) },
         })
         .then((response) => response.data);
     },
     initialPageParam: '',
     getNextPageParam: (lastPage) => lastPage.data?.nextCursor ?? undefined,
+    enabled: variables.query.length > 0,
   });
 };
