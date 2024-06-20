@@ -35,3 +35,31 @@ appId: ${APP_ID}
       visible:
         id: 'followings-pressable'
     file: 'explore-followings.yaml'
+
+- assertVisible:
+    id: 'Achievements-button'
+
+- tapOn:
+    id: 'Achievements-button'
+
+- swipe:
+    start: 50%,81%
+    end: 50%,48%
+    duration: 300
+
+- assertVisible:
+    id: 'Statistics-button'
+
+- tapOn:
+    id: 'Statistics-button'
+
+- swipe:
+    start: 50%,81%
+    end: 50%,48%
+    duration: 300
+
+- runFlow:
+    when:
+      visible:
+        id: 'followers-pressable'
+    file: 'explore-followers.yaml'

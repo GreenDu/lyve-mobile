@@ -1,0 +1,49 @@
+appId: ${APP_ID}
+---
+- assertVisible: 'Edit Profile'
+
+- tapOn: 'Edit Profile'
+
+- assertVisible:
+    id: 'heading'
+
+- assertVisible:
+    id: 'back-pressable'
+
+- assertVisible:
+    id: 'displayname-input'
+
+- assertVisible:
+    id: 'bio-input'
+
+- tapOn:
+    id: 'bio-input'
+
+- eraseText: 100
+
+- inputText: 'my new bio'
+
+- tapOn:
+    point: 17%,27%
+
+- assertVisible: 'Edit Avatar'
+
+- tapOn: 'Edit Avatar'
+
+- assertVisible: 'Choose From Gallery'
+- tapOn: 'Choose From Gallery'
+
+- assertVisible: 'Photos'
+
+- assertVisible: 'Foto, 30. März 2018, 21:14'
+
+# choose image
+- tapOn: 'Foto, 30. März 2018, 21:14'
+
+- assertVisible: 'Choose'
+
+- tapOn: 'Choose'
+
+- assertVisible: 'Finish'
+
+- tapOn: 'Finish'

@@ -60,7 +60,7 @@ export type UserToAchievement = {
   progress: number;
   created_at: Date;
   updated_at: Date;
-  achievemnt: Achievement;
+  achievement: Achievement;
 };
 
 export type Follows = {
@@ -87,7 +87,7 @@ export type Genre = {
   percent: number;
   days: Days[];
   avgViewers: number;
-}
+};
 
 export type GetUserResponse = TypedResponse<{
   user: User & {

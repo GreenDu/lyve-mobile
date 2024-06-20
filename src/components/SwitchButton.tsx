@@ -64,6 +64,7 @@ const SwitchButton: React.FC<SwitchButtonProps> = ({ states, onStateChange }) =>
         {states.map((state, index) => {
           return (
             <Button
+              testID={`${state}-button`}
               key={index}
               flex={1}
               width="100%"

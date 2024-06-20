@@ -83,10 +83,12 @@ const EditProfilePage = () => {
         <YStack padding="$4" backgroundColor="$background" gap="$5" flexGrow={1}>
           <XStack alignItems="center" justifyContent="space-between">
             <XStack alignItems="center">
-              <Pressable onPress={() => router.back()}>
+              <Pressable onPress={() => router.back()} testID="back-pressable">
                 <Feather name="chevron-left" size={28} color="white" />
               </Pressable>
-              <H1 fontSize={24}>Edit Profile</H1>
+              <H1 fontSize={24} testID="heading">
+                Edit Profile
+              </H1>
             </XStack>
             <Pressable
               disabled={
@@ -112,7 +114,7 @@ const EditProfilePage = () => {
           <YStack alignItems="center">
             <Avatar circular size="$10" testID="profile-avatar">
               <Avatar.Image
-                accessibilityLabel="Nate Wienert"
+                accessibilityLabel={data?.data?.user.username ?? ''}
                 src={
                   imageUri?.image.uri ??
                   data?.data?.user.avatar_url ??
@@ -138,6 +140,7 @@ const EditProfilePage = () => {
                 </XStack>
                 <Input
                   maxLength={20}
+                  testID="displayname-input"
                   placeholderTextColor="$textWashedOut"
                   placeholder="displayname"
                   onChangeText={props.handleChange('displayname')}
@@ -154,6 +157,7 @@ const EditProfilePage = () => {
                 </XStack>
                 <TextArea
                   maxLength={100}
+                  testID="bio-input"
                   placeholderTextColor="$textWashedOut"
                   placeholder="bio"
                   onChangeText={props.handleChange('bio')}
