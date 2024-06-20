@@ -72,7 +72,7 @@ const ProfilePage: React.FC<{ userid: string }> = ({ userid }) => {
 
 
   return (
-    <YStack height="100%" backgroundColor="$color.background">
+    <YStack height="100%" backgroundColor="$color.background" paddingBottom="$4">
       <ProfileHeader
         user={userData?.user!}
         isSelf={me.id === userid}
