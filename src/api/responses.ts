@@ -1,7 +1,7 @@
 import { TypedResponse } from '../types/response';
 import { Days } from '../types/types';
 
-export type AchievementType = 'NTH_STREAM' | 'NTH_VIEWERS';
+export type AchievementType = 'NTH_STREAM' | 'MINUTES_STREAMED' | 'NTH_VIEWERS';
 
 export type NotificationType =
   | 'STREAM_STARTED'
@@ -52,10 +52,15 @@ export type Achievement = {
   type: AchievementType;
   name: string;
   level: number;
-  bannerUrl: string;
   condition: number;
-  progress: number;
   promotionPoints: number;
+};
+
+export type UserToAchievement = {
+  progress: number;
+  created_at: Date;
+  updated_at: Date;
+  achievemnt: Achievement;
 };
 
 export type Follows = {
@@ -80,9 +85,7 @@ export type Notification = {
 export type GetUserResponse = TypedResponse<{
   user: User & {
     subscribed: boolean;
-    userToAchievement: {
-      achievement: Achievement;
-    }[];
+    userToAchievement: UserToAchievement[];
     streams: Stream[];
   };
 }>;
