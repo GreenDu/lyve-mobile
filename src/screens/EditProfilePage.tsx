@@ -60,9 +60,8 @@ const EditProfilePage = () => {
                 <Avatar.Image
                   accessibilityLabel="Nate Wienert"
                   src={
-                    user?.avatar_url !== ''
-                      ? user.avatar_url
-                      : 'https://lyveblobstorage.blob.core.windows.net/images/avatar_placeholder.png'
+                    data?.data?.user.avatar_url ??
+                    'https://lyveblobstorage.blob.core.windows.net/images/avatar_placeholder.png'
                   }
                 />
                 <Avatar.Fallback delayMs={600} backgroundColor="$blue10" />
