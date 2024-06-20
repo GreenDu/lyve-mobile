@@ -1,6 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { create } from 'zustand';
 import { combine } from 'zustand/middleware';
+import * as Crypto from 'expo-crypto';
 
 import { HistoryItem } from '../types';
 
@@ -18,16 +19,25 @@ export const useSearchHistoryStore = create(
       },
       addItem: async (name: string) => {
         const newItem: HistoryItem = {
-          id: crypto.randomUUID(),
+          id: Crypto.randomUUID(),
           name,
           created_at: new Date(),
         };
 
-        const newHistory = [newItem, ...get().history];
+        // Filter out existing item with the same name
+        const filteredHistory = get().history.filter((item) => item.name !== name);
+
+        const newHistory = [newItem, ...filteredHistory];
+
+        if (newHistory.length > 20) {
+          newHistory.pop();
+        }
 
         await AsyncStorage.setItem('searchHistory', JSON.stringify(newHistory));
 
         set({ history: newHistory });
+
+        console.log(get().history);
       },
       removeItem: async (id: string) => {
         const newHistory = get().history.filter((i) => i.id !== id);

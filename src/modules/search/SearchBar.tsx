@@ -1,12 +1,14 @@
 import { Feather } from '@expo/vector-icons';
 import React, { useState } from 'react';
 import { Button, XStack, Input } from 'tamagui';
+import { useSearchQueryStore } from './stores/useSearchQueryStore';
 
 interface SearchBarProps {
   onSearch: (query: string) => void;
 }
 const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
-  const [query, setQuery] = useState<string>('');
+  const { query } = useSearchQueryStore((s) => ({ query: s.query }));
+  const { setQuery } = useSearchQueryStore.getState();
   return (
     <XStack
       alignItems="center"

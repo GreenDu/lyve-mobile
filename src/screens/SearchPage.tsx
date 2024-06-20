@@ -17,6 +17,7 @@ import { usePaginatedSearch } from '@api/search/query/usePaginatedSearch';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import SearchHistory from '@modules/search/SearchHistory';
 import { useSearchHistoryStore } from '@modules/search/stores/useSearchHistoryStore';
+import { useSearchQueryStore } from '@modules/search/stores/useSearchQueryStore';
 
 const SearchPage = () => {
   const [query, setQuery] = useState<string>('');
@@ -39,7 +40,11 @@ const SearchPage = () => {
   });
 
   const handleSearch = async (query: string) => {
+    if (useSearchQueryStore.getState().query !== query) {
+      useSearchQueryStore.getState().setQuery(query);
+    }
     setQuery(query);
+
     await useSearchHistoryStore.getState().addItem(query);
   };
 
@@ -90,7 +95,7 @@ const SearchPage = () => {
           <XStack paddingBottom="$6">
             <SearchBar onSearch={handleSearch} />
           </XStack>
-          <SearchHistory />
+          <SearchHistory onPress={handleSearch} />
           <FlashList
             bounces
             showsVerticalScrollIndicator={false}

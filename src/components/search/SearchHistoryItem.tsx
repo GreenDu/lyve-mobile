@@ -4,19 +4,22 @@ import { HistoryItem } from '@modules/search/types';
 import { SizableText, XStack } from 'tamagui';
 import { Feather } from '@expo/vector-icons';
 
-const SearchHistoryItem: React.FC<{ history: HistoryItem; onRemove: (id: string) => void }> = ({
-  history,
-  onRemove,
-}) => {
+const SearchHistoryItem: React.FC<{
+  history: HistoryItem;
+  onPress: (query: string) => void;
+  onRemove: (id: string) => void;
+}> = ({ history, onPress, onRemove }) => {
   return (
-    <XStack flex={1} justifyContent="space-between" alignItems="center">
-      <XStack>
-        <Feather name="clock" size={20} color="#5E5E60" />
-        <SizableText>{history.name}</SizableText>
-        <Pressable onPress={() => onRemove(history.id)}>
-          <Feather name="x" size={20} color="#5E5E60" />
-        </Pressable>
-      </XStack>
+    <XStack width="100%" justifyContent="space-between" alignItems="center">
+      <Pressable onPress={() => onPress(history.name)}>
+        <XStack space="$4">
+          <Feather name="clock" size={20} color="#5E5E60" />
+          <SizableText>{history.name}</SizableText>
+        </XStack>
+      </Pressable>
+      <Pressable onPress={() => onRemove(history.id)}>
+        <Feather name="x" size={20} color="#5E5E60" />
+      </Pressable>
     </XStack>
   );
 };

@@ -1,11 +1,11 @@
 import SearchHistoryItem from '@components/search/SearchHistoryItem';
 import React, { useEffect, useState } from 'react';
-import { ScrollView, Pressable } from 'react-native';
-import { SizableText, YStack } from 'tamagui';
+import { Pressable } from 'react-native';
+import { SizableText, ScrollView, YStack } from 'tamagui';
 
 import { useSearchHistoryStore } from './stores/useSearchHistoryStore';
 
-const SearchHistory = () => {
+const SearchHistory: React.FC<{ onPress: (query: string) => void }> = ({ onPress }) => {
   const { history } = useSearchHistoryStore((s) => ({ history: s.history }));
 
   const [showMore, setShowMore] = useState<boolean>(false);
@@ -14,6 +14,7 @@ const SearchHistory = () => {
     (async () => {
       await useSearchHistoryStore.getState().load();
     })();
+    setShowMore(false);
   }, []);
 
   const handleRemove = async (id: string) => {
@@ -21,7 +22,7 @@ const SearchHistory = () => {
   };
 
   const handleShowMore = () => {
-    setShowMore(true);
+    setShowMore(!showMore);
   };
 
   if (!history.length) {
@@ -29,14 +30,19 @@ const SearchHistory = () => {
   }
 
   return (
-    <YStack height={showMore ? '100%' : '20%'} width="100%" alignItems="center">
-      <ScrollView>
+    <YStack height={!showMore ? '20%' : '50%'} width="100%" alignItems="center">
+      <ScrollView space="$2">
         {history.map((item) => (
-          <SearchHistoryItem history={item} onRemove={handleRemove} />
+          <SearchHistoryItem
+            key={item.id}
+            history={item}
+            onPress={onPress}
+            onRemove={handleRemove}
+          />
         ))}
       </ScrollView>
       <Pressable onPress={handleShowMore}>
-        <SizableText color="$textWashedOut">Show more</SizableText>
+        <SizableText color="$textWashedOut">Show {showMore ? 'less' : 'more'}</SizableText>
       </Pressable>
     </YStack>
   );
