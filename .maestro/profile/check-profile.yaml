@@ -6,8 +6,7 @@ appId: ${APP_ID}
 - tapOn:
     id: 'profile-tab'
 
-- assertVisible:
-    id: 'edit-profile-button'
+- assertVisible: 'Edit Profile'
 
 - assertVisible:
     id: 'settings-button'

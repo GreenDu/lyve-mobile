@@ -16,7 +16,8 @@
     "testFinal": "jest",
     "coverage": "jest -i --coverage --passWithNoTests",
     "install-maestro": "curl -Ls 'https://get.maestro.mobile.dev' | bash",
-    "test:e2e": "maestro test .maestro/ -e APP_ID=com.anonymous.lyve-mobile"
+    "test:e2e": "maestro test .maestro/ -e APP_ID=com.anonymous.lyve-mobile",
+    "test:e2e-2": "maestro test -c .maestro/test.yaml  -e APP_ID=com.anonymous.lyve-mobile"
   },
   "dependencies": {
     "@config-plugins/react-native-webrtc": "^9.0.0",

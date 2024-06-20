@@ -15,7 +15,7 @@ appId: ${APP_ID}
 - assertVisible: 'Settings'
 
 - repeat:
-    times: 3
+    times: 2
     commands:
       - swipe:
           start: 50%,50%
@@ -26,4 +26,4 @@ appId: ${APP_ID}
     id: 'logout-button'
 
 - tapOn:
-    point: 31%,88%
+    id: 'logout-button'
