@@ -60,6 +60,10 @@ const SearchPage = () => {
     }
   }, [data, isSuccess]);
 
+  useEffect(() => {
+    useSearchQueryStore.getState().setQuery('');
+  });
+
   const handleRefresh = () => {
     refetch();
   };
@@ -95,20 +99,23 @@ const SearchPage = () => {
           <XStack paddingBottom="$6">
             <SearchBar onSearch={handleSearch} />
           </XStack>
-          <SearchHistory onPress={handleSearch} />
-          <FlashList
-            bounces
-            showsVerticalScrollIndicator={false}
-            data={searchResults.result.users}
-            numColumns={1}
-            renderItem={renderItem}
-            keyExtractor={keyExtractor}
-            onEndReached={() => !isFetching && fetchNextPage()}
-            onEndReachedThreshold={0.3}
-            onRefresh={handleRefresh}
-            refreshing={isRefetching}
-            estimatedItemSize={100}
-          />
+          <YStack space="$4" flex={1}>
+            <SearchHistory onPress={handleSearch} />
+
+            <FlashList
+              bounces
+              showsVerticalScrollIndicator={false}
+              data={searchResults.result.users}
+              numColumns={1}
+              renderItem={renderItem}
+              keyExtractor={keyExtractor}
+              onEndReached={() => !isFetching && fetchNextPage()}
+              onEndReachedThreshold={0.3}
+              onRefresh={handleRefresh}
+              refreshing={isRefetching}
+              estimatedItemSize={100}
+            />
+          </YStack>
         </YStack>
       </TouchableWithoutFeedback>
     </KeyboardAvoidingView>

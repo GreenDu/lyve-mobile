@@ -30,7 +30,13 @@ const SearchHistory: React.FC<{ onPress: (query: string) => void }> = ({ onPress
   }
 
   return (
-    <YStack height={!showMore ? '20%' : '50%'} width="100%" alignItems="center">
+    <YStack
+      height={!showMore ? '20%' : '50%'}
+      width="100%"
+      alignItems="center"
+      borderBottomColor="$primaryLight"
+      borderBottomWidth={1}
+      paddingBottom="$3">
       <ScrollView space="$2">
         {history.map((item) => (
           <SearchHistoryItem
