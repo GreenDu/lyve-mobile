@@ -29,8 +29,8 @@ const HomePage = () => {
     });
 
   const [feed, setFeed] = useState<NonNullable<GetFeedResponse['data']>>({
-    // feed: generateFeed(50),
-    feed: [],
+    feed: generateFeed(50),
+    // feed: [],
     hasNext: false,
     nextCursor: '',
   });
@@ -83,20 +83,22 @@ const HomePage = () => {
       ) : isError ? (
         <ErrorFeedPlaceholder onRetry={handleRefresh} />
       ) : (
-        <MasonryFlashList
-          bounces
-          showsVerticalScrollIndicator={false}
-          ListEmptyComponent={<EmptyFeedPlaceholder onRefresh={handleRefresh} />}
-          data={feed.feed}
-          numColumns={2}
-          renderItem={renderItem}
-          keyExtractor={keyExtractor}
-          estimatedItemSize={273}
-          onEndReached={() => !isFetching && fetchNextPage()}
-          onEndReachedThreshold={0.3}
-          onRefresh={handleRefresh}
-          refreshing={isRefetching}
-        />
+        <YStack flex={1} paddingBottom="$10">
+          <MasonryFlashList
+            bounces
+            showsVerticalScrollIndicator={false}
+            ListEmptyComponent={<EmptyFeedPlaceholder onRefresh={handleRefresh} />}
+            data={feed.feed}
+            numColumns={2}
+            renderItem={renderItem}
+            keyExtractor={keyExtractor}
+            estimatedItemSize={273}
+            onEndReached={() => !isFetching && fetchNextPage()}
+            onEndReachedThreshold={0.3}
+            onRefresh={handleRefresh}
+            refreshing={isRefetching}
+          />
+        </YStack>
       )}
     </YStack>
   );

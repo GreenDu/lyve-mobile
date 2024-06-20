@@ -1,4 +1,9 @@
-import { AchievementType, Genre, GetMostStreamedGenresResponse, GetUserResponse } from '@api/responses';
+import {
+  AchievementType,
+  Genre,
+  GetMostStreamedGenresResponse,
+  GetUserResponse,
+} from '@api/responses';
 import { useGetGenreStatistic } from '@api/user/query/useGetGenreStatistic';
 import { useGetUser } from '@api/user/query/useGetUser';
 import SwitchButton from '@components/SwitchButton';
@@ -9,9 +14,8 @@ import { groupAchievements } from '@utils/groupAchievements';
 import React, { useEffect, useState } from 'react';
 import { ActivityIndicator, ScrollView } from 'react-native';
 import { SizableText, View, XStack, YStack } from 'tamagui';
-import { DisplayedAchievement } from "../types/types";
+import { DisplayedAchievement } from '../types/types';
 import AchievementBadge from '@components/profile/AchievementBadge';
-
 
 type States = 'Statistics' | 'Achievements';
 const ProfilePage: React.FC<{ userid: string }> = ({ userid }) => {
@@ -37,7 +41,6 @@ const ProfilePage: React.FC<{ userid: string }> = ({ userid }) => {
 
   const [groupedAchievements, setGroupedAchievements] = useState<DisplayedAchievement[]>([]);
 
-
   const handleStateChange = (newState: string) => {
     setActiveState(newState as States);
   };
@@ -45,7 +48,7 @@ const ProfilePage: React.FC<{ userid: string }> = ({ userid }) => {
   useEffect(() => {
     if (data && data.data) {
       setUserData(data.data);
-      setGroupedAchievements(groupAchievements(data.data.user.userToAchievement))
+      setGroupedAchievements(groupAchievements(data.data.user.userToAchievement));
     }
   }, [data]);
 
@@ -54,8 +57,6 @@ const ProfilePage: React.FC<{ userid: string }> = ({ userid }) => {
       setGenreData(mostStreamedGenres.data.user.genres);
     }
   }, [mostStreamedGenres]);
-
-
 
   if (isFetching && !userData) {
     return (
@@ -69,7 +70,6 @@ const ProfilePage: React.FC<{ userid: string }> = ({ userid }) => {
       </YStack>
     );
   }
-
 
   return (
     <YStack height="100%" backgroundColor="$color.background" paddingBottom="$4">
@@ -101,28 +101,31 @@ const ProfilePage: React.FC<{ userid: string }> = ({ userid }) => {
             </>
           ) : (
             <>
-              <ScrollView bounces>
-                <YStack marginBottom="$8" padding="$4">
-                  <YStack flex={1} gap="$3">
-                    {genreData.map((genre, index) => (
-                      <GenreStatisticBadge
-                        key={index}
-                        genre={genre.name}
-                        percent={genre.percent}
-                        avgViewer={genre.avgViewers}
-                        days={genre.days}
-                      />
-                    ))}
+              <YStack flex={1} paddingBottom="$10">
+                <ScrollView bounces>
+                  <YStack marginBottom="$8" padding="$4">
+                    <YStack flex={1} gap="$3">
+                      {genreData.map((genre, index) => (
+                        <GenreStatisticBadge
+                          key={index}
+                          genre={genre.name}
+                          percent={genre.percent}
+                          avgViewer={genre.avgViewers}
+                          days={genre.days}
+                        />
+                      ))}
+                    </YStack>
                   </YStack>
-                </YStack>
-              </ScrollView>
+                </ScrollView>
+              </YStack>
             </>
           )
         ) : (
           <>
-            <ScrollView bounces>
-              <YStack marginBottom="$8" padding="$4">
-              <YStack flex={1} gap="$3">
+            <YStack flex={1} paddingBottom="$10">
+              <ScrollView bounces>
+                <YStack marginBottom="$8" padding="$4">
+                  <YStack flex={1} gap="$3">
                     {groupedAchievements.map((achievement) => (
                       <AchievementBadge
                         key={achievement.id}
@@ -134,8 +137,9 @@ const ProfilePage: React.FC<{ userid: string }> = ({ userid }) => {
                       />
                     ))}
                   </YStack>
-              </YStack>
-            </ScrollView>
+                </YStack>
+              </ScrollView>
+            </YStack>
           </>
         )}
       </YStack>

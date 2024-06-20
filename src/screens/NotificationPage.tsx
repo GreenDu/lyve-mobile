@@ -29,13 +29,15 @@ const NotificationPage = () => {
         Notifications
       </H1>
 
-      <ScrollView bounces testID="notification-list">
-        <YStack space="$3">
-          {data?.data?.notifications.map((n) => {
-            return <NotificationCard key={n.id} notification={n} />;
-          })}
-        </YStack>
-      </ScrollView>
+      <YStack flex={1} paddingBottom="$10">
+        <ScrollView bounces testID="notification-list">
+          <YStack space="$3">
+            {data?.data?.notifications.map((n) => {
+              return <NotificationCard key={n.id} notification={n} />;
+            })}
+          </YStack>
+        </ScrollView>
+      </YStack>
     </YStack>
   );
 };

@@ -25,22 +25,24 @@ const FollowersPage: React.FC<{ id: string }> = ({ id }) => {
         </H1>
       </XStack>
       {isSuccess && (
-        <ScrollView testID="followers-list">
-          <YStack space="$3">
-            {data?.data?.user.followedBy.map((u) => {
-              return (
-                <UserFollowerCard
-                  key={u.user.id}
-                  id={u.user.id}
-                  username={u.user.username}
-                  dispname={u.user.dispname}
-                  avatar_url={u.user.avatar_url}
-                  subscribed={u.subscribed}
-                />
-              );
-            })}
-          </YStack>
-        </ScrollView>
+        <YStack flex={1} paddingBottom="$10">
+          <ScrollView testID="followers-list">
+            <YStack space="$3">
+              {data?.data?.user.followedBy.map((u) => {
+                return (
+                  <UserFollowerCard
+                    key={u.user.id}
+                    id={u.user.id}
+                    username={u.user.username}
+                    dispname={u.user.dispname}
+                    avatar_url={u.user.avatar_url}
+                    subscribed={u.subscribed}
+                  />
+                );
+              })}
+            </YStack>
+          </ScrollView>
+        </YStack>
       )}
     </YStack>
   );

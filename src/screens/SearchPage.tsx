@@ -102,19 +102,21 @@ const SearchPage = () => {
           <YStack space="$4" flex={1}>
             <SearchHistory onPress={handleSearch} />
 
-            <FlashList
-              bounces
-              showsVerticalScrollIndicator={false}
-              data={searchResults.result.users}
-              numColumns={1}
-              renderItem={renderItem}
-              keyExtractor={keyExtractor}
-              onEndReached={() => !isFetching && fetchNextPage()}
-              onEndReachedThreshold={0.3}
-              onRefresh={handleRefresh}
-              refreshing={isRefetching}
-              estimatedItemSize={100}
-            />
+            <YStack flex={1} paddingBottom="$10">
+              <FlashList
+                bounces
+                showsVerticalScrollIndicator={false}
+                data={searchResults.result.users}
+                numColumns={1}
+                renderItem={renderItem}
+                keyExtractor={keyExtractor}
+                onEndReached={() => !isFetching && fetchNextPage()}
+                onEndReachedThreshold={0.3}
+                onRefresh={handleRefresh}
+                refreshing={isRefetching}
+                estimatedItemSize={100}
+              />
+            </YStack>
           </YStack>
         </YStack>
       </TouchableWithoutFeedback>
