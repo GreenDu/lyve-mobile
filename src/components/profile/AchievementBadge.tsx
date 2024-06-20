@@ -5,9 +5,10 @@ interface Props {
   name: string;
   condition: number;
   progress: number;
+  type: string;
 }
 
-const AchievementBadge: React.FC<Props> = ({ name, condition, progress }) => {
+const AchievementBadge: React.FC<Props> = ({ name, condition, progress, type }) => {
   return (
     <YStack padding="$2" backgroundColor="$primaryLight" borderRadius={15}>
       <XStack gap="$2">
