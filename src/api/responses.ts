@@ -181,9 +181,11 @@ export type StartStreamResponse = TypedResponse<{
 
 export type SearchResponse = TypedResponse<{
   result: {
-    users: (Pick<User, 'id' | 'username' | 'dispname' | 'avatar_url' | 'followerCount'> & {
-      subscribed: boolean;
-    })[];
+    users: Array<
+      Pick<User, 'id' | 'username' | 'dispname' | 'avatar_url' | 'followerCount'> & {
+        subscribed: boolean;
+      }
+    >;
   };
   nextCursor: string;
   hasNext: boolean;

@@ -1,0 +1,26 @@
+appId: ${APP_ID}
+---
+- assertVisible:
+    id: 'search-tab'
+
+- tapOn:
+    id: 'search-tab'
+
+- assertVisible:
+    id: 'search-input'
+
+- assertVisible:
+    id: 'send-button'
+
+- tapOn:
+    id: 'search-input'
+
+- inputText: 'o'
+
+- assertVisible:
+    id: 'user-search-result-card'
+    index: 0
+
+- tapOn:
+    id: 'user-search-result-card'
+    index: 0
