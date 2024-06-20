@@ -64,8 +64,7 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({ user, isSelf, subscribed 
           {isSelf ? (
             <>
               <Button
-                testID="edit-profile-button"
-                onPress={() => console.log('Edit Profile View')}
+                onPress={() => router.push('/(auth)/(tabs)/profile/editProfile')}
                 backgroundColor="$textWashedOut"
                 size="$4"
                 borderRadius="$10"

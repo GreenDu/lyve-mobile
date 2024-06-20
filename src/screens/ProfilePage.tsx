@@ -1,4 +1,5 @@
-import { GetUserResponse } from '@api/responses';
+import { Genre, GetMostStreamedGenresResponse, GetUserResponse } from '@api/responses';
+import { useGetGenreStatistic } from '@api/user/query/useGetGenreStatistic';
 import { useGetUser } from '@api/user/query/useGetUser';
 import SwitchButton from '@components/SwitchButton';
 import GenreStatisticBadge from '@components/profile/GenreStatisticBadge';
@@ -6,7 +7,7 @@ import ProfileHeader from '@components/profile/ProfileHeader';
 import useAuth from '@modules/auth/useAuth';
 import React, { useEffect, useState } from 'react';
 import { ActivityIndicator, ScrollView } from 'react-native';
-import { XStack, YStack } from 'tamagui';
+import { SizableText, View, XStack, YStack } from 'tamagui';
 
 type States = 'Statistics' | 'Achievements';
 const ProfilePage: React.FC<{ userid: string }> = ({ userid }) => {
@@ -16,9 +17,17 @@ const ProfilePage: React.FC<{ userid: string }> = ({ userid }) => {
     refetchOnWindowFocus: true,
   });
 
+  const { data: mostStreamedGenres } = useGetGenreStatistic({
+    variables: { id: userid },
+    refetchOnMount: true,
+    refetchOnWindowFocus: true,
+  });
+
   const { user: me } = useAuth();
 
   const [userData, setUserData] = useState<GetUserResponse['data']>(null);
+
+  const [genreData, setGenreData] = useState<Genre[]>([]);
 
   const [activeState, setActiveState] = useState<States>('Statistics');
 
@@ -31,6 +40,13 @@ const ProfilePage: React.FC<{ userid: string }> = ({ userid }) => {
       setUserData(data.data);
     }
   }, [data]);
+
+  useEffect(() => {
+    if (mostStreamedGenres && mostStreamedGenres.data) {
+      setGenreData(mostStreamedGenres.data.user.genres);
+    }
+  }, [mostStreamedGenres]);
+
 
   if (isFetching && !userData) {
     return (
@@ -63,21 +79,32 @@ const ProfilePage: React.FC<{ userid: string }> = ({ userid }) => {
           />
         </XStack>
 
-        <ScrollView bounces>
-          <YStack gap="$-8" marginBottom="$8">
-            <XStack flex={1} justifyContent="center" gap="$6" padding="$7">
-              <GenreStatisticBadge genre="Education 👨‍🏫" percent={30} />
-              <GenreStatisticBadge genre="Music 🎶" percent={20} />
-              <GenreStatisticBadge genre="Football ⚽️" percent={13} />
-            </XStack>
+        { genreData.length === 0 ? <>
 
-            <XStack flex={1} justifyContent="center" gap="$6" padding="$7">
-              <GenreStatisticBadge genre="IRL 😄" percent={9} />
-              <GenreStatisticBadge genre="Art 🎨" percent={5} />
-              <GenreStatisticBadge genre="Sport 🏈" percent={2} />
-            </XStack>
+        <YStack flex={1} paddingTop="$8" alignItems='center'>
+            <SizableText fontSize={24} textAlign='center'>
+              There are currently no statistics available!
+            </SizableText>
+        </YStack>
+
+        </> : <>
+        <ScrollView bounces>
+          <YStack marginBottom="$8" padding="$4">
+            <YStack flex={1} gap="$3">
+              {genreData.map((genre, index) => (
+                <GenreStatisticBadge
+                  key={index} 
+                  genre={genre.name} 
+                  percent={genre.percent}
+                  avgViewer={genre.avgViewers}
+                  days={genre.days}
+                />
+              ))}
+            </YStack>
           </YStack>
         </ScrollView>
+        </> }
+
       </YStack>
     </YStack>
   );

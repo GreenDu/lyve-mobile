@@ -1,26 +1,30 @@
 import FloatingButton from '@components/FloatingButton';
 import { Feather } from '@expo/vector-icons';
 import useAuth from '@modules/auth/useAuth';
-import { Tabs } from 'expo-router';
+import { Tabs, usePathname } from 'expo-router';
 import React from 'react';
 import { Platform } from 'react-native';
 
 export default function TabLayout() {
   const { user } = useAuth();
 
+  const pathname = usePathname();
+
   return (
     <Tabs
       screenOptions={{
+        tabBarHideOnKeyboard: true,
         tabBarTestID: 'tabbar',
         tabBarActiveTintColor: 'white',
         tabBarInactiveTintColor: '#676D75',
         headerShown: false,
         tabBarStyle: {
+          display: pathname.includes('editProfile') ? 'none' : 'flex',
           position: 'absolute',
           justifyContent: 'center',
           alignItems: 'center',
           borderWidth: 0,
-          height: Platform.OS === 'ios' ? '11%' : '8%',
+          height: Platform.OS === 'ios' ? '11%' : '9%',
           borderColor: '#151718',
           borderTopWidth: 1,
           borderTopColor: '#242526',

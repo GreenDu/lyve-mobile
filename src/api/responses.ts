@@ -82,6 +82,13 @@ export type Notification = {
   updated_at: Date;
 };
 
+export type Genre = {
+  name: string;
+  percent: number;
+  days: Days[];
+  avgViewers: number;
+}
+
 export type GetUserResponse = TypedResponse<{
   user: User & {
     subscribed: boolean;
