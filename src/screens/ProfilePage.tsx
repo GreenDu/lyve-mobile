@@ -129,6 +129,7 @@ const ProfilePage: React.FC<{ userid: string }> = ({ userid }) => {
                         name={achievement.name}
                         progress={achievement.progress}
                         condition={achievement.condition}
+                        type={achievement.type}
                       />
                     ))}
                   </YStack>
