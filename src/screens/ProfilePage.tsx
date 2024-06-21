@@ -54,7 +54,11 @@ const ProfilePage: React.FC<{ userid: string }> = ({ userid }) => {
 
   useEffect(() => {
     if (mostStreamedGenres && mostStreamedGenres.data) {
-      setGenreData(mostStreamedGenres.data.user.genres);
+      setGenreData(
+        mostStreamedGenres.data.user.genres.sort((a, b) => {
+          return b.percent - a.percent;
+        })
+      );
     }
   }, [mostStreamedGenres]);
 
