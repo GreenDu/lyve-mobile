@@ -23,7 +23,7 @@ const AchievementBadge: React.FC<Props> = ({ name, condition, progress, type, le
 
   useEffect(() => {
     Animated.timing(heightAnim, {
-      toValue: showDescription ? 50 : 0,
+      toValue: showDescription ? 80 : 0,
       duration: 300,
       useNativeDriver: false,
     }).start();
