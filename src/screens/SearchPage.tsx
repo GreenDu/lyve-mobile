@@ -1,35 +1,26 @@
-import {
-  View,
-  Text,
-  ListRenderItem,
-  KeyboardAvoidingView,
-  TouchableWithoutFeedback,
-  Platform,
-  Keyboard,
-} from 'react-native';
-import React, { useCallback, useEffect, useState } from 'react';
-import { SizableText, XStack, YStack } from 'tamagui';
-import SearchBar from '@modules/search/SearchBar';
-import { FlashList } from '@shopify/flash-list';
 import { SearchResponse, User } from '@api/responses';
-import UserSearchResultCard from '@components/search/UserSearchResultCard';
 import { usePaginatedSearch } from '@api/search/query/usePaginatedSearch';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import UserSearchResultCard from '@components/search/UserSearchResultCard';
+import SearchBar from '@modules/search/SearchBar';
 import SearchHistory from '@modules/search/SearchHistory';
 import { useSearchHistoryStore } from '@modules/search/stores/useSearchHistoryStore';
 import { useSearchQueryStore } from '@modules/search/stores/useSearchQueryStore';
+import { FlashList } from '@shopify/flash-list';
+import { useFocusEffect } from 'expo-router';
+import React, { useCallback, useEffect, useState } from 'react';
+import { KeyboardAvoidingView, TouchableWithoutFeedback, Platform, Keyboard } from 'react-native';
+import { XStack, YStack } from 'tamagui';
 
 const SearchPage = () => {
   const [query, setQuery] = useState<string>('');
 
-  const { fetchNextPage, refetch, isRefetching, data, isSuccess, isLoading, isFetching, isError } =
-    usePaginatedSearch(
-      {
-        query,
-        limit: '20',
-      },
-      { enabled: !!query }
-    );
+  const { fetchNextPage, refetch, isRefetching, data, isSuccess, isFetching } = usePaginatedSearch(
+    {
+      query,
+      limit: '20',
+    },
+    { enabled: !!query }
+  );
 
   const [searchResults, setSearchResults] = useState<NonNullable<SearchResponse['data']>>({
     result: {
@@ -60,9 +51,11 @@ const SearchPage = () => {
     }
   }, [data, isSuccess]);
 
-  useEffect(() => {
-    useSearchQueryStore.getState().setQuery('');
-  });
+  useFocusEffect(
+    useCallback(() => {
+      useSearchQueryStore.getState().setQuery('');
+    }, [])
+  );
 
   const handleRefresh = () => {
     refetch();
