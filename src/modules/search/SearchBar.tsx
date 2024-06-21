@@ -2,6 +2,7 @@ import { Feather } from '@expo/vector-icons';
 import React, { useState } from 'react';
 import { Button, XStack, Input } from 'tamagui';
 import { useSearchQueryStore } from './stores/useSearchQueryStore';
+import { Keyboard, NativeSyntheticEvent, TextInputKeyPressEventData } from 'react-native';
 
 interface SearchBarProps {
   onSearch: (query: string) => void;
@@ -9,18 +10,28 @@ interface SearchBarProps {
 const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
   const { query } = useSearchQueryStore((s) => ({ query: s.query }));
   const { setQuery } = useSearchQueryStore.getState();
+
+  const handleKeyPress = (e: NativeSyntheticEvent<TextInputKeyPressEventData>) => {
+    if (e.nativeEvent.key === 'Enter') {
+      Keyboard.dismiss();
+      if (query.length) {
+        onSearch(query);
+      }
+    }
+  };
+
   return (
     <XStack
       alignItems="center"
       justifyContent="space-between"
       borderRadius={50}
       backgroundColor="#24252677"
-      // bg="red"
       flex={1}>
       <XStack flex={1}>
         <Input
           value={query}
           onChangeText={(e) => setQuery(e)}
+          onKeyPress={handleKeyPress}
           testID="search-input"
           borderColor="$colorTransparent"
           backgroundColor="$colorTransparent"
