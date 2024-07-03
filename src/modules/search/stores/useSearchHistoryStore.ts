@@ -36,8 +36,6 @@ export const useSearchHistoryStore = create(
         await AsyncStorage.setItem('searchHistory', JSON.stringify(newHistory));
 
         set({ history: newHistory });
-
-        console.log(get().history);
       },
       removeItem: async (id: string) => {
         const newHistory = get().history.filter((i) => i.id !== id);
