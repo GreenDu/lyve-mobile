@@ -10,7 +10,11 @@ const SearchHistoryItem: React.FC<{
   onRemove: (id: string) => void;
 }> = ({ history, onPress, onRemove }) => {
   return (
-    <XStack width="100%" justifyContent="space-between" alignItems="center">
+    <XStack
+      width="100%"
+      justifyContent="space-between"
+      alignItems="center"
+      testID="search-history-item">
       <Pressable onPress={() => onPress(history.name)}>
         <XStack space="$4">
           <Feather name="clock" size={20} color="#5E5E60" />
@@ -18,7 +22,7 @@ const SearchHistoryItem: React.FC<{
         </XStack>
       </Pressable>
       <Pressable onPress={() => onRemove(history.id)}>
-        <Feather name="x" size={20} color="#5E5E60" />
+        <Feather testID="search-history-item-delete-button" name="x" size={20} color="#5E5E60" />
       </Pressable>
     </XStack>
   );

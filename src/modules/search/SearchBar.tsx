@@ -54,7 +54,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
         />
       </XStack>
       <Button
-        testID="send-button"
+        testID="search-button"
         onPress={() => {
           if (query.length) {
             onSearch(query);

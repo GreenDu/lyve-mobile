@@ -10,17 +10,27 @@ appId: ${APP_ID}
     id: 'search-input'
 
 - assertVisible:
-    id: 'send-button'
+    id: 'search-button'
 
 - tapOn:
     id: 'search-input'
 
 - inputText: 'o'
 
-- assertVisible:
-    id: 'user-search-result-card'
-    index: 0
-
 - tapOn:
+    id: 'search-button'
+
+- assertVisible:
+    id: 'search-history-item'
+
+- assertVisible: 'Show more'
+
+- tapOn: 'Show more'
+
+- assertVisible: 'Show less'
+
+- tapOn: 'Show less'
+
+- assertVisible:
     id: 'user-search-result-card'
     index: 0
