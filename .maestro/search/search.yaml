@@ -17,6 +17,12 @@ appId: ${APP_ID}
 
 - inputText: 'o'
 
+- assertVisible:
+    id: 'Return'
+
+- tapOn:
+    id: 'Return'
+
 - tapOn:
     id: 'search-button'
 
