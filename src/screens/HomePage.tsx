@@ -29,8 +29,8 @@ const HomePage = () => {
     });
 
   const [feed, setFeed] = useState<NonNullable<GetFeedResponse['data']>>({
-    feed: generateFeed(50),
-    // feed: [],
+    // feed: generateFeed(50),
+    feed: [],
     hasNext: false,
     nextCursor: '',
   });
