@@ -85,44 +85,38 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children, config }) => {
   };
 
   const fetchUserData = async (userData: IdTokenPayload) => {
-    try {
-      const userResponse = await fetch(
-        `${process.env.EXPO_PUBLIC_API_URL}/api/user/${userData.sub}`,
-        {
-          headers: {
-            Authorization: 'Bearer ' + (await AsyncStorage.getItem('accessToken')),
-          },
-        }
-      ).then((res) => res.json() as unknown as GetUserResponse);
-
-      console.log(userResponse);
-
-      if (userResponse.success && userResponse.data) {
-        return userResponse.data.user;
-      } else {
-        const createdUserData = await createUserMutation.mutateAsync({
-          id: userData.sub,
-          username: userData.preferred_username,
-          email: userData.email,
-        });
-
-        if (createdUserData.success && createdUserData.data) {
-          return createdUserData.data.user;
-        }
-
-        if (createdUserData.error[0]) {
-          Toast.show({
-            type: 'error',
-            text1: createdUserData.error[0].name,
-            text2: createdUserData.error[0].msg,
-          });
-        }
+    const access_token = await AsyncStorage.getItem('accessToken');
+    const userResponse = await fetch(
+      `${process.env.EXPO_PUBLIC_API_URL}/api/user/${userData.sub}`,
+      {
+        headers: {
+          Authorization: 'Bearer ' + access_token,
+        },
       }
-      return null;
-    } catch (error) {
-      console.error('Error fetching user data', error);
-      return null;
+    ).then((res) => res.json() as unknown as GetUserResponse);
+
+    if (userResponse.success && userResponse.data) {
+      return userResponse.data.user;
+    } else {
+      const createdUserData = await createUserMutation.mutateAsync({
+        id: userData.sub,
+        username: userData.preferred_username,
+        email: userData.email,
+      });
+
+      if (createdUserData.success && createdUserData.data) {
+        return createdUserData.data.user;
+      }
+
+      if (createdUserData.error[0]) {
+        Toast.show({
+          type: 'error',
+          text1: createdUserData.error[0].name,
+          text2: createdUserData.error[0].msg,
+        });
+      }
     }
+    return null;
   };
 
   const signIn = useCallback(async () => {
