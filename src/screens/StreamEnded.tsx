@@ -27,7 +27,7 @@ const StreamEnded: React.FC<{ onLeave: () => void }> = ({ onLeave }) => {
           </H4>
 
           <SizableText>
-            Duration of the stream: {(data?.data?.stream.duration || 0).toFixed(2)} minutes
+            Duration of the stream: {((data?.data?.stream.duration || 0) / 60).toFixed(2)} minutes
           </SizableText>
           <SizableText>There are still {viewerCount} people here!</SizableText>
         </YStack>
