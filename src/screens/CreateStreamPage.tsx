@@ -86,7 +86,7 @@ const CreateStreamPage = () => {
 
     if (imageUri) {
       // Dont remove this comment below
-      // its needed bc typescript is a hurensohn
+      // its needed bc typescript is retarded
       // @ts-ignore
       formData.append('image', { ...imageUri.image });
     }
