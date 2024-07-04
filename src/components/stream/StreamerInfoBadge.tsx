@@ -42,7 +42,7 @@ const StreamerInfoBadge: React.FC = () => {
         </Avatar>
         <YStack marginLeft="$3" height="$4" justifyContent="center" width="$5">
           <SizableText size="$4" overflow="hidden" textOverflow="clip" whiteSpace="nowrap">
-            {streamer?.username}
+            {streamer?.dispname.replace(/(\r\n|\n|\r)/gm, '')}
           </SizableText>
           <XStack justifyContent="flex-start" alignItems="center" gap="$2">
             <FontAwesome6 name="user-group" size={12} color="white" />

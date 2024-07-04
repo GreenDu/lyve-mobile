@@ -95,6 +95,8 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children, config }) => {
         }
       ).then((res) => res.json() as unknown as GetUserResponse);
 
+      console.log(userResponse);
+
       if (userResponse.success && userResponse.data) {
         return userResponse.data.user;
       } else {
@@ -229,9 +231,9 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children, config }) => {
 
   useEffect(() => {
     if (result) {
-      handleTokenExchange().then((res) => {
+      handleTokenExchange().then(async (res) => {
         if (res) {
-          storeTokensAndSetUser(res, true);
+          await storeTokensAndSetUser(res, true);
         } else {
           setIsAuthenticated(false);
         }
